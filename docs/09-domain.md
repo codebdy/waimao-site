@@ -29,7 +29,7 @@
 | --- | --- |
 | [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/) | 按成本价卖，没有加价；**如果网站发布在 Cloudflare，最省事**，DNS 自动在一起 |
 | [Namecheap](https://www.namecheap.com/) | 海外老牌，界面简单 |
-| [Porkbun](https://porkbun.com/) | 价格透明，续费不涨价 |
+| [Porkbun](https://porkbun.com/) | 价格透明 |
 | [Vercel Domains](https://vercel.com/domains) | 网站在 Vercel 时，可以直接在 Vercel 买，自动配好 |
 | [阿里云](https://wanwang.aliyun.com/) / [腾讯云](https://dnspod.cloud.tencent.com/) | 中文界面、可用支付宝；国内域名商要求做**域名实名认证**（不是 ICP 备案） |
 
@@ -94,7 +94,7 @@ AI 会更新网站里的正式地址（关系到 Google 收录），然后你 Co
 
 ## 完成标志
 
-- 浏览器输入 `yourcompany.com` 和 `www.yourcompany.com` 都能打开网站
+- 你绑定的网址都能打开网站（两个都绑了的话，让 AI 帮你定一个主网址，另一个自动跳转过去）
 - 地址栏显示小锁头（SSL 证书生效，网址以 https 开头）。SSL 证书由平台**自动配置**，不用自己买，一般绑定后几分钟到几小时生效
 - 公司邮箱收发正常
 

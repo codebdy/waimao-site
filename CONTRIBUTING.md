@@ -24,7 +24,7 @@
 npm ci
 npm test               # 单元测试
 npm run check          # Astro 类型检查
-npm run test:builds    # 六种离线静态构建（脱敏数据，不联网）
+npm run test:builds    # 七种离线静态构建，另含四项错误配置检查（脱敏数据，不联网）
 npm run build          # 默认静态构建
 ```
 

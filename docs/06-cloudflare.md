@@ -52,7 +52,7 @@ AI 会把 `site.config.mjs` 里的发布平台设成 Cloudflare。改完后按[�
 
 ## 发布之后
 
-- 把这个网址告诉 AI：“网站发布在 https://xxx.pages.dev，请更新网站地址配置。”然后 Commit、Push。
+- 把这个网址告诉 AI，比如“网站发布在 `https://xxx.pages.dev`，请更新网站地址配置”，然后 Commit、Push。
 - 以后每次 Push 到 GitHub，Cloudflare 会**自动重新发布**。
 - 要用自己的域名，看[日常更新和域名](08-update.md)。
 

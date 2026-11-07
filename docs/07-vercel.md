@@ -45,7 +45,7 @@ Vercel 的免费版（Hobby）**只限个人非商业用途**。公司外贸网�
 
 ## 发布之后
 
-- 把这个网址告诉 AI：“网站发布在 https://xxx.vercel.app，请更新网站地址配置。”然后 Commit、Push。
+- 把这个网址告诉 AI，比如“网站发布在 `https://xxx.vercel.app`，请更新网站地址配置”，然后 Commit、Push。
 - 以后每次 Push 到 GitHub，Vercel 会**自动重新发布**，不用再来这里操作。
 - 要用自己的域名，看[日常更新和域名](08-update.md)。
 
