@@ -1,86 +1,65 @@
-# Export Site · 外贸建站 Skill
+# Export Site · AI 外贸建站
 
-让 AI 根据企业资料、产品和图片，制作面向海外采购商的网站。适合不懂代码、希望由 AI 引导建站的使用者。
+把公司和产品资料交给 AI，它帮你做一个面向海外客户的外贸网站，再一步步带你发布到网上。**不需要会写代码。**
 
-**第一次使用，请从[零基础使用指南](docs/usage-guide.md)开始。** 指南一步步说明：注册 GitHub、安装并使用 skill、预览网站、上传代码、注册 Vercel / Cloudflare、连接 GitHub 自动部署，以及后续更新和 Cookie 同意框设置。
+## 你会得到什么
 
-Skill 是给 AI 使用的建站说明包，需要配合能读写本地文件的 AI 编程工具，如 Claude Code、Codex、WorkBuddy 等。本目录是 skill 源码，网站应生成到独立项目。版本 0.1.0，当前未上传公开 GitHub 仓库，也未部署客户网站。
+- 一个外贸网站：首页、产品列表、产品详情、联系页、隐私页
+- 以后想改文字、换产品，直接告诉 AI 就行
+- 发布到 Vercel 或 Cloudflare，有自己的网址，可以绑定自己的域名
+- 自带基础 SEO：标题描述、网站地图、结构化数据，方便 Google 收录
+- 可选：Cookie 同意框、Google 统计、站内询盘表单
+- B2B 网站设计指导：AI 根据产品、采购人群和品牌资料安排配色、排版与询盘入口，无需另外安装设计 skill → [确定网站风格](docs/03-style.md)
 
-现在由作者直接分发安装包 `export-site-0.1.0.zip`；公开后，请到项目 GitHub 页面右侧的 **Releases** 下载同名 ZIP，不要用绿色 **Code → Download ZIP**，那样解压后的文件夹会叫 `export-site-main`，还需要改名。解压后把完整 export-site 文件夹按使用指南安装。发布包排除依赖、构建目录及本地密钥文件。
+## 三步开始
 
-维护者发布新版本时，先把 `SKILL.md` 的 `metadata.version` 改成新版本号并提交，再在 GitHub 网页 **Releases → Draft a new release** 中用 `v版本号` 作为 tag，点击 **Publish release**；Actions 会自动生成并附上 ZIP 和 SHA-256 校验文件。本地 `python -I scripts/package_skill.py` 仅用于本地试打包。
+1. **安装**：下载安装包，放进你用的 AI 工具（Claude Code、Codex、WorkBuddy 等）→ [安装](docs/01-install.md)
+2. **建站**：把公司资料告诉 AI，让它生成网站，先在电脑上看效果 → [开始建站](docs/02-start.md)
+3. **发布**：上传到 GitHub，连接 Vercel 或 Cloudflare，网站就上线了 → [上传到 GitHub](docs/05-github.md)
 
-## 默认怎么建站
+👉 **下载安装包：** [GitHub Releases](https://github.com/codebdy/export-site/releases)（下载 `export-site-版本号.zip`，不要点绿色 Code 按钮）
 
-| 建站方式 | 内容来源 | 当前随包能力 |
-| --- | --- | --- |
-| **纯静态站，默认** | 项目内本地文件 | 可构建的 Astro + Tailwind 模板，无 CMS 凭证需求 |
-| RXCMS 站 | rxcms-server API | 产品/文章内容适配、分页和脱敏测试；客户接口仍需实际联调 |
-| WordPress 站（实验） | WordPress REST API | 标准文章最小客户端与脱敏测试；产品插件、多语言等需要继续适配 |
+## 遇到什么事，看哪篇
 
-没有指定且没有后台需求时，AI 明确告知采用默认纯静态站；已经选择则沿用。三种内容来源都默认 `static`；需要请求时生成页面才另选 `server`。前端均为 **Astro + Tailwind**，不是 WordPress PHP 主题。
+| 我想…… | 看这篇 |
+| --- | --- |
+| 安装这个 skill | [安装](docs/01-install.md) |
+| 开始做网站，第一次跟 AI 怎么说 | [开始建站](docs/02-start.md) |
+| 定网站的颜色、风格、Logo | [确定网站风格](docs/03-style.md) |
+| 在电脑上看网站、提修改意见 | [预览和修改](docs/04-preview.md) |
+| 把网站代码上传到 GitHub | [上传到 GitHub](docs/05-github.md) |
+| 发布到 Vercel | [发布到 Vercel](docs/06-vercel.md) |
+| 发布到 Cloudflare | [发布到 Cloudflare](docs/07-cloudflare.md) |
+| 改了内容让网站更新、换电脑、换平台 | [日常更新](docs/08-update.md) |
+| 买域名、把自己的域名绑到网站 | [注册域名并绑定](docs/09-domain.md) |
+| 选哪种方式管理内容 | [纯静态站](docs/content-static.md) · [RXCMS 站](docs/content-rxcms.md) · [WordPress 站](docs/content-wordpress.md) |
+| 让客户在网站上直接发询盘 | [询盘表单](docs/inquiry.md) |
+| 让 Google 搜到我的网站 | [SEO](docs/seo.md) |
+| 网站要不要弹 Cookie 框、怎么接 Google 统计 | [Cookie 同意框](docs/cookie.md) |
+| 出问题了，或想看看容易忽略的事 | [常见问题](docs/faq.md) |
 
-内容来源、static/server、发布平台，以及是否启用询盘函数分别配置。**static + RXCMS 询盘函数**已有示例，可以与本地或 CMS 内容搭配。密钥只放构建/函数环境变量，不进入浏览器。模板测试不代表客户站点已接通或邮件已送达。
+## 免费和收费
 
-## 如何开始
+- **这个 skill 免费开源**，可以直接用。
+- 你自己用的 AI 工具、域名、网站托管，按各家规则收费。
+- **RXCMS 平台**（后台管理内容、图片视频托管、询盘、邮件通知、智能体）和**专业 SEO 服务**由作者提供，需要时联系作者。不买也能正常使用这个 skill。
 
-1. 按[使用指南的安装表](docs/usage-guide.md#install)，把解压后的完整 `export-site` 文件夹放进所选工具的对应目录。
-2. 用所选 AI 工具打开该项目，按安装表的方式调用 skill，提供公司、产品、目标市场和联系资料。也可按表中的兜底办法，直接请 AI 读取 `SKILL.md`。
-3. AI 默认把网站生成到独立的 `website/`，先制作和检查，再引导你自行预览。
-4. 按[GitHub 上传步骤](docs/usage-guide.md#github-upload)上传生成的网站，再选择一个托管平台。
-
-新手不必阅读所有技术参考。AI 的执行入口是 [SKILL.md](SKILL.md)；生成的网站也应有自己的 README，记录实际选择和操作步骤。
-
-## 发布网站：Vercel 或 Cloudflare
-
-本项目所说的发布，是把**生成的网站**放到托管平台；公开发布 skill 仓库是另一件事。
-
-| 选择 | 网站发布方式 | 详细操作 |
-| --- | --- | --- |
-| Vercel + static | GitHub 导入网站仓库，Astro，构建 `npm run build`，输出 `dist` | [注册、导入、自动部署](docs/usage-guide.md#vercel) |
-| Cloudflare + static | 注册 Cloudflare 后，在 Pages 连接 GitHub；构建 `npm run build`，输出 `dist` | [注册、连接、自动部署](docs/usage-guide.md#cloudflare) |
-| Vercel + server | Vercel 适配器及框架输出配置 | [项目模板说明](assets/astro-starter/README.md) |
-| Cloudflare + server | Cloudflare 适配器，部署到 Workers | [部署参考](references/deployment.md) |
-
-网站的 `site.config.mjs` 保存 output、deployTarget；小型配置模块按平台选择适配器。构建环境变量 SITE_OUTPUT / DEPLOY_TARGET 可以覆盖文件值，切换时同步核对。static 询盘通过 `npm run configure:inquiry` 生成目标平台函数入口，先提交源码，再部署。
-
-新手默认只在 site.config.mjs 中选择模式和平台，不再要求在控制台重复填这两个覆盖变量；CMS 密钥等仍使用平台环境变量。静态模板根目录不放 Wrangler 配置，只有选择 Cloudflare server 时才从示例创建。
-
-**自动更新流程：修改 → Commit → Push 到 GitHub → 平台自动构建部署。** CMS 后台更新需手动重建或另配发布钩子。可以切换平台，但环境变量、函数配置、钩子和域名也要迁移；不能只改平台名称就宣称完成。[更新与切换指南](docs/usage-guide.md#updates)
-
-## Cookie / Google 同意框
-
-模板提供 Cookie 隐私同意框及 Google Consent Mode v2 基础集成，参考 kingnod-v2 的需求重新实现。访客可分别决定统计和广告，并从页脚重新设置。
-
-默认开启弹窗、Google ID 留空，不默认发送 Google 统计或广告请求。`cookieConsent.enabled: false` 同时关闭弹窗和随包 Google 集成。用途、开关和上线步骤见[使用指南](docs/usage-guide.md#consent)。它不是 Google 评价框，也不是自动满足法律要求的认证 CMP。
-
-## SEO 优化与专业支持
-
-开源 skill 主要提供入门建站和基础优化：标题描述、canonical、robots、sitemap、基础结构化数据及多语言 SEO 注意事项。它不承诺搜索排名。
-
-需要更深入、更专业的 SEO skills，请扫码添加作者微信，咨询专业 SEO skills 及支持服务。
-
-## RXCMS 平台与联系作者
-
-RXCMS 接入后端为 **rxcms-server**。平台可提供图片与视频托管、询盘表单、邮件通知及智能体接入，需要开通服务并完成客户站点配置。网站模板不等于这些服务已经开通。
-
-### 联系作者
+## 联系作者
 
 作者拥有 **18 年外贸经验、25 年软件开发经验**，关注如何把技术用到外贸业务中，让建站、营销和客户开发更高效。
 
-如果你也在做外贸，欢迎扫码添加作者微信，交流独立站、SEO、AI 工具与海外营销。想加入外贸营销群，也可以联系作者，和同行一起分享经验、讨论问题。
+欢迎扫码添加作者微信，交流独立站、SEO、AI 工具与海外营销，或咨询 RXCMS 平台和专业 SEO 服务。想加入外贸营销群，也可以联系作者，和同行一起分享经验、讨论问题。
 
-![扫码添加作者微信](docs/author-wechat.png)
+<img src="docs/author-wechat.png" alt="扫码添加作者微信" width="200">
 
-## 给实施者与审核者
+## 请作者喝杯奶茶 🧋
 
-- [RXCMS 内容契约及适配范围](references/rxcms.md)
-- [static 询盘函数、状态语义和客户验收](references/inquiry.md)
-- [WordPress 实验客户端](references/wordpress.md)
-- [Consent 实现与验证](references/consent.md)
-- [模板 README](assets/astro-starter/README.md)、[验证记录](VALIDATION.md)
-- [借鉴来源与许可证](THIRD_PARTY_NOTICES.md)
+如果这个 skill 帮你省下了建站的时间和费用，欢迎请作者喝杯奶茶，支持项目继续更新。完全自愿，不影响任何功能的使用。
 
-核心采用 MIT；借鉴了 Claude SEO 等开源项目的方法，保留来源与许可证。WordPress 官方 GPL skills 仅作为参考，没有打包复制。开发默认不启动应用或服务，不执行真实部署、CMS 写入和邮件发送。
+| 微信 | 支付宝 |
+| :---: | :---: |
+| <img src="docs/donate-wechat.png" alt="微信赞赏码" height="220"> | <img src="docs/donate-alipay.png" alt="支付宝收款码" height="220"> |
 
-客户真实联调留到具体网站阶段：确认后台记录、垃圾分类、通知日志与收件箱；当前 RXCMS 接口不报告邮件发送结果，代理明确返回未知，不能推断送达。Claude Code 的整包审核提示词在对话中提供，不另存提示词文件。
+---
+
+核心采用 MIT；借鉴部分保留各自的 MIT / Apache-2.0 许可 · [许可证](LICENSE) · [借鉴来源](THIRD_PARTY_NOTICES.md)

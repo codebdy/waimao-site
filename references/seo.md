@@ -11,6 +11,7 @@
 - 主要内容在初始 HTML 可见；每页有清楚的主标题、独立 title / description、语义链接及合理标题层级。不要把固定字数当合格条件。
 - canonical 来自配置的生产域名和规范路径，而不是预览请求 Host；不携带追踪参数或 fragment。分页通常保留自己的 canonical，不一律指向第 1 页。
 - sitemap 只含希望索引的规范成功页面，排除 noindex、错误页、重定向和重复 URL；lastmod 使用真实修改时间或省略。
+- 上线并开启收录后，引导用户验证 Google Search Console 并提交 sitemap；没有 Search Console 数据就不报告收录结论。
 - robots.txt 控制抓取，不保证 URL 不被索引。需要爬虫读取 noindex 的公开页面不要同时 Disallow。私有预览优先用平台访问控制；robots 与 noindex 不是保密措施。
 - 不继承 Kingnod 的临时 Disallow 或“所有标签页 noindex”作为通用政策。分类/标签是否索引取决于独立价值和用户选择。
 - 旧 URL 迁移要映射到实际对应页面，永久迁移用合适状态码；不存在页面返回真实 404/410，不能把错误页用 200 输出。静态平台的状态码与重定向另行验证。

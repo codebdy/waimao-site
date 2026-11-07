@@ -1,6 +1,6 @@
 # Cookie 同意与 Google Consent Mode v2
 
-实现/修改统计、广告、隐私弹窗时阅读。面向用户的解释和开关操作见 [使用指南](../docs/usage-guide.md#consent)。
+实现/修改统计、广告、隐私弹窗时阅读。面向用户的解释和开关操作见 [Cookie 同意框和 Google 统计](../docs/cookie.md)。
 
 ## 当前实现
 

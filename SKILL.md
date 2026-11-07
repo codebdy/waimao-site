@@ -1,7 +1,7 @@
 ---
 name: export-site
-description: 创建或改造面向海外采购商的 B2B 外贸网站，使用 Astro + Tailwind，内容来源可选本地文件、RXCMS API 或 WordPress REST API（实验，仅标准文章），覆盖页面规划、询盘内容和基础 SEO。新建站默认 static，可按需求选择 server，并支持 Vercel / Cloudflare 部署配置与迁移。用于外贸建站和相关实现，不代替独立的营销运营或通用 CMS 管理。
-license: MIT
+description: 创建或改造面向海外采购商的 B2B 外贸网站，使用 Astro + Tailwind，内容来源可选本地文件、RXCMS API 或 WordPress REST API（实验，仅标准文章），覆盖页面规划、B2B 视觉设计、询盘内容和基础 SEO。新建站默认 static，可按需求选择 server，并支持 Vercel / Cloudflare 部署配置与迁移。用于外贸建站和相关实现，不代替独立的营销运营或通用 CMS 管理。
+license: MIT; adapted third-party portions retain their licenses (see THIRD_PARTY_NOTICES.md)
 metadata:
   version: "0.1.0"
 ---
@@ -12,7 +12,7 @@ metadata:
 
 ## 面向零基础用户
 
-- 账号注册、安装、GitHub 上传与自动部署需要详细引导时，使用 [零基础使用指南](docs/usage-guide.md)。README 保留项目介绍和指南入口；生成网站仍须提供符合本项目实际配置的说明，不能只引用 skill 文档。
+- 账号注册、安装、GitHub 上传与自动部署需要详细引导时，按主题使用 `docs/` 下的新手文档：[安装](docs/01-install.md)、[开始建站](docs/02-start.md)、[风格](docs/03-style.md)、[预览](docs/04-preview.md)、[GitHub](docs/05-github.md)、[Vercel](docs/06-vercel.md)、[Cloudflare](docs/07-cloudflare.md)、[更新](docs/08-update.md)、[域名](docs/09-domain.md)、[SEO](docs/seo.md)、[Cookie](docs/cookie.md)、[询盘](docs/inquiry.md)、[常见问题](docs/faq.md)。用户提问时引导到对应那一篇，不整篇复述。README 只做入口；生成网站仍须提供符合本项目实际配置的说明，不能只引用 skill 文档。
 - 默认用户不懂终端、框架、API、环境变量、构建或部署。先用业务语言说明当前阶段和下一步，技术细节留给实施。需要用户操作时再解释术语，例如构建就是把内容生成网站文件，部署就是把网站放到可访问的平台。
 - 每轮只询问当前必要的少量信息，通常 1–3 个问题；已有资料先读取。不给用户整张技术配置问卷，不让其决定无关的底层实现。
 - 用户操作步骤必须说明：在哪个应用/页面或文件夹操作、输入/选择什么、成功后会看到什么。区分 AI 对话与终端命令；命令依据实际系统给出，路径使用本次真实目录，不让小白原样执行带占位符的命令。
@@ -51,7 +51,7 @@ metadata:
 ## 工作流程
 
 1. 识别新建还是维护，按上面的选择规则说明建站方式和默认值。读取已有资料，确定企业类型、目标采购商、产品、市场语言、内容来源和主要转化目标。只询问影响当前决策的缺项；未知认证、交期和产能不能编造。
-2. 规划页面和内容，读取 [planning](references/planning.md)。新建或视觉改造时读取 [design](references/design.md)。简单修复不强制重新做全站策划。
+2. 规划页面和内容，读取 [planning](references/planning.md)。新建或视觉改造时读取 [design](references/design.md)，围绕产品展示、采购信息和询盘提出适合客户的视觉方向，再落实到页面。使用者无需另外安装设计 skill；简单修复不强制重新做全站策划或设计。
 3. 读取 [astro](references/astro.md) 实现共用前端；内容来源选 RXCMS 时再读 [rxcms](references/rxcms.md)，选 WordPress API 时再读 [wordpress](references/wordpress.md)。只加载相关内容源分支。
 4. 生成或修改页面、内容和真实询盘路径。新建 Astro 可使用 [starter](assets/astro-starter/README.md)，它是单语言起步模板，不是完成的客户网站；不要覆盖已有项目。
    - 启用 RXCMS 询盘时读取 [inquiry](references/inquiry.md)。static 可以独立配置询盘函数，不因此切换 server；配置后先生成对应平台入口并提交，再部署。保存、垃圾判定和通知结果分别表达，旧后端通知结果未提供就标未知。客户建站到联调阶段再取得测试站点与收件人，不能要求 skill 使用者在尚未建站时提供这些信息。

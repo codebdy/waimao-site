@@ -46,7 +46,7 @@ Consent: default enabled with empty Google IDs; categories are separate; accepte
 
 - Follow-up check: ZIP entries now carry explicit 0644 Unix permissions (previously mode 0, which macOS/Linux unzip tools can extract as unreadable when packaged on those systems). The guide now explains that Windows "Extract All" adds an `export-site-0.1.0` wrapper folder and only the inner `export-site` folder is installed. The package was regenerated; its contents were compared byte-for-byte with the source tree and scanned for local paths.
 
-- 2026-11-07: Clarified author-distributed ZIP installation and future GitHub Releases downloads; packaging now reports all unrecognized file extensions instead of silently omitting them, with exclusion checks passing and no clear error found in the listed prior edits during a quick review. Regenerated `releases/export-site-0.1.0.zip` with 69 files using `python -I scripts/package_skill.py`; `npm.cmd test` passed 33/33 (PowerShell blocked `npm.ps1`), and skill validation passed.
+- 2026-11-07 historical packaging check: installation text at that point described direct ZIP distribution. The repository is now public at https://github.com/codebdy/export-site and installation instructions point to its Releases page. Packaging reports unrecognized file extensions instead of silently omitting them. That check regenerated a 69-file ZIP with `python -I scripts/package_skill.py`; `npm.cmd test` passed 33/33 (PowerShell blocked `npm.ps1`), and skill validation passed.
 
 ## Still requires customer/environment verification
 
@@ -62,3 +62,17 @@ Consent: default enabled with empty Google IDs; categories are separate; accepte
 Installation instructions now cover multiple AI tools. Claude Code / Codex locations follow the official documentation supplied for this update, while WorkBuddy / DeepSeek-related tools remain untested.
 
 Added `.github/workflows/release.yml` to check the published Release tag against `SKILL.md` metadata.version, package the skill, and upload the ZIP and SHA-256 file. The workflow has not yet been run on GitHub; actual Release triggering and asset upload remain unverified.
+
+## 2026-11-07 SEO and beginner documentation update
+
+- Added a neutral placeholder favicon, optional absolute og:image and og:site_name, Article and detail-page BreadcrumbList nodes, and existing product images. Missing article dates, authors, product prices and ratings are not invented.
+- Updated the beginner guide with Search Console DNS verification and sitemap submission, clarified single-language scope, and replaced outdated installation wording with the public repository's Releases download instructions. SKILL.md and THIRD_PARTY_NOTICES.md needed no download wording changes.
+- `npm.cmd test`: 33/33 passed. `npm.cmd run check`: 35 files, 0 errors/warnings/hints. `npm.cmd run test:builds`: all six offline variants passed (RXCMS 10 HTML pages, other variants 7 each), including structured-data parsing, dated/undated articles, breadcrumbs, product images, favicon and optional sharing metadata checks. `npm.cmd run build`: passed, 7 static pages.
+- `python -I scripts/package_skill.py`: generated the local 70-file ZIP and SHA-256 sidecar. SVG was already permitted by the packaging script; no packaging rules changed.
+- This update used no network, running service, deployment or Git push. Real DNS/Search Console verification, sitemap status, indexing, social preview rendering and platform behavior remain to be checked on the customer's live site.
+
+## 2026-11-07 B2B design guidance integration
+
+- Adapted only B2B website-relevant methods from Anthropic frontend-design, UI UX Pro Max and Vercel Web Interface Guidelines into the existing design reference; added routing, beginner guidance and scoped visual checks. Pinned source revisions, modification notices and three full licenses are recorded in THIRD_PARTY_NOTICES.md and licenses/. No upstream tools, databases, runtime dependencies or brand assets were added.
+- Preserved the concurrent split of the beginner documentation; updated the existing style guide and README without replacing that work. Skill validation passed with `python -X utf8 .../skill-creator/scripts/quick_validate.py` using the existing user-installed PyYAML (the isolated invocation could not import it). Parsed Markdown link checks found 162 existing local file targets and no missing targets in the checked snapshot; anchors and external URLs were not validated. `git diff --check` passed.
+- Regenerated the local package with `python -I scripts/package_skill.py`, including the new licenses. This integration changes instructions/documentation only; it did not rerun the previous section's passing Astro tests or builds. Source research used read-only GitHub requests; no service, deployment, Git push or real inquiry was performed. No generated customer site, browser behavior or design quality was visually tested. The Claude review prompt is supplied in conversation, not saved as a file.

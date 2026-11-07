@@ -24,13 +24,15 @@ content.source、output、deployTarget、inquiry.provider 四项独立。RXCMS �
 3. 首次安装依赖输入 `npm ci`。出现错误先处理，不继续发布。
 4. 由你输入 `npm run dev`，访问终端打印的网址。保持窗口运行，结束时按 Ctrl+C 停止。此时只是本地预览。
 5. 把需要修改的内容告诉 AI，再预览。发布前执行 `npm test` 和 `npm run build`。AI 默认不启动 dev/preview 或任何服务。
-6. 把网站仓库推送到自己的 GitHub，按下方选择平台。若尚不会注册、安装或上传，请先看完整 skill 的 docs/usage-guide.md；生成客户项目时应保留适合本项目的新手步骤。
+6. 把网站仓库推送到自己的 GitHub，按下方选择平台。若尚不会注册、安装或上传，请先看完整 skill 的 docs/ 目录（05-github.md、06-vercel.md、07-cloudflare.md）；生成客户项目时应保留适合本项目的新手步骤。
 
 独立网站仓库根目录应直接能看到 package.json。GitHub Desktop 中查看 Changes，Commit 后还要 Push origin，托管平台才会自动构建。不要上传 .env、node_modules、dist、.astro、.wrangler、.vercel。真实询盘函数不由普通 Astro 本地预览运行。
 
 ## 网站与内容配置
 
 编辑 site.config.mjs 中已有字段：site 为实际正式根网址，name、description、language、email 为真实资料。当前只支持根域部署；子目录部署需另改链接、base 和 canonical。indexable 默认 false：演示页 noindex、sitemap 空，robots 允许读取 noindex。它不是访问保护；补齐内容和隐私页后才开启收录。
+
+`public/favicon.svg` 是中性的占位小图标，上线前须替换成客户自己的图标。可选 `ogImage` 默认为空；需要社交分享图时，填 public 下的路径（例如 `/share.jpg`，不写 public 前缀）或完整 HTTPS 图片地址。路径会按 `site` 域名生成绝对地址；不填就不输出 og:image 或大图卡片标签，没有默认分享图。文章和产品详情包含面包屑结构化数据；文章只使用已有发布日期，产品只使用已有图片，不编造作者、价格或评价。
 
 ```js
 output: 'static',

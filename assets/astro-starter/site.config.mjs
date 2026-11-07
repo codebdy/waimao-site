@@ -5,6 +5,8 @@ export default {
   content: { source: 'local', locale: 'en' }, // 'local', 'rxcms', 'wordpress' (experimental posts)
   inquiry: { provider: 'none', turnstileSiteKey: '' }, // 'none' or 'rxcms'; independent of content/output
   site: 'https://example.com',
+  // Replace public/favicon.svg with the customer's own icon before launch.
+  ogImage: '', // Optional public/ asset path (e.g. /share.jpg) or full HTTPS URL; no default image.
   name: 'Example Export Company',
   description: 'A demonstration catalog for a B2B export website.',
   language: 'en',

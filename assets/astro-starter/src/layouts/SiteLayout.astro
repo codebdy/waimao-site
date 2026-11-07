@@ -9,17 +9,21 @@ interface Props {
   title: string;
   description: string;
   noindex?: boolean;
-  schema?: Record<string, unknown>;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 const { title, description, noindex = false, schema } = Astro.props;
 const canonical = canonicalUrl(Astro.url.pathname, settings.site);
 const root = canonicalUrl('/', settings.site);
+const shareImage = settings.ogImage ? new URL(settings.ogImage, root) : null;
+if (shareImage && shareImage.protocol !== 'https:' && shareImage.origin !== new URL(root).origin) {
+  throw new Error('ogImage must be a public asset path or an absolute HTTPS URL.');
+}
 const indexable = settings.indexable && !noindex;
 const graph = [
   { '@type': 'Organization', '@id': `${root}#organization`, name: settings.name, url: root },
   { '@type': 'WebSite', '@id': `${root}#website`, name: settings.name, url: root, publisher: { '@id': `${root}#organization` } },
   { '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical, name: title, description, inLanguage: settings.language, isPartOf: { '@id': `${root}#website` } },
-  ...(schema ? [schema] : []),
+  ...(Array.isArray(schema) ? schema : schema ? [schema] : []),
 ];
 ---
 <!doctype html>
@@ -27,6 +31,7 @@ const graph = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} | {settings.name}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={indexable ? 'index, follow' : 'noindex, follow'} />
@@ -35,6 +40,11 @@ const graph = [
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={settings.name} />
+    {shareImage && <>
+      <meta property="og:image" content={shareImage.href} />
+      <meta name="twitter:card" content="summary_large_image" />
+    </>}
     <script type="application/ld+json" set:html={serializeJsonLd({ '@context': 'https://schema.org', '@graph': graph })} />
   </head>
   <body>

@@ -39,7 +39,7 @@ const catalog = source === 'rxcms' ? await loadRXCatalog(env, settings.content.l
   : source === 'wordpress' ? { products: [], posts: (await createWordPressClient(env).listAll()).map(mapWordPressPost) }
   : { products: localProducts, posts: [] };
 export const products: Product[] = catalog.products;
-export const posts: { slug: string; title: string; description: string; contentHtml: string; seoTitle?: string; seoDescription?: string }[] = catalog.posts;
+export const posts: { slug: string; title: string; description: string; contentHtml: string; seoTitle?: string; seoDescription?: string; publishedAt?: string }[] = catalog.posts;
 
 // Shared by route generation and sitemap: one public catalog inventory.
 export const productPath = (slug: string) => `/products/${encodeURIComponent(slug)}/`;

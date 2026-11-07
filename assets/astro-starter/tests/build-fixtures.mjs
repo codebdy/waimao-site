@@ -26,6 +26,22 @@ async function allFiles(directory) {
   return files;
 }
 
+function inspectHTML(html) {
+  const tags = [], graph = [];
+  let json = null;
+  new Parser({
+    onopentag(name, attrs) {
+      tags.push({ name, attrs });
+      if (name === 'script' && attrs.type === 'application/ld+json') json = '';
+    },
+    ontext(text) { if (json !== null) json += text; },
+    onclosetag(name) {
+      if (name === 'script' && json !== null) { graph.push(...JSON.parse(json)['@graph']); json = null; }
+    },
+  }).end(html);
+  return { tags, graph };
+}
+
 try {
   await cp(source, work, { recursive: true, filter: path => !skipped.has(basename(path)) && !basename(path).startsWith('.dev.vars') && !(basename(path).startsWith('.env') && basename(path) !== '.env.example') });
   await symlink(join(source, 'node_modules'), join(work, 'node_modules'), process.platform === 'win32' ? 'junction' : 'dir');
@@ -35,6 +51,7 @@ try {
   await writeFile(preload, `
 import { readFile } from 'node:fs/promises';
 const rx = JSON.parse(await readFile(new URL('./tests/fixtures/rxcms.json', import.meta.url)));
+rx.posts.push({ ...rx.posts[0], id: 202, slug: 'undated-news', data: { ...rx.posts[0].data, publishedAt: null } });
 const wp = JSON.parse(await readFile(new URL('./tests/fixtures/wordpress.json', import.meta.url)));
 globalThis.fetch = async input => {
   const url = new URL(input);
@@ -55,6 +72,9 @@ globalThis.fetch = async input => {
     config.content = { source: 'local', locale: 'en' };
     config.inquiry = { provider: 'none', turnstileSiteKey: '' };
     config.cookieConsent.enabled = true; config.google = { analyticsId: '', adsId: '' };
+    config.ogImage = '';
+    if (variant === 'consent-off') config.ogImage = '/favicon.svg'; // Test a local asset URL, not a default share image.
+    if (variant === 'inquiry-vercel') config.ogImage = 'https://cdn.example.com/share.png';
     if (['rxcms', 'wordpress'].includes(variant)) { config.content.source = variant; config.indexable = true; }
     if (variant === 'consent-off') { config.cookieConsent.enabled = false; config.google.analyticsId = 'G-EXAMPLE123'; config.google.adsId = 'AW-123456'; }
     if (variant.startsWith('inquiry-')) { config.deployTarget = variant.slice('inquiry-'.length); config.inquiry = { provider: 'rxcms', turnstileSiteKey: 'public-fixture-key' }; }
@@ -68,6 +88,40 @@ globalThis.fetch = async input => {
     assert.equal(result.status, 0, `${variant}: ${result.stdout}\n${result.stderr}`);
     const files = await allFiles(join(work, 'dist'));
     for (const file of files) assert.ok(!(await readFile(file, 'utf8')).includes(secret), `Secret leaked into ${relative(work, file)}`);
+    assert.ok(files.includes(join(work, 'dist/favicon.svg')));
+    for (const file of files.filter(path => path.endsWith('.html'))) {
+      const { tags, graph } = inspectHTML(await readFile(file, 'utf8'));
+      const meta = key => tags.find(tag => tag.name === 'meta' && (tag.attrs.property === key || tag.attrs.name === key))?.attrs.content;
+      assert.ok(tags.some(tag => tag.name === 'link' && tag.attrs.rel === 'icon' && tag.attrs.href === '/favicon.svg'), `${file}: favicon missing`);
+      assert.equal(meta('og:site_name'), config.name);
+      assert.equal(meta('og:image'), config.ogImage ? new URL(config.ogImage, config.site).href : undefined);
+      assert.equal(meta('twitter:card'), config.ogImage ? 'summary_large_image' : undefined);
+      const product = graph.find(node => node['@type'] === 'Product');
+      const article = graph.find(node => node['@type'] === 'Article');
+      if (['sample-component', 'sample-pump', 'sample-valve'].some(slug => file === join(work, 'dist/products', slug, 'index.html'))) assert.ok(product, `${file}: Product missing`);
+      const isArticlePage = relative(join(work, 'dist/articles'), file) === join('sample-news', 'index.html') || relative(join(work, 'dist/articles'), file) === join('undated-news', 'index.html');
+      if (isArticlePage) assert.ok(article, `${variant}: Article missing`);
+      if (product || article) {
+        const entity = product || article;
+        const page = graph.find(node => node['@type'] === 'WebPage');
+        assert.equal(entity.mainEntityOfPage['@id'], page['@id']);
+        assert.equal(entity.url, page.url);
+        const breadcrumb = graph.find(node => node['@type'] === 'BreadcrumbList');
+        assert.ok(breadcrumb, `${file}: BreadcrumbList missing`);
+        assert.equal(breadcrumb['@id'], `${page.url}#breadcrumb`);
+        assert.deepEqual(breadcrumb.itemListElement.map(item => item.position), [1, 2, 3]);
+        assert.deepEqual(breadcrumb.itemListElement.map(item => item.item), [new URL('/', config.site).href, new URL(product ? '/products/' : '/articles/', config.site).href, page.url]);
+        if (article) {
+          assert.equal(article.headline, variant === 'wordpress' ? 'Pumps & valves' : 'Sample news');
+          assert.equal(article.datePublished, page.url.endsWith('/undated-news/') ? undefined : '2026-01-01T00:00:00Z');
+          assert.equal(article.author, undefined);
+        }
+        if (product) {
+          assert.deepEqual(product.image, page.url.endsWith('/sample-pump/') ? ['https://media.example.com/pump.webp'] : undefined);
+          assert.equal(product.offers, undefined); assert.equal(product.aggregateRating, undefined);
+        }
+      }
+    }
     const index = await readFile(join(work, 'dist/index.html'), 'utf8');
     const contact = await readFile(join(work, 'dist/contact/index.html'), 'utf8');
     const ids = new Set(), remoteScripts = [];

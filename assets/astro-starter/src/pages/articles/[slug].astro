@@ -2,12 +2,26 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import Container from '../../components/Container.astro';
-import { posts } from '../../data/catalog';
+import { posts, postPath } from '../../data/catalog';
+import { canonicalUrl } from '../../lib/seo.mjs';
+import settings from '../../../site.config.mjs';
 export const prerender = true;
 export function getStaticPaths() { return posts.map(post => ({ params: { slug: post.slug }, props: { post } })); }
 const { post } = Astro.props;
+const url = canonicalUrl(postPath(post.slug), settings.site);
+const schema = [
+  { '@type': 'Article', '@id': `${url}#article`, headline: post.title, url,
+    mainEntityOfPage: { '@id': `${url}#webpage` },
+    ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
+  },
+  { '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl('/', settings.site) },
+    { '@type': 'ListItem', position: 2, name: 'Articles', item: canonicalUrl('/articles/', settings.site) },
+    { '@type': 'ListItem', position: 3, name: post.title, item: url },
+  ] },
+];
 ---
-<SiteLayout title={post.seoTitle || post.title} description={post.seoDescription || post.description}>
+<SiteLayout title={post.seoTitle || post.title} description={post.seoDescription || post.description} schema={schema}>
   <PageHeader title={post.title} description={post.description} />
   <Container class="section content-body"><div set:html={post.contentHtml} /></Container>
 </SiteLayout>
