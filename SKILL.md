@@ -1,6 +1,6 @@
 ---
 name: export-site
-description: 创建或改造面向海外采购商的 B2B 外贸网站，使用 Astro + Tailwind，内容来源可选本地文件、RXCMS API 或 WordPress REST API（实验，仅标准文章），覆盖页面规划、B2B 视觉设计、询盘内容和基础 SEO。新建站默认 static，可按需求选择 server，并支持 Vercel / Cloudflare 部署配置与迁移。用于外贸建站和相关实现，不代替独立的营销运营或通用 CMS 管理。
+description: 创建或改造面向海外采购商的 B2B 外贸网站，使用 Astro + Tailwind，内容来源可选本地文件、RXCMS API 或 WordPress REST API（实验，仅标准文章），覆盖页面规划、B2B 视觉设计、询盘内容和完整的站内技术 SEO（元信息、canonical、sitemap、结构化数据、多语言 hreflang）。新建站默认 static，可按需求选择 server，并支持 Vercel / Cloudflare 部署配置与迁移。用于外贸建站和相关实现，不代替独立的营销运营或通用 CMS 管理。
 license: MIT; adapted third-party portions retain their licenses (see THIRD_PARTY_NOTICES.md)
 metadata:
   version: "0.1.0"

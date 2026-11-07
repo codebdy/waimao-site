@@ -17,3 +17,20 @@ export function serializeJsonLd(value) {
 export function escapeXml(value) {
   return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&apos;');
 }
+
+export function hreflangLinks(page, pages, config, site) {
+  if (!page || page.noindex || config.locales.length < 2) return [];
+  const translations = pages.filter(candidate => candidate.key === page.key && !candidate.noindex);
+  const links = translations.map(candidate => ({
+    hreflang: config.locales.find(locale => locale.code === candidate.locale).htmlLang,
+    href: canonicalUrl(candidate.path, site),
+  }));
+  const defaultPage = translations.find(candidate => candidate.locale === config.defaultLocale);
+  // If there is no default-language version, the default homepage is a real entry point.
+  return [...links, { hreflang: 'x-default', href: canonicalUrl(defaultPage?.path ?? '/', site) }];
+}
+
+export function sitemapXml(paths, site, indexable) {
+  const entries = indexable ? [...new Set(paths)].map(path => `<url><loc>${escapeXml(canonicalUrl(path, site))}</loc></url>`).join('') : '';
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${entries}</urlset>`;
+}

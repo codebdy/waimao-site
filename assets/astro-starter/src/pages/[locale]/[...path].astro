@@ -1,0 +1,24 @@
+---
+import Home from '../index.astro';
+import Products from '../products/index.astro';
+import Product from '../products/[slug].astro';
+import Articles from '../articles/index.astro';
+import Article from '../articles/[slug].astro';
+import Contact from '../contact.astro';
+import Privacy from '../privacy-policy.astro';
+import { pageRoutes, type PageRoute } from '../../data/catalog';
+import { i18n } from '../../i18n/config.mjs';
+
+export const prerender = true;
+export function getStaticPaths() {
+  return pageRoutes.filter(page => page.locale !== i18n.defaultLocale).map(page => ({
+    params: { locale: page.locale, path: decodeURIComponent(page.path.slice(page.locale.length + 2, -1)) || undefined },
+    props: { page },
+  }));
+}
+interface Props { page: PageRoute; }
+const { page } = Astro.props;
+const views = { home: Home, products: Products, product: Product, articles: Articles, article: Article, contact: Contact, privacy: Privacy };
+const Page = views[page.kind];
+---
+<Page locale={page.locale} product={page.product!} post={page.post!} />

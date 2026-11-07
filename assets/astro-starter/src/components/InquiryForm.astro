@@ -1,17 +1,24 @@
 ---
 import settings from '../../site.config.mjs';
+import { i18n } from '../i18n/config.mjs';
+import { localePath } from '../i18n/urls.mjs';
+import { useUi } from '../i18n/ui.mjs';
+interface Props { locale?: string; }
+const { locale = i18n.defaultLocale } = Astro.props;
+const t = useUi(locale).inquiry;
+const messages = { security: t.security, submitting: t.submitting, savedReview: t.savedReview, saved: t.saved, notSaved: t.notSaved, unknown: t.unknown };
 ---
-<form id="inquiry-form" class="grid max-w-2xl gap-5" action="/api/inquiry" method="post">
-  <label>Name <input class="block w-full rounded border p-2" name="name" required maxlength="120" autocomplete="name" /></label>
-  <label>Email <input class="block w-full rounded border p-2" name="email" type="email" required maxlength="254" autocomplete="email" /></label>
-  <label>Company <input class="block w-full rounded border p-2" name="company" maxlength="200" autocomplete="organization" /></label>
-  <label>Requirements <textarea class="block w-full rounded border p-2" name="message" rows="6" required maxlength="5000"></textarea></label>
-  <div hidden aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off" /></label></div>
-  <p>See our <a class="underline" href="/privacy-policy/">privacy notice</a> for inquiry processing and spam prevention.</p>
-  <div class="cf-turnstile" data-sitekey={settings.inquiry.turnstileSiteKey} data-action="inquiry"></div>
-  <button class="button justify-center" type="submit">Send inquiry</button>
+<form id="inquiry-form" class="grid max-w-2xl gap-5" action="/api/inquiry" method="post" data-messages={JSON.stringify(messages)}>
+  <label>{t.name} <input class="block w-full rounded border p-2" name="name" required maxlength="120" autocomplete="name" /></label>
+  <label>{t.email} <input class="block w-full rounded border p-2" name="email" type="email" required maxlength="254" autocomplete="email" /></label>
+  <label>{t.company} <input class="block w-full rounded border p-2" name="company" maxlength="200" autocomplete="organization" /></label>
+  <label>{t.message} <textarea class="block w-full rounded border p-2" name="message" rows="6" required maxlength="5000"></textarea></label>
+  <div hidden aria-hidden="true"><label>{t.website} <input name="website" tabindex="-1" autocomplete="off" /></label></div>
+  <p>{t.privacyBefore} <a class="underline" href={localePath('/privacy-policy/', locale)}>{t.privacyLink}</a> {t.privacyAfter}</p>
+  <div class="cf-turnstile" data-sitekey={settings.inquiry.turnstileSiteKey} data-action="inquiry" data-language={i18n.locales.find(item => item.code === locale)!.htmlLang}></div>
+  <button class="button justify-center" type="submit">{t.submit}</button>
   <p role="status" aria-live="polite" data-inquiry-status></p>
-  <noscript>JavaScript is required for this inquiry form. Please use the email contact link instead.</noscript>
+  <noscript>{t.noscript}</noscript>
 </form>
 <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
@@ -21,11 +28,12 @@ import settings from '../../site.config.mjs';
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
     if (button.disabled) return;
     const status = form.querySelector<HTMLElement>('[data-inquiry-status]')!;
+    const messages = JSON.parse(form.dataset.messages!);
     const data = new FormData(form);
     const token = data.get('cf-turnstile-response');
-    if (!token) { status.textContent = 'Please complete the security check.'; return; }
+    if (!token) { status.textContent = messages.security; return; }
     button.disabled = true;
-    status.textContent = 'Submitting…';
+    status.textContent = messages.submitting;
     try {
       const response = await fetch('/api/inquiry', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -33,10 +41,10 @@ import settings from '../../site.config.mjs';
       });
       const receipt = await response.json();
       if (response.ok && receipt.saved === true) {
-        status.textContent = receipt.spam ? 'Your inquiry was saved for review.' : 'Your inquiry has been received.';
+        status.textContent = receipt.spam ? messages.savedReview : messages.saved;
         form.reset();
-      } else status.textContent = receipt.saved === false ? 'Your inquiry was not saved. Please check the form or contact us by email.' : 'We could not confirm receipt. Please contact us before submitting again.';
-    } catch { status.textContent = 'We could not confirm receipt. Please contact us before submitting again.'; }
+      } else status.textContent = receipt.saved === false ? messages.notSaved : messages.unknown;
+    } catch { status.textContent = messages.unknown; }
     finally {
       button.disabled = false;
       const widget = window as typeof window & { turnstile?: { reset: () => void } };

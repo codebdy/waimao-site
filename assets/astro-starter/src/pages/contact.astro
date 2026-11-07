@@ -4,11 +4,16 @@ import PageHeader from '../components/PageHeader.astro';
 import Container from '../components/Container.astro';
 import settings from '../../site.config.mjs';
 import InquiryForm from '../components/InquiryForm.astro';
+import { i18n } from '../i18n/config.mjs';
+import { useUi } from '../i18n/ui.mjs';
+interface Props { locale?: string; }
+const { locale = i18n.defaultLocale } = Astro.props;
+const t = useUi(locale);
 ---
-<SiteLayout title="Contact" description="Contact the supplier to discuss product requirements and request information.">
-  <PageHeader title="Discuss your requirements" description="Share the product, specification, quantity and destination relevant to your request." />
+<SiteLayout locale={locale} title={t.contact.title} description={t.contact.description}>
+  <PageHeader title={t.contact.heading} description={t.contact.intro} />
   <section class="section"><Container>
-    {settings.inquiry.provider === 'rxcms' && <InquiryForm />}
-    {settings.email ? <a class="button" href={`mailto:${settings.email}`}>Email {settings.email}</a> : settings.inquiry.provider === 'none' && <p>Contact details have not been configured in this demonstration.</p>}
+    {settings.inquiry.provider === 'rxcms' && <InquiryForm locale={locale} />}
+    {settings.email ? <a class="button" href={`mailto:${settings.email}`}>{t.contact.email} {settings.email}</a> : settings.inquiry.provider === 'none' && <p>{t.contact.unconfigured}</p>}
   </Container></section>
 </SiteLayout>

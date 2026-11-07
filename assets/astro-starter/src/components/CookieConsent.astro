@@ -1,9 +1,23 @@
 ---
 import settings from '../../site.config.mjs';
-import { consentOptions } from '../lib/consent.mjs';
+import { consentOptions, consentTranslation } from '../lib/consent.mjs';
+import { i18n } from '../i18n/config.mjs';
+import { localePath } from '../i18n/urls.mjs';
+import { useUi } from '../i18n/ui.mjs';
 import 'vanilla-cookieconsent/dist/cookieconsent.css';
 import '../styles/consent.css';
-const options = consentOptions(settings);
+interface Props { locale?: string; }
+const { locale = i18n.defaultLocale } = Astro.props;
+const options = {
+  ...consentOptions(settings),
+  language: {
+    default: locale,
+    rtl: i18n.locales.filter(item => item.dir === 'rtl').map(item => item.code),
+    translations: Object.fromEntries(i18n.locales.map(item => [item.code,
+      consentTranslation(consentOptions(settings), useUi(item.code), localePath('/privacy-policy/', item.code)),
+    ])),
+  },
+};
 ---
 {options.enabled && <div id="export-consent-options" hidden data-options={JSON.stringify(options)}></div>}
 <script>

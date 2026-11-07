@@ -3,13 +3,20 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Container from '../components/Container.astro';
 import ProductCard from '../components/ProductCard.astro';
-import { products } from '../data/catalog';
+import { getCatalog } from '../data/catalog';
+import { i18n } from '../i18n/config.mjs';
+import { localePath } from '../i18n/urls.mjs';
+import { useUi } from '../i18n/ui.mjs';
+interface Props { locale?: string; }
+const { locale = i18n.defaultLocale } = Astro.props;
+const t = useUi(locale);
+const { products } = getCatalog(locale);
 ---
-<SiteLayout title="B2B export catalog" description="A demonstration of a product-led B2B export website. Replace with your verified business information.">
-  <PageHeader title="Help buyers find the right product" description="Use this space to explain what you supply, who you serve and how buyers can confirm the right specification.">
-    <a class="button mt-7" href="/products/">Explore the catalog</a>
+<SiteLayout locale={locale} title={t.home.title} description={t.home.description}>
+  <PageHeader title={t.home.heading} description={t.home.intro}>
+    <a class="button mt-7" href={localePath('/products/', locale)}>{t.home.explore}</a>
   </PageHeader>
-  <section class="section" aria-label="Featured products">
-    <Container class="grid gap-6 md:grid-cols-2">{products.map(product => <ProductCard product={product} />)}</Container>
+  <section class="section" aria-label={t.home.featured}>
+    <Container class="grid gap-6 md:grid-cols-2">{products.map(product => <ProductCard product={product} locale={locale} />)}</Container>
   </section>
 </SiteLayout>

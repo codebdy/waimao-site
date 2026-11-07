@@ -2,7 +2,10 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import Container from '../../components/Container.astro';
-import { products, productPath, type Product } from '../../data/catalog';
+import { products, getCatalog, productPath, type Product } from '../../data/catalog';
+import { i18n } from '../../i18n/config.mjs';
+import { localePath } from '../../i18n/urls.mjs';
+import { useUi } from '../../i18n/ui.mjs';
 import { canonicalUrl } from '../../lib/seo.mjs';
 import settings from '../../../site.config.mjs';
 // Catalog is a build-time snapshot in either output mode.
@@ -11,33 +14,35 @@ export const prerender = true;
 export function getStaticPaths() {
   return products.map(product => ({ params: { slug: product.slug }, props: { product } }));
 }
-interface Props { product: Product; }
-const { product } = Astro.props;
-const url = canonicalUrl(productPath(product.slug), settings.site);
+interface Props { product: Product; locale?: string; }
+const { product, locale = i18n.defaultLocale } = Astro.props;
+const t = useUi(locale);
+const url = canonicalUrl(productPath(product.slug, locale), settings.site);
+const localProducts = getCatalog(locale).products;
 const images = product.media?.filter(media => media.type === 'image').map(media => media.url) ?? [];
 const schema = [
   { '@type': 'Product', '@id': `${url}#product`, url, name: product.title, description: product.description,
     mainEntityOfPage: { '@id': `${url}#webpage` }, ...(images.length ? { image: images } : {}),
   },
   { '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl('/', settings.site) },
-    { '@type': 'ListItem', position: 2, name: 'Products', item: canonicalUrl('/products/', settings.site) },
+    { '@type': 'ListItem', position: 1, name: t.nav.home, item: canonicalUrl(localePath('/', locale), settings.site) },
+    { '@type': 'ListItem', position: 2, name: t.nav.products, item: canonicalUrl(localePath('/products/', locale), settings.site) },
     { '@type': 'ListItem', position: 3, name: product.title, item: url },
   ] },
 ];
 ---
-<SiteLayout title={product.seoTitle || product.title} description={product.seoDescription || product.description} schema={schema}>
+<SiteLayout locale={locale} title={product.seoTitle || product.title} description={product.seoDescription || product.description} schema={schema}>
   <PageHeader title={product.title} description={product.description} />
   <section class="section">
     <Container>
-      <h2 class="text-2xl font-semibold">Product information</h2>
+      <h2 class="text-2xl font-semibold">{t.products.information}</h2>
       <dl class="mt-6 grid gap-4">{product.specifications.map(spec => <div><dt class="font-semibold">{spec.label}</dt><dd>{spec.value}</dd></div>)}</dl>
       {product.media?.filter(media => media.type === 'image').map(media => <img class="mt-6 max-w-full" src={media.url} alt={media.alt} loading="lazy" />)}
       {product.contentHtml && <div class="content-body mt-6" set:html={product.contentHtml} />}
       {product.extraContentHtml?.map(html => <div class="content-body mt-6" set:html={html} />)}
-      {product.attachments?.map(media => <p class="mt-4"><a class="underline" href={media.url}>{media.alt || media.name || 'Download document'}</a></p>)}
-      {product.relatedSlugs?.map(slug => products.find(p => p.slug === slug)).filter(Boolean).map(related => <p class="mt-4"><a class="underline" href={productPath(related!.slug)}>{related!.title}</a></p>)}
-      <a class="button mt-8" href="/contact/">Discuss your requirements</a>
+      {product.attachments?.map(media => <p class="mt-4"><a class="underline" href={media.url}>{media.alt || media.name || t.products.download}</a></p>)}
+      {product.relatedSlugs?.map(slug => localProducts.find(p => p.slug === slug)).filter(Boolean).map(related => <p class="mt-4"><a class="underline" href={productPath(related!.slug, locale)}>{related!.title}</a></p>)}
+      <a class="button mt-8" href={localePath('/contact/', locale)}>{t.products.discuss}</a>
     </Container>
   </section>
 </SiteLayout>

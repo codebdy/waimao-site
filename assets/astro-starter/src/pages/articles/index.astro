@@ -2,12 +2,18 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import Container from '../../components/Container.astro';
-import { posts, postPath } from '../../data/catalog';
+import { getCatalog, postPath } from '../../data/catalog';
+import { i18n } from '../../i18n/config.mjs';
+import { useUi } from '../../i18n/ui.mjs';
 export const prerender = true;
+interface Props { locale?: string; }
+const { locale = i18n.defaultLocale } = Astro.props;
+const t = useUi(locale);
+const { posts } = getCatalog(locale);
 ---
-<SiteLayout title="Articles" description="Product and company updates." noindex={posts.length === 0}>
-  <PageHeader title="Articles" />
+<SiteLayout locale={locale} title={t.articles.title} description={t.articles.description} noindex={posts.length === 0}>
+  <PageHeader title={t.articles.title} />
   <Container class="section space-y-6">
-    {posts.length ? posts.map(post => <article><h2 class="text-xl font-semibold"><a class="underline" href={postPath(post.slug)}>{post.title}</a></h2><p>{post.description}</p></article>) : <p>No articles have been published yet.</p>}
+    {posts.length ? posts.map(post => <article><h2 class="text-xl font-semibold"><a class="underline" href={postPath(post.slug, locale)}>{post.title}</a></h2><p>{post.description}</p></article>) : <p>{t.articles.empty}</p>}
   </Container>
 </SiteLayout>

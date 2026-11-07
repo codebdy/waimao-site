@@ -1,17 +1,27 @@
 ---
 import settings from '../../site.config.mjs';
-import { canonicalUrl, serializeJsonLd } from '../lib/seo.mjs';
+import { canonicalUrl, serializeJsonLd, hreflangLinks } from '../lib/seo.mjs';
 import Container from '../components/Container.astro';
 import CookieConsent from '../components/CookieConsent.astro';
-import { posts } from '../data/catalog';
+import { getCatalog, pageRoutes } from '../data/catalog';
+import { i18n } from '../i18n/config.mjs';
+import { localePath, languageLinks } from '../i18n/urls.mjs';
+import { useUi } from '../i18n/ui.mjs';
 import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
   noindex?: boolean;
+  locale?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
 }
-const { title, description, noindex = false, schema } = Astro.props;
+const { title, description, noindex = false, schema, locale = i18n.defaultLocale } = Astro.props;
+const language = i18n.locales.find(item => item.code === locale)!;
+const t = useUi(locale);
+const { posts } = getCatalog(locale);
+const page = pageRoutes.find(page => page.path === Astro.url.pathname);
+const alternates = noindex ? [] : hreflangLinks(page, pageRoutes, i18n, settings.site);
+const switches = languageLinks(page, pageRoutes);
 const canonical = canonicalUrl(Astro.url.pathname, settings.site);
 const root = canonicalUrl('/', settings.site);
 const shareImage = settings.ogImage ? new URL(settings.ogImage, root) : null;
@@ -22,12 +32,12 @@ const indexable = settings.indexable && !noindex;
 const graph = [
   { '@type': 'Organization', '@id': `${root}#organization`, name: settings.name, url: root },
   { '@type': 'WebSite', '@id': `${root}#website`, name: settings.name, url: root, publisher: { '@id': `${root}#organization` } },
-  { '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical, name: title, description, inLanguage: settings.language, isPartOf: { '@id': `${root}#website` } },
+  { '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical, name: title, description, inLanguage: language.htmlLang, isPartOf: { '@id': `${root}#website` } },
   ...(Array.isArray(schema) ? schema : schema ? [schema] : []),
 ];
 ---
 <!doctype html>
-<html lang={settings.language}>
+<html lang={language.htmlLang} dir={language.dir}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,6 +46,7 @@ const graph = [
     <meta name="description" content={description} />
     <meta name="robots" content={indexable ? 'index, follow' : 'noindex, follow'} />
     {!noindex && <link rel="canonical" href={canonical} />}
+    {alternates.map(item => <link rel="alternate" hreflang={item.hreflang} href={item.href} />)}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -48,24 +59,27 @@ const graph = [
     <script type="application/ld+json" set:html={serializeJsonLd({ '@context': 'https://schema.org', '@graph': graph })} />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">{t.nav.skip}</a>
     <Container class="flex flex-wrap items-center justify-between gap-5 py-5">
-      <a href="/" class="text-lg font-semibold">{settings.name}</a>
-      <nav aria-label="Main navigation" class="flex flex-wrap gap-5">
-        <a href="/products/">Products</a>{posts.length > 0 && <a href="/articles/">Articles</a>}<a href="/contact/">Contact</a>
+      <a href={localePath('/', locale)} class="text-lg font-semibold">{settings.name}</a>
+      <nav aria-label={t.nav.label} class="flex flex-wrap gap-5">
+        <a href={localePath('/products/', locale)}>{t.nav.products}</a>{posts.length > 0 && <a href={localePath('/articles/', locale)}>{t.nav.articles}</a>}<a href={localePath('/contact/', locale)}>{t.nav.contact}</a>
       </nav>
+      {switches.length > 1 && <nav aria-label={t.nav.languages} data-language-switcher class="flex flex-wrap gap-3">
+        {switches.map(item => <a href={item.href} lang={item.htmlLang} dir={item.dir} aria-current={item.code === locale ? 'page' : undefined}>{item.name}</a>)}
+      </nav>}
     </Container>
     <main id="main"><slot /></main>
     <footer class="section bg-surface">
       <Container>
         <p>{settings.name}</p>
         <div class="mt-4 flex flex-wrap gap-5">
-          <a class="underline" href="/privacy-policy/">Privacy and cookies</a>
-          {settings.cookieConsent.enabled && <button type="button" class="cursor-pointer underline" data-cookie-preferences>Cookie settings</button>}
+          <a class="underline" href={localePath('/privacy-policy/', locale)}>{t.privacy.title}</a>
+          {settings.cookieConsent.enabled && <button type="button" class="cursor-pointer underline" data-cookie-preferences>{t.cookie.settings}</button>}
         </div>
-        {!settings.indexable && <p class="text-muted">Demonstration website — sample content, not a live supplier catalog.</p>}
+        {!settings.indexable && <p class="text-muted">{t.footer.demo}</p>}
       </Container>
     </footer>
-    <CookieConsent />
+    <CookieConsent locale={locale} />
   </body>
 </html>

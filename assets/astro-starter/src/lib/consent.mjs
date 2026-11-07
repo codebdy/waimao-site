@@ -1,3 +1,6 @@
+import { useUi } from '../i18n/ui.mjs';
+import { escapeXml } from './seo.mjs';
+
 function tagId(value, prefix, alphabet) {
   if (value === '') return '';
   if (typeof value !== 'string' || !value.startsWith(prefix) || value.length <= prefix.length ||
@@ -72,43 +75,41 @@ export function createGoogleConsentController(options, effects) {
 export const analyticsCookiePattern = /^_ga(?:_|$)/;
 export const adsCookiePattern = /^_gcl_/;
 
+export function consentTranslation(options, ui, privacyPath) {
+  const t = ui.cookie;
+  const sections = [{
+    title: t.necessaryTitle, linkedCategory: 'necessary', description: t.necessaryDescription,
+  }];
+  if (options.analyticsId) sections.push({ title: t.analyticsTitle, linkedCategory: 'analytics', description: t.analyticsDescription });
+  if (options.adsId) sections.push({ title: t.adsTitle, linkedCategory: 'advertisement', description: t.adsDescription });
+  return {
+    consentModal: {
+      title: t.title,
+      description: options.analyticsId || options.adsId ? t.optionalDescription : t.necessaryOnlyDescription,
+      acceptAllBtn: t.accept, acceptNecessaryBtn: t.reject, showPreferencesBtn: t.settings,
+      footer: `<a href="${escapeXml(privacyPath)}">${escapeXml(ui.privacy.title)}</a>`,
+    },
+    preferencesModal: {
+      title: t.settings, acceptAllBtn: t.accept, acceptNecessaryBtn: t.reject,
+      savePreferencesBtn: t.save, closeIconLabel: t.close, sections,
+    },
+  };
+}
+
 /** @returns {import('vanilla-cookieconsent').CookieConsentConfig} */
 export function bannerConfig(options, onUpdate) {
   const categories = { necessary: { enabled: true, readOnly: true } };
-  const sections = [{
-    title: 'Necessary storage', linkedCategory: 'necessary',
-    description: 'We store your cookie choices so this site can remember them. This preference storage is always enabled.',
-  }];
-  if (options.analyticsId) {
-    categories.analytics = { autoClear: { cookies: [{ name: analyticsCookiePattern }] } };
-    sections.push({ title: 'Analytics', linkedCategory: 'analytics', description: 'Allow Google Analytics to measure how visitors use this website.' });
-  }
-  if (options.adsId) {
-    categories.advertisement = { autoClear: { cookies: [{ name: adsCookiePattern }] } };
-    sections.push({ title: 'Advertising', linkedCategory: 'advertisement', description: 'Allow Google Ads storage, advertising user data and ad personalization.' });
-  }
+  if (options.analyticsId) categories.analytics = { autoClear: { cookies: [{ name: analyticsCookiePattern }] } };
+  if (options.adsId) categories.advertisement = { autoClear: { cookies: [{ name: adsCookiePattern }] } };
   return {
     mode: 'opt-in', autoShow: true, revision: options.revision,
-    cookie: { name: options.cookieName, expiresAfterDays: 180 },
+    cookie: { name: options.cookieName, path: '/', expiresAfterDays: 180 },
     guiOptions: {
       consentModal: { layout: 'box inline', position: 'bottom left', equalWeightButtons: true },
       preferencesModal: { layout: 'box', equalWeightButtons: true },
     },
     categories,
     onConsent: onUpdate, onChange: onUpdate,
-    language: { default: 'en', translations: { en: {
-      consentModal: {
-        title: 'Your privacy choices',
-        description: options.analyticsId || options.adsId
-          ? 'You can accept or reject optional analytics and advertising, or choose your preferences. Necessary preference storage remains enabled.'
-          : 'This site currently uses only necessary storage to remember your privacy choices. No Google analytics or advertising tags are configured.',
-        acceptAllBtn: 'Accept all', acceptNecessaryBtn: 'Reject optional', showPreferencesBtn: 'Cookie settings',
-        footer: '<a href="/privacy-policy/">Privacy and cookies</a>',
-      },
-      preferencesModal: {
-        title: 'Cookie settings', acceptAllBtn: 'Accept all', acceptNecessaryBtn: 'Reject optional',
-        savePreferencesBtn: 'Save preferences', closeIconLabel: 'Close settings', sections,
-      },
-    } } },
+    language: options.language ?? { default: 'en', translations: { en: consentTranslation(options, useUi('en'), '/privacy-policy/') } },
   };
 }

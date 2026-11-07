@@ -1,8 +1,11 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import { i18n } from '../i18n/config.mjs';
+import { useUi } from '../i18n/ui.mjs';
 export const prerender = true;
+const t = useUi(i18n.defaultLocale).notFound;
 ---
-<SiteLayout title="Page not found" description="The requested page could not be found." noindex>
-  <PageHeader title="Page not found" description="Check the address or return to the product catalog."><a class="button mt-7" href="/products/">Browse products</a></PageHeader>
+<SiteLayout title={t.title} description={t.description} noindex>
+  <PageHeader title={t.title} description={t.intro}><a class="button mt-7" href="/products/">{t.browse}</a></PageHeader>
 </SiteLayout>
