@@ -53,5 +53,5 @@
 代码都在 GitHub 上。新电脑上：
 1. 安装 Node.js、AI 工具、GitHub Desktop。
 2. 新建 `my-waimao-site` 文件夹，在 GitHub Desktop 里用 **File → Clone repository** 把网站仓库下载到 `my-waimao-site` 里（文件夹名和仓库名一致，如 `huali-pumps`）。
-3. 按[安装](01-install.md)让 AI 重新装一次 skill，按[预览和修改](04-preview.md)第一次运行 `npm ci`，就能继续让 AI 修改。
+3. 按[安装](01-install.md)让 AI 重新装一次 skill，再让 AI 安装依赖并启动本地预览（见[预览和修改](04-preview.md)），就能继续修改网站。
 4. 用了 RXCMS 或 WordPress 的：密钥不会保存在 GitHub 上，要按之前的方法重新填写 `.env` 文件。
