@@ -21,6 +21,8 @@
 
 ## 三步开始
 
+<img src="docs/images/roadmap.svg" alt="从零到上线的 7 个步骤：安装 skill、告诉 AI 资料、电脑上预览、上传 GitHub、发布到 Cloudflare、绑定域名（可选）、开启收录并提交 Google" width="100%">
+
 1. **安装**：下载安装包，放进你用的 AI 工具（Claude Code、Codex、WorkBuddy 等）→ [安装](docs/01-install.md)
 2. **建站**：把公司资料告诉 AI，让它生成网站，先在电脑上看效果 → [开始建站](docs/02-start.md)
 3. **发布**：上传到 GitHub，连接 Cloudflare（推荐，免费）或 Vercel，网站就上线了 → [上传到 GitHub](docs/05-github.md)

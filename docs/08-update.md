@@ -6,6 +6,8 @@
 
 ## 改内容的固定流程
 
+<img src="images/update-flow.svg" alt="改完内容后：电脑上让 AI 修改并预览，GitHub Desktop 里 Commit 存档、Push 上传，Cloudflare 或 Vercel 自动构建，网站随之更新" width="100%">
+
 ```text
 告诉 AI 改什么 → 自己预览确认 → GitHub Desktop 里 Commit → Push → 平台自动发布
 ```

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 470" width="1200" height="470" role="img" aria-labelledby="t d">
+<title id="t">多语言网站示意</title>
+<desc id="d">一个外贸网站同时提供英语、西班牙语、德语、阿拉伯语等版本，每种语言有独立网址，页头可以切换语言，并告诉 Google 各语言版本的对应关系。</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F8FBFF"/><stop offset="1" stop-color="#EEF3FF"/></linearGradient>
+  <radialGradient id="blobA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#67E8F9" stop-opacity=".40"/><stop offset="1" stop-color="#67E8F9" stop-opacity="0"/></radialGradient>
+  <radialGradient id="blobB" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#A78BFA" stop-opacity=".35"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0"/></radialGradient>
+  <linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#14B8A6"/><stop offset=".5" stop-color="#3B82F6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+  <linearGradient id="title" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0891B2"/><stop offset=".5" stop-color="#2563EB"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-40%" width="140%" height="190%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="6"/><feOffset dy="4"/>
+    <feComponentTransfer><feFuncA type="linear" slope=".13"/></feComponentTransfer>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#C7D2FE" opacity=".55"/></pattern>
+</defs>
+<style>
+  text { font-family: 'PingFang SC','Microsoft YaHei','Noto Sans SC','Source Han Sans SC','Segoe UI','Noto Sans Arabic',sans-serif; }
+  .base { fill: none; stroke-width: 2; opacity: .55; }
+  .sig { fill: none; stroke-linecap: round; stroke-width: 4; stroke-dasharray: 14 120; stroke-dashoffset: 14; opacity: 0; }
+  .glow { stroke-opacity: 0; }
+  .m0 { animation: m0 6s ease-in-out infinite; }
+  @keyframes m0 { 0%,8% { stroke-dashoffset: 14; opacity: 0; } 10% { opacity: 1; } 40% { stroke-dashoffset: -100; opacity: 1; } 42%,100% { stroke-dashoffset: -100; opacity: 0; } }
+  .m1 { animation: m1 6s ease-in-out infinite; }
+  @keyframes m1 { 0%,8% { stroke-dashoffset: 14; opacity: 0; } 10% { opacity: 1; } 40% { stroke-dashoffset: -100; opacity: 1; } 42%,100% { stroke-dashoffset: -100; opacity: 0; } }
+  .m2 { animation: m2 6s ease-in-out infinite; }
+  @keyframes m2 { 0%,8% { stroke-dashoffset: 14; opacity: 0; } 10% { opacity: 1; } 40% { stroke-dashoffset: -100; opacity: 1; } 42%,100% { stroke-dashoffset: -100; opacity: 0; } }
+  .m3 { animation: m3 6s ease-in-out infinite; }
+  @keyframes m3 { 0%,8% { stroke-dashoffset: 14; opacity: 0; } 10% { opacity: 1; } 40% { stroke-dashoffset: -100; opacity: 1; } 42%,100% { stroke-dashoffset: -100; opacity: 0; } }
+  .h0 { animation: h0 6s ease-in-out infinite; }
+  @keyframes h0 { 0%,40%,64%,100% { stroke-opacity: 0; } 46%,56% { stroke-opacity: .85; } }
+  .h1 { animation: h1 6s ease-in-out infinite; }
+  @keyframes h1 { 0%,40%,64%,100% { stroke-opacity: 0; } 46%,56% { stroke-opacity: .85; } }
+  .h2 { animation: h2 6s ease-in-out infinite; }
+  @keyframes h2 { 0%,40%,64%,100% { stroke-opacity: 0; } 46%,56% { stroke-opacity: .85; } }
+  .h3 { animation: h3 6s ease-in-out infinite; }
+  @keyframes h3 { 0%,40%,64%,100% { stroke-opacity: 0; } 46%,56% { stroke-opacity: .85; } }
+
+  @media (prefers-reduced-motion: reduce) { .sig, .glow { animation: none !important; } }
+</style>
+<rect width="1200" height="470" rx="24" fill="url(#bg)"/>
+<rect width="1200" height="470" rx="24" fill="url(#dots)"/>
+<circle cx="120" cy="410" r="230" fill="url(#blobA)"/>
+<circle cx="1100" cy="80" r="240" fill="url(#blobB)"/>
+
+<text x="600" y="58" text-anchor="middle" font-size="26" font-weight="700" fill="url(#title)">一个网站，各国客户各看各的语言</text>
+<path d="M440,210 C350,210 420,156.0 330,156.0" class="base" stroke="url(#line)"/>
+<path d="M440,210 C350,210 420,156.0 330,156.0" class="sig m0" stroke="#2563EB" pathLength="100"/>
+<path d="M440,280 C350,280 420,338.0 330,338.0" class="base" stroke="url(#line)"/>
+<path d="M440,280 C350,280 420,338.0 330,338.0" class="sig m1" stroke="#4F46E5" pathLength="100"/>
+<path d="M760,210 C850,210 780,156.0 870,156.0" class="base" stroke="url(#line)"/>
+<path d="M760,210 C850,210 780,156.0 870,156.0" class="sig m2" stroke="#7C3AED" pathLength="100"/>
+<path d="M760,280 C850,280 780,338.0 870,338.0" class="base" stroke="url(#line)"/>
+<path d="M760,280 C850,280 780,338.0 870,338.0" class="sig m3" stroke="#0891B2" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="60" y="118" width="270" height="76" rx="16" fill="#FFFFFF"/></g>
+<rect x="60" y="118" width="270" height="76" rx="16" fill="none" stroke="#2563EB" stroke-width="2.2" class="glow h0"/>
+<rect x="78" y="138" width="44" height="36" rx="10" fill="#2563EB"/>
+<text x="100" y="162" text-anchor="middle" font-size="15" font-weight="800" fill="#FFFFFF">EN</text>
+<text x="138" y="152" font-size="18" font-weight="700" fill="#0F172A">English</text>
+<text x="138" y="176" font-size="14" fill="#475569">yoursite.com/</text>
+<g filter="url(#shadow)"><rect x="60" y="300" width="270" height="76" rx="16" fill="#FFFFFF"/></g>
+<rect x="60" y="300" width="270" height="76" rx="16" fill="none" stroke="#4F46E5" stroke-width="2.2" class="glow h1"/>
+<rect x="78" y="320" width="44" height="36" rx="10" fill="#4F46E5"/>
+<text x="100" y="344" text-anchor="middle" font-size="15" font-weight="800" fill="#FFFFFF">ES</text>
+<text x="138" y="334" font-size="18" font-weight="700" fill="#0F172A">Español</text>
+<text x="138" y="358" font-size="14" fill="#475569">yoursite.com/es/</text>
+<g filter="url(#shadow)"><rect x="870" y="118" width="270" height="76" rx="16" fill="#FFFFFF"/></g>
+<rect x="870" y="118" width="270" height="76" rx="16" fill="none" stroke="#7C3AED" stroke-width="2.2" class="glow h2"/>
+<rect x="888" y="138" width="44" height="36" rx="10" fill="#7C3AED"/>
+<text x="910" y="162" text-anchor="middle" font-size="15" font-weight="800" fill="#FFFFFF">DE</text>
+<text x="948" y="152" font-size="18" font-weight="700" fill="#0F172A">Deutsch</text>
+<text x="948" y="176" font-size="14" fill="#475569">yoursite.com/de/</text>
+<g filter="url(#shadow)"><rect x="870" y="300" width="270" height="76" rx="16" fill="#FFFFFF"/></g>
+<rect x="870" y="300" width="270" height="76" rx="16" fill="none" stroke="#0891B2" stroke-width="2.2" class="glow h3"/>
+<rect x="888" y="320" width="44" height="36" rx="10" fill="#0891B2"/>
+<text x="910" y="344" text-anchor="middle" font-size="15" font-weight="800" fill="#FFFFFF">AR</text>
+<text x="948" y="334" font-size="18" font-weight="700" fill="#0F172A">العربية</text>
+<text x="948" y="358" font-size="14" fill="#475569">yoursite.com/ar/</text>
+<g filter="url(#shadow)"><rect x="440" y="120" width="320" height="236" rx="16" fill="#FFFFFF"/></g>
+<path d="M440,136 a16,16 0 0 1 16,-16 h288 a16,16 0 0 1 16,16 v22 h-320 z" fill="#EEF2FF"/>
+<rect x="440" y="120" width="320" height="236" rx="16" fill="none" stroke="#C7D2FE"/>
+<circle cx="460" cy="139" r="4.5" fill="#F87171"/>
+<circle cx="475" cy="139" r="4.5" fill="#FBBF24"/>
+<circle cx="490" cy="139" r="4.5" fill="#34D399"/>
+<rect x="512" y="128" width="232" height="22" rx="11" fill="#FFFFFF" stroke="#E0E7FF"/>
+<g transform="translate(522,132) scale(0.58)" fill="none" stroke="#16A34A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6zM9 11V8a3 3 0 0 1 6 0v3M12 15v2"/></g>
+<text x="542" y="144" font-size="12.5" fill="#475569">https://yoursite.com</text>
+<rect x="594" y="170" width="34" height="22" rx="6" fill="#4F46E5"/>
+<text x="611" y="185.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#FFFFFF">EN</text>
+<rect x="632" y="170" width="34" height="22" rx="6" fill="#E0E7FF"/>
+<text x="649" y="185.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3730A3">DE</text>
+<rect x="670" y="170" width="34" height="22" rx="6" fill="#E0E7FF"/>
+<text x="687" y="185.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3730A3">ES</text>
+<rect x="708" y="170" width="34" height="22" rx="6" fill="#E0E7FF"/>
+<text x="725" y="185.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3730A3">AR</text>
+<text x="458" y="186" font-size="12.5" fill="#64748B">语言切换</text>
+<circle cx="600.0" cy="260" r="40" fill="#2563EB"/>
+<g transform="translate(576.0,236) scale(2)" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9M12 3c-2.5 2.5-3.5 5.5-3.5 9s1 6.5 3.5 9"/></g>
+<text x="600.0" y="332" text-anchor="middle" font-size="18" font-weight="700" fill="#0F172A">多语言外贸网站</text>
+<rect x="250" y="400" width="700" height="40" rx="20" fill="#FFFFFF" stroke="#C7D2FE" filter="url(#shadow)"/>
+<text x="600" y="426" text-anchor="middle" font-size="15" fill="#475569">每种语言独立网址 · 页头一键切换 · 告诉 Google 各语言版本的对应关系</text>
+</svg>

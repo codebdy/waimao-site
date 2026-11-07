@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" role="img" aria-labelledby="t d">
+<title id="t">改完内容后网站自动更新的过程</title>
+<desc id="d">你的电脑上让 AI 修改并预览，GitHub Desktop 里先 Commit 存档再 Push 上传，Cloudflare 或 Vercel 收到上传后自动构建，你的网站随之更新。只保存或只 Commit 不 Push，网站不会更新。</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F8FBFF"/><stop offset="1" stop-color="#EEF3FF"/></linearGradient>
+  <radialGradient id="blobA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#67E8F9" stop-opacity=".40"/><stop offset="1" stop-color="#67E8F9" stop-opacity="0"/></radialGradient>
+  <radialGradient id="blobB" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#A78BFA" stop-opacity=".35"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0"/></radialGradient>
+  <linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#14B8A6"/><stop offset=".5" stop-color="#3B82F6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+  <linearGradient id="title" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0891B2"/><stop offset=".5" stop-color="#2563EB"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-40%" width="140%" height="190%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="6"/><feOffset dy="4"/>
+    <feComponentTransfer><feFuncA type="linear" slope=".13"/></feComponentTransfer>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#C7D2FE" opacity=".55"/></pattern>
+</defs>
+<style>
+  text { font-family: 'PingFang SC','Microsoft YaHei','Noto Sans SC','Source Han Sans SC','Segoe UI','Noto Sans Arabic',sans-serif; }
+  .base { fill: none; stroke-width: 2; opacity: .55; }
+  .sig { fill: none; stroke-linecap: round; stroke-width: 4; stroke-dasharray: 14 120; stroke-dashoffset: 14; opacity: 0; }
+  .glow { stroke-opacity: 0; }
+  .u0 { animation: u0 6s ease-in-out infinite; }
+  @keyframes u0 { 0%,6% { stroke-dashoffset: 14; opacity: 0; } 8% { opacity: 1; } 26% { stroke-dashoffset: -100; opacity: 1; } 28%,100% { stroke-dashoffset: -100; opacity: 0; } }
+  .u1 { animation: u1 6s ease-in-out infinite; }
+  @keyframes u1 { 0%,32% { stroke-dashoffset: 14; opacity: 0; } 34% { opacity: 1; } 52% { stroke-dashoffset: -100; opacity: 1; } 54%,100% { stroke-dashoffset: -100; opacity: 0; } }
+  .u2 { animation: u2 6s ease-in-out infinite; }
+  @keyframes u2 { 0%,58% { stroke-dashoffset: 14; opacity: 0; } 60% { opacity: 1; } 78% { stroke-dashoffset: -100; opacity: 1; } 80%,100% { stroke-dashoffset: -100; opacity: 0; } }
+  .g0 { animation: g0 6s ease-in-out infinite; }
+  @keyframes g0 { 0%,0%,24%,100% { stroke-opacity: 0; } 6%,16% { stroke-opacity: .85; } }
+  .g1 { animation: g1 6s ease-in-out infinite; }
+  @keyframes g1 { 0%,26%,50%,100% { stroke-opacity: 0; } 32%,42% { stroke-opacity: .85; } }
+  .g2 { animation: g2 6s ease-in-out infinite; }
+  @keyframes g2 { 0%,52%,76%,100% { stroke-opacity: 0; } 58%,68% { stroke-opacity: .85; } }
+  .g3 { animation: g3 6s ease-in-out infinite; }
+  @keyframes g3 { 0%,78%,98%,100% { stroke-opacity: 0; } 84%,94% { stroke-opacity: .85; } }
+
+  @media (prefers-reduced-motion: reduce) { .sig, .glow { animation: none !important; } }
+</style>
+<rect width="1200" height="420" rx="24" fill="url(#bg)"/>
+<rect width="1200" height="420" rx="24" fill="url(#dots)"/>
+<circle cx="120" cy="360" r="230" fill="url(#blobA)"/>
+<circle cx="1100" cy="80" r="240" fill="url(#blobB)"/>
+
+<text x="600" y="58" text-anchor="middle" font-size="26" font-weight="700" fill="url(#title)">改完内容，网站自动更新</text>
+<path d="M274.0,202.0 L332.6666666666667,202.0" class="base" stroke="url(#line)"/>
+<path d="M274.0,202.0 L332.6666666666667,202.0" class="sig u0" stroke="#2563EB" pathLength="100"/>
+<path d="M322.6666666666667,195.0 L331.6666666666667,202.0 L322.6666666666667,209.0" fill="none" stroke="#818CF8" stroke-width="2" stroke-linecap="round"/>
+<path d="M570.6666666666667,202.0 L629.3333333333334,202.0" class="base" stroke="url(#line)"/>
+<path d="M570.6666666666667,202.0 L629.3333333333334,202.0" class="sig u1" stroke="#4F46E5" pathLength="100"/>
+<path d="M619.3333333333334,195.0 L628.3333333333334,202.0 L619.3333333333334,209.0" fill="none" stroke="#818CF8" stroke-width="2" stroke-linecap="round"/>
+<path d="M867.3333333333334,202.0 L926.0,202.0" class="base" stroke="url(#line)"/>
+<path d="M867.3333333333334,202.0 L926.0,202.0" class="sig u2" stroke="#7C3AED" pathLength="100"/>
+<path d="M916.0,195.0 L925.0,202.0 L916.0,209.0" fill="none" stroke="#818CF8" stroke-width="2" stroke-linecap="round"/>
+<g filter="url(#shadow)"><rect x="40.0" y="104" width="230" height="196" rx="18" fill="#FFFFFF"/></g>
+<rect x="40.0" y="104" width="230" height="196" rx="18" fill="none" stroke="#2563EB" stroke-width="2.2" class="glow g0"/>
+<circle cx="155.0" cy="150" r="26" fill="#2563EB"/>
+<g transform="translate(140.6,135.6) scale(1.2)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14v10H5zM2 19h20M10 19l.5-2h3l.5 2"/></g>
+<text x="155.0" y="206" text-anchor="middle" font-size="18" font-weight="700" fill="#0F172A">你的电脑</text>
+<text x="155.0" y="236" text-anchor="middle" font-size="15" fill="#475569">告诉 AI 改什么</text>
+<text x="155.0" y="260" text-anchor="middle" font-size="15" fill="#475569">自己预览确认</text>
+<g filter="url(#shadow)"><rect x="336.6666666666667" y="104" width="230" height="196" rx="18" fill="#FFFFFF"/></g>
+<rect x="336.6666666666667" y="104" width="230" height="196" rx="18" fill="none" stroke="#4F46E5" stroke-width="2.2" class="glow g1"/>
+<circle cx="451.6666666666667" cy="150" r="26" fill="#4F46E5"/>
+<g transform="translate(437.2666666666667,135.6) scale(1.2)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6zM15 3v3h3M9 10h6M9 14h6M9 18h3"/></g>
+<text x="451.6666666666667" y="206" text-anchor="middle" font-size="18" font-weight="700" fill="#0F172A">GitHub</text>
+<text x="451.6666666666667" y="236" text-anchor="middle" font-size="15" fill="#475569">Commit：存档</text>
+<text x="451.6666666666667" y="260" text-anchor="middle" font-size="15" fill="#475569">Push：上传</text>
+<g filter="url(#shadow)"><rect x="633.3333333333334" y="104" width="230" height="196" rx="18" fill="#FFFFFF"/></g>
+<rect x="633.3333333333334" y="104" width="230" height="196" rx="18" fill="none" stroke="#7C3AED" stroke-width="2.2" class="glow g2"/>
+<circle cx="748.3333333333334" cy="150" r="26" fill="#7C3AED"/>
+<g transform="translate(733.9333333333334,135.6) scale(1.2)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-8A5.5 5.5 0 0 1 17 8.5 4.5 4.5 0 0 1 17.5 18M12 20v-8M9 15l3-3 3 3"/></g>
+<text x="748.3333333333334" y="206" text-anchor="middle" font-size="18" font-weight="700" fill="#0F172A">Cloudflare / Vercel</text>
+<text x="748.3333333333334" y="236" text-anchor="middle" font-size="15" fill="#475569">收到上传</text>
+<text x="748.3333333333334" y="260" text-anchor="middle" font-size="15" fill="#475569">自动构建网站</text>
+<g filter="url(#shadow)"><rect x="930.0" y="104" width="230" height="196" rx="18" fill="#FFFFFF"/></g>
+<rect x="930.0" y="104" width="230" height="196" rx="18" fill="none" stroke="#0891B2" stroke-width="2.2" class="glow g3"/>
+<circle cx="1045.0" cy="150" r="26" fill="#0891B2"/>
+<g transform="translate(1030.6,135.6) scale(1.2)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9M12 3c-2.5 2.5-3.5 5.5-3.5 9s1 6.5 3.5 9"/></g>
+<text x="1045.0" y="206" text-anchor="middle" font-size="18" font-weight="700" fill="#0F172A">你的网站</text>
+<text x="1045.0" y="236" text-anchor="middle" font-size="15" fill="#475569">自动更新</text>
+<text x="1045.0" y="260" text-anchor="middle" font-size="15" fill="#475569">刷新就能看到</text>
+<rect x="300" y="340" width="600" height="40" rx="20" fill="#FFFFFF" stroke="#FCD34D" filter="url(#shadow)"/>
+<text x="600" y="366" text-anchor="middle" font-size="15" fill="#92400E">⚠ 只保存文件，或只 Commit 不 Push，网站都不会更新</text>
+</svg>
