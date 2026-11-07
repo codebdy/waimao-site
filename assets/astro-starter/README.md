@@ -22,8 +22,8 @@ content.source、output、deployTarget、inquiry.provider 四项独立。RXCMS �
 1. 打开本文件和 package.json 所在的网站目录，AI 应告诉你实际路径。不要在 skill 安装目录操作。
 2. 安装 Node.js 24 LTS（当前要求 >=22.23.4），打开该目录的终端；已有工具无需重复安装。
 3. 首次安装依赖输入 `npm ci`。出现错误先处理，不继续发布。
-4. 由你输入 `npm run dev`，访问终端打印的网址。保持窗口运行，结束时按 Ctrl+C 停止。此时只是本地预览。
-5. 把需要修改的内容告诉 AI，再预览。发布前执行 `npm test` 和 `npm run build`。AI 默认不启动 dev/preview 或任何服务。
+4. 最简单的方式是对 AI 说“帮我打开网站预览”，AI 会启动本地预览并给你网址；自己操作时输入 `npm run dev`（Windows 拦截时用 `npm.cmd run dev`），访问终端打印的网址，结束时按 Ctrl+C。此时只是本地预览。
+5. 把需要修改的内容告诉 AI，再预览。发布前执行 `npm test` 和 `npm run build`。AI 只在你要看网站时启动本地预览，看完可以让它关掉；不会擅自部署或上传。
 6. 把网站仓库推送到自己的 GitHub，按下方选择平台。若尚不会注册、安装或上传，请先看完整 skill 的 docs/ 目录（05-github.md、07-vercel.md、06-cloudflare.md）；生成客户项目时应保留适合本项目的新手步骤。
 
 独立网站仓库根目录应直接能看到 package.json。GitHub Desktop 中查看 Changes，Commit 后还要 Push origin，托管平台才会自动构建。不要上传 .env、node_modules、dist、.astro、.wrangler、.vercel。真实询盘函数不由普通 Astro 本地预览运行。

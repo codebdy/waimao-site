@@ -28,13 +28,13 @@ GitHub Desktop 是一个用按钮操作的软件，不用敲命令。
 
 ## 第三步：把网站加进 Desktop
 
-> **只上传 `website` 文件夹**，不要上传整个 `my-waimao-site`（里面有你的原始资料）。
+> **只上传网站文件夹**（以公司英文名命名，下面以 `huali-pumps` 为例，换成你自己的），不要上传整个 `my-waimao-site`（里面有你的原始资料）。
 
-1. 在 Desktop 点菜单 **File → Add local repository**，选择 `my-waimao-site/website` 文件夹。
+1. 在 Desktop 点菜单 **File → Add local repository**，选择 `my-waimao-site/huali-pumps` 文件夹。
 2. 如果提示“这个文件夹还不是仓库”，点提示里的 **create a repository**。
-   - 弹出的窗口里，Name 填 `website`，Local path 选 `my-waimao-site`（也就是 website 的上一层）。
-   - 确认最后的路径还是 `my-waimao-site/website`，没有多套一层。
-   - 拿不准就让 AI 帮你：“请只在 website 文件夹里初始化 Git 仓库”。
+   - 弹出的窗口里，Name 填网站文件夹的名字（如 `huali-pumps`），Local path 选 `my-waimao-site`（也就是网站文件夹的上一层）。
+   - 确认最后的路径还是 `my-waimao-site/huali-pumps`，没有多套一层。
+   - 拿不准就让 AI 帮你：“请只在网站文件夹里初始化 Git 仓库”。
 3. 看左边 **Changes** 列表，应该有 `src`、`package.json`、`site.config.mjs` 这些。**如果看到 `.env`、`node_modules`、`dist`，先停下来问 AI**，这些不能上传。
 
 ## 第四步：提交并上传
@@ -42,7 +42,7 @@ GitHub Desktop 是一个用按钮操作的软件，不用敲命令。
 1. 左下角 Summary 写一句说明，比如“网站第一版”，点 **Commit to main**。
    - 这一步只是在你电脑上存了一个版本，还没上传。
 2. 点上方的 **Publish repository**。
-   - 名字可以改成好认的，比如 `company-website`。
+   - 名字保持和网站文件夹一致（如 `huali-pumps`）即可。
    - **勾选 Keep this code private**（代码私有）。代码私有不影响网站被访问。
 3. 点 **Publish Repository** 完成上传。
 

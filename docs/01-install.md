@@ -62,7 +62,18 @@ AI 告诉你它已经读取了 waimao-site，并开始问你公司和产品的�
 
 ## 以后怎么更新 skill
 
-有新版本时，把上面那段话再发给 AI，改成“更新到最新版本”即可。
+有新版本时（在 [GitHub Releases](https://github.com/codebdy/waimao-site/releases) 能看到），把下面这段话发给 AI：
+
+```text
+请把 waimao-site 这个 skill 更新到最新版本：
+从 https://github.com/codebdy/waimao-site/releases 下载最新版本的 waimao-site ZIP，
+用里面的 waimao-site 文件夹替换你用户级 skills 目录里原来的 waimao-site 文件夹，
+更新好后告诉我新版本号。
+```
+
+更新后关掉 AI 工具重新打开。用命令安装的，重新执行一次 `npx skills add codebdy/waimao-site -g` 即可；手动安装的，按页面最下方的步骤用新文件夹替换旧文件夹。
+
+**注意：** 更新 skill 不会自动改动你已经做好的网站。想让已有网站用上新功能，再对 AI 说：“按最新版的 waimao-site 更新我的网站”，它会说明要改哪些地方，你确认后再改。
 
 下一步：[开始建站](02-start.md)
 
