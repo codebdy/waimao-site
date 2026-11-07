@@ -78,6 +78,7 @@ metadata:
 5. 涉及路由、索引、内容或 SEO 输出时读取 [seo](references/seo.md)。将发现转为代码修复或有依据的待办，不只输出评分。
 6. 根据目标平台读取 [deployment](references/deployment.md)。在生成项目 README 中写清当前模式、平台、部署操作、环境变量、CMS 更新和平台切换步骤。不能只链接回本 skill。
    - 新手优先使用 GitHub 仓库连接平台的自动构建路线，说明保存、Commit、Push、部署的区别；不为了这条现成功能额外搭建 GitHub Actions。Cloudflare 注册与连接 GitHub 分开解释。客户网站仓库与开源 skill 仓库分开。
+   - 到上传 GitHub 阶段，由 AI 在网站文件夹里初始化 Git 仓库（分支 main），确认 `.gitignore` 排除 `.env`、`node_modules`、`dist` 等后做第一次提交，只在本机、不推送；然后让用户在 GitHub Desktop 用 Add local repository 选中这个文件夹并 Publish。不让用户用 New repository 自己起名新建，那样容易建出一个没有网站文件的空仓库。用户的平台显示框架为 Other 或访问 404 时，先检查仓库根目录有没有网站的 `package.json`。
 7. 按 [verification](references/verification.md) 检查本次改动，报告已验证、未验证和需要用户提供的事项。
 
 ## 新建站分阶段推进
