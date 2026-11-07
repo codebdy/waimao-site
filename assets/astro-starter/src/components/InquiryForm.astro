@@ -1,0 +1,46 @@
+---
+import settings from '../../site.config.mjs';
+---
+<form id="inquiry-form" class="grid max-w-2xl gap-5" action="/api/inquiry" method="post">
+  <label>Name <input class="block w-full rounded border p-2" name="name" required maxlength="120" autocomplete="name" /></label>
+  <label>Email <input class="block w-full rounded border p-2" name="email" type="email" required maxlength="254" autocomplete="email" /></label>
+  <label>Company <input class="block w-full rounded border p-2" name="company" maxlength="200" autocomplete="organization" /></label>
+  <label>Requirements <textarea class="block w-full rounded border p-2" name="message" rows="6" required maxlength="5000"></textarea></label>
+  <div hidden aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off" /></label></div>
+  <p>See our <a class="underline" href="/privacy-policy/">privacy notice</a> for inquiry processing and spam prevention.</p>
+  <div class="cf-turnstile" data-sitekey={settings.inquiry.turnstileSiteKey} data-action="inquiry"></div>
+  <button class="button justify-center" type="submit">Send inquiry</button>
+  <p role="status" aria-live="polite" data-inquiry-status></p>
+  <noscript>JavaScript is required for this inquiry form. Please use the email contact link instead.</noscript>
+</form>
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+  const form = document.querySelector<HTMLFormElement>('#inquiry-form');
+  form?.addEventListener('submit', async event => {
+    event.preventDefault();
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    if (button.disabled) return;
+    const status = form.querySelector<HTMLElement>('[data-inquiry-status]')!;
+    const data = new FormData(form);
+    const token = data.get('cf-turnstile-response');
+    if (!token) { status.textContent = 'Please complete the security check.'; return; }
+    button.disabled = true;
+    status.textContent = 'Submitting…';
+    try {
+      const response = await fetch('/api/inquiry', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...Object.fromEntries(data), turnstileToken: token, fromUrl: location.href }),
+      });
+      const receipt = await response.json();
+      if (response.ok && receipt.saved === true) {
+        status.textContent = receipt.spam ? 'Your inquiry was saved for review.' : 'Your inquiry has been received.';
+        form.reset();
+      } else status.textContent = receipt.saved === false ? 'Your inquiry was not saved. Please check the form or contact us by email.' : 'We could not confirm receipt. Please contact us before submitting again.';
+    } catch { status.textContent = 'We could not confirm receipt. Please contact us before submitting again.'; }
+    finally {
+      button.disabled = false;
+      const widget = window as typeof window & { turnstile?: { reset: () => void } };
+      widget.turnstile?.reset();
+    }
+  });
+</script>

@@ -1,0 +1,14 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Container from '../components/Container.astro';
+import settings from '../../site.config.mjs';
+import InquiryForm from '../components/InquiryForm.astro';
+---
+<SiteLayout title="Contact" description="Contact the supplier to discuss product requirements and request information.">
+  <PageHeader title="Discuss your requirements" description="Share the product, specification, quantity and destination relevant to your request." />
+  <section class="section"><Container>
+    {settings.inquiry.provider === 'rxcms' && <InquiryForm />}
+    {settings.email ? <a class="button" href={`mailto:${settings.email}`}>Email {settings.email}</a> : settings.inquiry.provider === 'none' && <p>Contact details have not been configured in this demonstration.</p>}
+  </Container></section>
+</SiteLayout>

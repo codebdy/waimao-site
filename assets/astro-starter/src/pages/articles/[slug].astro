@@ -1,0 +1,13 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Container from '../../components/Container.astro';
+import { posts } from '../../data/catalog';
+export const prerender = true;
+export function getStaticPaths() { return posts.map(post => ({ params: { slug: post.slug }, props: { post } })); }
+const { post } = Astro.props;
+---
+<SiteLayout title={post.seoTitle || post.title} description={post.seoDescription || post.description}>
+  <PageHeader title={post.title} description={post.description} />
+  <Container class="section content-body"><div set:html={post.contentHtml} /></Container>
+</SiteLayout>

@@ -1,0 +1,61 @@
+---
+import settings from '../../site.config.mjs';
+import { canonicalUrl, serializeJsonLd } from '../lib/seo.mjs';
+import Container from '../components/Container.astro';
+import CookieConsent from '../components/CookieConsent.astro';
+import { posts } from '../data/catalog';
+import '../styles/global.css';
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  schema?: Record<string, unknown>;
+}
+const { title, description, noindex = false, schema } = Astro.props;
+const canonical = canonicalUrl(Astro.url.pathname, settings.site);
+const root = canonicalUrl('/', settings.site);
+const indexable = settings.indexable && !noindex;
+const graph = [
+  { '@type': 'Organization', '@id': `${root}#organization`, name: settings.name, url: root },
+  { '@type': 'WebSite', '@id': `${root}#website`, name: settings.name, url: root, publisher: { '@id': `${root}#organization` } },
+  { '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical, name: title, description, inLanguage: settings.language, isPartOf: { '@id': `${root}#website` } },
+  ...(schema ? [schema] : []),
+];
+---
+<!doctype html>
+<html lang={settings.language}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | {settings.name}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={indexable ? 'index, follow' : 'noindex, follow'} />
+    {!noindex && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <script type="application/ld+json" set:html={serializeJsonLd({ '@context': 'https://schema.org', '@graph': graph })} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Container class="flex flex-wrap items-center justify-between gap-5 py-5">
+      <a href="/" class="text-lg font-semibold">{settings.name}</a>
+      <nav aria-label="Main navigation" class="flex flex-wrap gap-5">
+        <a href="/products/">Products</a>{posts.length > 0 && <a href="/articles/">Articles</a>}<a href="/contact/">Contact</a>
+      </nav>
+    </Container>
+    <main id="main"><slot /></main>
+    <footer class="section bg-surface">
+      <Container>
+        <p>{settings.name}</p>
+        <div class="mt-4 flex flex-wrap gap-5">
+          <a class="underline" href="/privacy-policy/">Privacy and cookies</a>
+          {settings.cookieConsent.enabled && <button type="button" class="cursor-pointer underline" data-cookie-preferences>Cookie settings</button>}
+        </div>
+        {!settings.indexable && <p class="text-muted">Demonstration website — sample content, not a live supplier catalog.</p>}
+      </Container>
+    </footer>
+    <CookieConsent />
+  </body>
+</html>

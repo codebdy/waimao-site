@@ -1,0 +1,33 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Container from '../../components/Container.astro';
+import { products, productPath, type Product } from '../../data/catalog';
+import { canonicalUrl } from '../../lib/seo.mjs';
+import settings from '../../../site.config.mjs';
+// Catalog is a build-time snapshot in either output mode.
+// For live CMS SSR, replace this route's fetching and 404/5xx handling together.
+export const prerender = true;
+export function getStaticPaths() {
+  return products.map(product => ({ params: { slug: product.slug }, props: { product } }));
+}
+interface Props { product: Product; }
+const { product } = Astro.props;
+const url = canonicalUrl(productPath(product.slug), settings.site);
+const schema = { '@type': 'Product', '@id': `${url}#product`, url, name: product.title, description: product.description, mainEntityOfPage: { '@id': `${url}#webpage` } };
+---
+<SiteLayout title={product.seoTitle || product.title} description={product.seoDescription || product.description} schema={schema}>
+  <PageHeader title={product.title} description={product.description} />
+  <section class="section">
+    <Container>
+      <h2 class="text-2xl font-semibold">Product information</h2>
+      <dl class="mt-6 grid gap-4">{product.specifications.map(spec => <div><dt class="font-semibold">{spec.label}</dt><dd>{spec.value}</dd></div>)}</dl>
+      {product.media?.filter(media => media.type === 'image').map(media => <img class="mt-6 max-w-full" src={media.url} alt={media.alt} loading="lazy" />)}
+      {product.contentHtml && <div class="content-body mt-6" set:html={product.contentHtml} />}
+      {product.extraContentHtml?.map(html => <div class="content-body mt-6" set:html={html} />)}
+      {product.attachments?.map(media => <p class="mt-4"><a class="underline" href={media.url}>{media.alt || media.name || 'Download document'}</a></p>)}
+      {product.relatedSlugs?.map(slug => products.find(p => p.slug === slug)).filter(Boolean).map(related => <p class="mt-4"><a class="underline" href={productPath(related!.slug)}>{related!.title}</a></p>)}
+      <a class="button mt-8" href="/contact/">Discuss your requirements</a>
+    </Container>
+  </section>
+</SiteLayout>

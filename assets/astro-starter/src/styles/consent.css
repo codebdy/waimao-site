@@ -1,0 +1,24 @@
+/* Neutral dark dialog inspired by the reference site's layout; no brand assets. */
+#cc-main {
+  --cc-bg: #172321;
+  --cc-primary-color: #f7faf9;
+  --cc-secondary-color: #d5dfdc;
+  --cc-btn-primary-bg: #f7faf9;
+  --cc-btn-primary-color: #172321;
+  --cc-btn-primary-border-color: #f7faf9;
+  --cc-btn-primary-hover-bg: #d5dfdc;
+  --cc-btn-primary-hover-color: #172321;
+  --cc-btn-secondary-bg: #f7faf9;
+  --cc-btn-secondary-color: #172321;
+  --cc-btn-secondary-border-color: #f7faf9;
+  --cc-btn-secondary-hover-bg: #d5dfdc;
+  --cc-btn-secondary-hover-color: #172321;
+  --cc-cookie-category-block-bg: #22332f;
+  --cc-cookie-category-block-hover-bg: #2c413b;
+  --cc-cookie-category-expanded-block-bg: #22332f;
+  --cc-cookie-category-expanded-block-hover-bg: #2c413b;
+  --cc-separator-border-color: #526760;
+  --cc-footer-bg: #172321;
+  --cc-footer-color: #d5dfdc;
+  --cc-footer-border-color: #526760;
+}

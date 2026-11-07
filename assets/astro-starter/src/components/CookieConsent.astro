@@ -1,0 +1,38 @@
+---
+import settings from '../../site.config.mjs';
+import { consentOptions } from '../lib/consent.mjs';
+import 'vanilla-cookieconsent/dist/cookieconsent.css';
+import '../styles/consent.css';
+const options = consentOptions(settings);
+---
+{options.enabled && <div id="export-consent-options" hidden data-options={JSON.stringify(options)}></div>}
+<script>
+  import { run, acceptedCategory, showPreferences } from 'vanilla-cookieconsent';
+  import { bannerConfig, createGoogleConsentController } from '../lib/consent.mjs';
+  const element = document.getElementById('export-consent-options');
+  if (element?.dataset.options) {
+    const options = JSON.parse(element.dataset.options);
+    const state = window as typeof window & { dataLayer?: unknown[]; gtag?: (...args: unknown[]) => void };
+    state.dataLayer ??= [];
+    state.gtag ??= function () { state.dataLayer!.push(arguments); };
+    const controller = createGoogleConsentController(options, {
+      gtag: (...args: unknown[]) => state.gtag!(...args),
+      loadScript: (src: string) => {
+        const script = document.createElement('script');
+        script.src = src; script.async = true; document.head.append(script);
+      },
+      setAnalyticsDisabled: (disabled: boolean) => {
+        if (options.analyticsId) Reflect.set(window, `ga-disable-${options.analyticsId}`, disabled);
+      },
+      reload: () => { window.setTimeout(() => window.location.reload(), 0); },
+    });
+    const sync = () => controller.update({ analytics: acceptedCategory('analytics'), advertisement: acceptedCategory('advertisement') });
+    void run(bannerConfig(options, sync)).catch(() => {
+      // No tag was loaded if initialization failed before a valid consent choice.
+      console.error('Cookie settings could not initialize. Optional Google tags remain gated.');
+    });
+    document.querySelectorAll('[data-cookie-preferences]').forEach(button => {
+      button.addEventListener('click', () => showPreferences());
+    });
+  }
+</script>

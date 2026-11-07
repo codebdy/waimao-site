@@ -1,0 +1,4 @@
+[
+  { "id": 1, "slug": "sample-news", "status": "publish", "title": { "rendered": "Pumps &amp; valves" }, "excerpt": { "rendered": "<p>Example article.</p>", "protected": false }, "content": { "rendered": "<p onclick=\"alert(1)\">Public <strong>content</strong>.</p><script>alert(1)</script><iframe src=\"https://example.com\"></iframe><a href=\"javascript:alert(1)\">bad link</a>", "protected": false }, "date_gmt": "2026-01-01T00:00:00", "link": "https://cms.example.com/sample-news/" },
+  { "id": 2, "slug": "protected-news", "status": "publish", "title": { "rendered": "Private content" }, "excerpt": { "rendered": "", "protected": true }, "content": { "rendered": "", "protected": true } }
+]

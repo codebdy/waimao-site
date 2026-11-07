@@ -1,0 +1,17 @@
+{
+  "note": "Synthetic, anonymized contract fixture; no customer data or production credentials.",
+  "config": { "website": { "name": "Example supplier", "baseLang": { "abbr": "en" } }, "locales": [{ "abbr": "en", "htmlLang": "en", "urlFragment": "en" }, { "abbr": "de", "htmlLang": "de", "urlFragment": "de" }] },
+  "products": [
+    { "id": 101, "type": "product", "slug": "sample-pump", "locale": "en", "data": {
+      "title": "Sample pump", "description": "Fictional product for testing.",
+      "content": "## Overview\n\nExample **pump**. <script>alert(1)</script>", "content2": "Packaging example", "content3": "Delivery example", "features": "- Sample feature",
+      "meta": { "seoTitle": "Sample pump specifications", "seoDescription": "Synthetic SEO description" },
+      "medias": [{ "altText": "Example pump", "media": { "mediaType": "image", "file": { "url": "https://media.example.com/pump.webp" } } }],
+      "attachments": [{ "media": { "name": "Example datasheet", "mediaType": "file", "file": { "url": "https://media.example.com/datasheet.pdf" } } }],
+      "relatedSlugs": ["sample-valve"], "schemaJson": { "@type": "Product", "name": "Sample pump" }, "category": { "slug": "pumps", "name": "Pumps" }
+    } },
+    { "id": 102, "type": "product", "slug": "sample-valve", "locale": "en", "data": { "title": "Sample valve", "description": "A second fictional product.", "content": "Sample body", "relatedSlugs": [] } }
+  ],
+  "posts": [{ "id": 201, "type": "post", "slug": "sample-news", "locale": "en", "data": { "title": "Sample news", "description": "Fictional article", "content": "## Example\n\nPublic information.", "publishedAt": "2026-01-01T00:00:00Z" } }],
+  "receipts": { "saved": { "id": 301, "ok": true, "spam": false }, "spam": { "id": 302, "ok": true, "spam": true } }
+}

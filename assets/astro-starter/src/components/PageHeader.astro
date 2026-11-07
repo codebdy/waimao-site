@@ -1,0 +1,12 @@
+---
+import Container from './Container.astro';
+interface Props { title: string; description?: string; }
+const { title, description } = Astro.props;
+---
+<header class="section bg-surface">
+  <Container>
+    <h1 class="page-title">{title}</h1>
+    {description && <p class="mt-6 max-w-2xl text-lg text-muted">{description}</p>}
+    <slot />
+  </Container>
+</header>

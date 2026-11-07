@@ -1,0 +1,11 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Container from '../../components/Container.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { products } from '../../data/catalog';
+---
+<SiteLayout title="Products" description="Browse product specifications and contact the supplier for requirements.">
+  <PageHeader title="Products" description="Compare specifications, applications and ordering requirements." />
+  <section class="section" aria-label="Product catalog"><Container class="grid gap-6 md:grid-cols-2">{products.map(product => <ProductCard product={product} />)}</Container></section>
+</SiteLayout>

@@ -1,0 +1,41 @@
+name: Package release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check release version
+        run: |
+          python -I - <<'PY'
+          import os
+          from pathlib import Path
+
+          lines = Path('SKILL.md').read_text(encoding='utf-8-sig').splitlines()
+          versions = [line.split(':', 1)[1].strip().strip('\"\'') for line in lines if line.startswith('  version:')]
+          if len(versions) != 1 or not versions[0]:
+              raise SystemExit('Expected one non-empty metadata.version in SKILL.md')
+          tag = os.environ['TAG']
+          if tag.removeprefix('v') != versions[0]:
+              raise SystemExit(f'Release tag {tag!r} does not match SKILL.md metadata.version {versions[0]!r}; update and commit the version before publishing.')
+          PY
+      - name: Package skill
+        run: python -I scripts/package_skill.py
+      - name: Upload release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${TAG#v}"
+          gh release upload "$TAG" "releases/export-site-${VERSION}.zip" "releases/export-site-${VERSION}.zip.sha256" --clobber

@@ -1,0 +1,8 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+export const prerender = true;
+---
+<SiteLayout title="Page not found" description="The requested page could not be found." noindex>
+  <PageHeader title="Page not found" description="Check the address or return to the product catalog."><a class="button mt-7" href="/products/">Browse products</a></PageHeader>
+</SiteLayout>

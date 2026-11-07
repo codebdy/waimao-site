@@ -1,0 +1,15 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Container from '../components/Container.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../data/catalog';
+---
+<SiteLayout title="B2B export catalog" description="A demonstration of a product-led B2B export website. Replace with your verified business information.">
+  <PageHeader title="Help buyers find the right product" description="Use this space to explain what you supply, who you serve and how buyers can confirm the right specification.">
+    <a class="button mt-7" href="/products/">Explore the catalog</a>
+  </PageHeader>
+  <section class="section" aria-label="Featured products">
+    <Container class="grid gap-6 md:grid-cols-2">{products.map(product => <ProductCard product={product} />)}</Container>
+  </section>
+</SiteLayout>

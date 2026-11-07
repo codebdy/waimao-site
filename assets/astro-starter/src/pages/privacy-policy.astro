@@ -1,0 +1,22 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Container from '../components/Container.astro';
+import settings from '../../site.config.mjs';
+---
+<SiteLayout title="Privacy and cookies" description="Information about this website's cookie settings and optional Google services.">
+  <PageHeader title="Privacy and cookies" />
+  <Container class="section space-y-6">
+    <p>This starter notice must be completed with the website operator's actual privacy information before public launch.</p>
+    <h2 class="text-2xl font-semibold">Cookie choices</h2>
+    {settings.cookieConsent.enabled ? <>
+      <p>We use a preference cookie to remember your choices for up to 180 days. Optional Google tags are loaded only after you allow their category.</p>
+      <p>You can change your choices using Cookie settings in the footer. Withdrawing a previously enabled category reloads the page. This does not remove data already received by a service provider.</p>
+      <p>Google Analytics: {settings.google.analyticsId ? 'configured, subject to your analytics choice' : 'not configured'}. Google Ads: {settings.google.adsId ? 'configured, subject to your advertising choice' : 'not configured'}.</p>
+    </> : <p>The included consent dialog and Google tag integration are disabled. Previously stored preferences can be removed using your browser's site-data controls.</p>}
+    <h2 class="text-2xl font-semibold">Contact and data handling</h2>
+    <p>The operator must describe actual inquiry handling, service providers, retention and contact arrangements here before launch.</p>
+    {settings.inquiry.provider === 'rxcms' ? <p>The configured inquiry form sends your contact details and message through a server function to RXCMS. It uses Cloudflare Turnstile for spam prevention. This security service is separate from the optional Google categories.</p> : <p>The RXCMS inquiry form is currently disabled. Email links open your email application.</p>}
+    <a class="underline" href="/contact/">Contact information</a>
+  </Container>
+</SiteLayout>

@@ -1,0 +1,13 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Container from '../../components/Container.astro';
+import { posts, postPath } from '../../data/catalog';
+export const prerender = true;
+---
+<SiteLayout title="Articles" description="Product and company updates." noindex={posts.length === 0}>
+  <PageHeader title="Articles" />
+  <Container class="section space-y-6">
+    {posts.length ? posts.map(post => <article><h2 class="text-xl font-semibold"><a class="underline" href={postPath(post.slug)}>{post.title}</a></h2><p>{post.description}</p></article>) : <p>No articles have been published yet.</p>}
+  </Container>
+</SiteLayout>
