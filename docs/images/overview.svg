@@ -1,220 +1,139 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="overview-title overview-desc">
-  <title id="overview-title">外贸网站制作技能能力全景</title>
-  <desc id="overview-desc">左侧的公司介绍、产品资料、Logo 和照片、目标市场通过流动光线连接中央 AI 外贸网站制作技能，再连接右侧八项建站能力。底部为可选增值服务。减少动态效果偏好开启时，所有动画停止。</desc>
-  <defs>
-    <linearGradient id="background" x2="1" y2="1">
-      <stop stop-color="#102744"/><stop offset=".5" stop-color="#080f23"/><stop offset="1" stop-color="#050a15"/>
-    </linearGradient>
-    <radialGradient id="atmosphere">
-      <stop stop-color="#18667e" stop-opacity=".32"/><stop offset="1" stop-color="#18667e" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="violet-atmosphere">
-      <stop stop-color="#6554dc" stop-opacity=".18"/><stop offset="1" stop-color="#6554dc" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="card" x2="1" y2="1">
-      <stop stop-color="#102c40"/><stop offset="1" stop-color="#0b182a"/>
-    </linearGradient>
-    <linearGradient id="core-fill" x2=".8" y2="1">
-      <stop stop-color="#123b50"/><stop offset=".5" stop-color="#101d38"/><stop offset="1" stop-color="#202249"/>
-    </linearGradient>
-    <linearGradient id="neon" x2="1" y2=".45">
-      <stop stop-color="#59f0ef"/><stop offset=".5" stop-color="#65bcff"/><stop offset="1" stop-color="#a38bff"/>
-    </linearGradient>
-    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
-      <path d="M32 0H0V32" fill="none" stroke="#8cd8ff" stroke-opacity=".055" stroke-width=".7"/>
-    </pattern>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="5"/>
-    </filter>
-    <filter id="core-glow" x="-30%" y="-50%" width="160%" height="200%" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="12"/>
-    </filter>
-    <symbol id="company" viewBox="0 0 32 32">
-      <path d="M5 27V9l13-4v22M18 13h9v14M3 27h26M10 11v2m4-3v2m-4 5v2m4-3v2m8 0v2M10 27v-5h4v5"/>
-    </symbol>
-    <symbol id="product" viewBox="0 0 32 32">
-      <path d="m16 4 12 7v13l-12 6-12-6V11Zm-12 7 12 7 12-7M16 18v12M10 7l12 7v6"/>
-    </symbol>
-    <symbol id="photo" viewBox="0 0 32 32">
-      <rect x="4" y="5" width="24" height="22" rx="3"/><circle cx="21" cy="12" r="2.5"/><path d="m5 24 8-9 7 8 3-4 5 5"/>
-    </symbol>
-    <symbol id="target" viewBox="0 0 32 32">
-      <circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="6"/><path d="m16 16 12-12m-6 0h6v6"/>
-    </symbol>
-    <symbol id="language" viewBox="0 0 32 32">
-      <circle cx="16" cy="16" r="12"/><ellipse cx="16" cy="16" rx="5" ry="12"/><path d="M4 16h24M7 9h18M7 23h18"/>
-    </symbol>
-    <symbol id="design" viewBox="0 0 32 32">
-      <path d="m7 25 2-8L22 4l6 6-13 13-8 2Zm3-9 6 6M19 7l6 6M5 29h23"/>
-    </symbol>
-    <symbol id="search" viewBox="0 0 32 32">
-      <circle cx="14" cy="14" r="9"/><path d="m21 21 7 7M9 17v-4m5 4V9m5 8v-6"/>
-    </symbol>
-    <symbol id="inquiry" viewBox="0 0 32 32">
-      <path d="M7 5h18a3 3 0 0 1 3 3v13a3 3 0 0 1-3 3H14l-7 5v-5a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3Z"/><path d="M10 12h12M10 17h8"/>
-    </symbol>
-    <symbol id="statistics" viewBox="0 0 32 32">
-      <path d="M5 5v22h23M11 22v-6m6 6V9m6 13V13M9 10l5-5 6 2 7-4"/>
-    </symbol>
-    <symbol id="publish" viewBox="0 0 32 32">
-      <path d="M9 24H8a6 6 0 0 1-1-12 9 9 0 0 1 17-2 7 7 0 0 1 1 14h-2M16 29V15m-5 5 5-5 5 5"/>
-    </symbol>
-    <symbol id="domain" viewBox="0 0 32 32">
-      <path d="m16 3 11 4v9c0 7-11 13-11 13S5 23 5 16V7Z"/><rect x="11" y="13" width="10" height="8" rx="2"/><path d="M13 13v-3a3 3 0 0 1 6 0v3M16 16v2"/>
-    </symbol>
-    <symbol id="update" viewBox="0 0 32 32">
-      <path d="M27 12a12 12 0 0 0-21-4L3 12m0-8v8h8M5 20a12 12 0 0 0 21 4l3-4m0 8v-8h-8"/>
-    </symbol>
-    <path id="input-company" d="M288 154C326 154 315 245 350 245"/>
-    <path id="input-product" d="M288 250C318 250 320 280 350 280"/>
-    <path id="input-photo" d="M288 346C318 346 320 320 350 320"/>
-    <path id="input-market" d="M288 442C326 442 315 355 350 355"/>
-    <path id="output-language" d="M750 244C803 244 803 116 858 116"/>
-    <path id="output-design" d="M750 260C803 260 803 174 858 174"/>
-    <path id="output-seo" d="M750 276C803 276 803 232 858 232"/>
-    <path id="output-inquiry" d="M750 292C803 292 803 290 858 290"/>
-    <path id="output-cookie" d="M750 308C803 308 803 348 858 348"/>
-    <path id="output-publish" d="M750 324C803 324 803 406 858 406"/>
-    <path id="output-domain" d="M750 340C803 340 803 464 858 464"/>
-    <path id="output-update" d="M750 356C803 356 803 522 858 522"/>
-  </defs>
-  <style>
-    text { font-family: 'PingFang SC','Microsoft YaHei','Noto Sans SC','Source Han Sans SC',sans-serif; }
-    .heading { fill: #a5d9ed; font-size: 18px; font-weight: 600; letter-spacing: 2px; }
-    .label { fill: #edf7ff; font-size: 18px; font-weight: 500; }
-    .icon { fill: none; stroke: #81e6f2; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-    .wire { fill: none; stroke: url(#neon); stroke-width: 1.3; opacity: .31; }
-    .flow { fill: none; stroke: #8beefb; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 7 65; opacity: .72; animation: flow 9s linear infinite; }
-    .right-flow { stroke: #a69dff; animation-duration: 12s; }
-    .node { fill: url(#card); stroke: #365571; stroke-width: 1; }
-    .node-halo { fill: none; stroke: #69d8ff; stroke-width: 3; opacity: .12; filter: url(#glow); animation: wake 12s ease-in-out infinite; }
-    .core-halo { fill: none; stroke: url(#neon); stroke-width: 7; opacity: .3; filter: url(#core-glow); animation: breathe 6s ease-in-out infinite; }
-    .core-edge { fill: none; stroke: url(#neon); stroke-width: 1.5; opacity: .85; }
-    @keyframes flow { from { stroke-dashoffset: 144; } to { stroke-dashoffset: 0; } }
-    @keyframes breathe { 0%, 100% { opacity: .23; } 50% { opacity: .56; } }
-    @keyframes wake { 0%, 24%, 100% { opacity: .12; } 12% { opacity: .75; } }
-    @media (prefers-reduced-motion: reduce) {
-      .flow, .node-halo, .core-halo { animation: none !important; }
-    }
-  </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-labelledby="t d">
+<title id="t">外贸网站制作技能能力全景</title>
+<desc id="d">左侧是你需要提供的公司介绍、产品资料、Logo 和照片、目标市场，流入中央的 AI 外贸网站制作技能，再流向右侧八项能力：多语言外贸网站、B2B 专业设计、站内技术 SEO、询盘与客户联系、Cookie 与访问统计、免费发布上线、自己的域名加 SSL、随时更新内容。底部为可选增值服务。</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#F8FBFF"/><stop offset="1" stop-color="#EEF3FF"/>
+  </linearGradient>
+  <radialGradient id="blobA" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#67E8F9" stop-opacity=".45"/><stop offset="1" stop-color="#67E8F9" stop-opacity="0"/></radialGradient>
+  <radialGradient id="blobB" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#A78BFA" stop-opacity=".40"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0"/></radialGradient>
+  <radialGradient id="blobC" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#93C5FD" stop-opacity=".45"/><stop offset="1" stop-color="#93C5FD" stop-opacity="0"/></radialGradient>
+  <radialGradient id="orb" cx="0.35" cy="0.3" r="0.8">
+    <stop offset="0" stop-color="#38BDF8"/><stop offset=".55" stop-color="#2563EB"/><stop offset="1" stop-color="#6D28D9"/>
+  </radialGradient>
+  <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5"><stop offset=".55" stop-color="#60A5FA" stop-opacity=".35"/><stop offset="1" stop-color="#60A5FA" stop-opacity="0"/></radialGradient>
+  <linearGradient id="inLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#14B8A6"/><stop offset="1" stop-color="#3B82F6"/></linearGradient>
+  <linearGradient id="outLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+  <linearGradient id="title" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0891B2"/><stop offset=".5" stop-color="#2563EB"/><stop offset="1" stop-color="#7C3AED"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-40%" width="140%" height="190%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="6"/><feOffset dy="4" result="b"/>
+    <feComponentTransfer><feFuncA type="linear" slope=".14"/></feComponentTransfer>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#C7D2FE" opacity=".55"/></pattern>
+</defs>
+<style>
+  text { font-family: 'PingFang SC','Microsoft YaHei','Noto Sans SC','Source Han Sans SC',sans-serif; }
+  .base { fill: none; stroke-width: 2; opacity: .55; }
+  /* One calm signal per 5s cycle: inputs -> orb pulse -> outputs -> cards light up. */
+  .sig { fill: none; stroke-linecap: round; stroke-width: 4; stroke-dasharray: 14 120; stroke-dashoffset: 14; opacity: 0; }
+  .sig-in { animation: sigIn 5s ease-in-out infinite; }
+  .sig-out { animation: sigOut 5s ease-in-out infinite; }
+  .halo { opacity: .6; animation: pulse 5s ease-in-out infinite; }
+  .chip { stroke-opacity: 0; animation: glow 5s ease-in-out infinite; }
+  @keyframes sigIn { 0% { stroke-dashoffset: 14; opacity: 0; } 3% { opacity: 1; } 30% { stroke-dashoffset: -100; opacity: 1; } 32%,100% { stroke-dashoffset: -100; opacity: 0; } }
+  @keyframes sigOut { 0%,36% { stroke-dashoffset: 14; opacity: 0; } 39% { opacity: 1; } 68% { stroke-dashoffset: -100; opacity: 1; } 70%,100% { stroke-dashoffset: -100; opacity: 0; } }
+  @keyframes pulse { 0%,26%,52%,100% { opacity: .6; } 34% { opacity: 1; } }
+  @keyframes glow { 0%,66%,96%,100% { stroke-opacity: 0; } 74%,86% { stroke-opacity: .85; } }
+  @media (prefers-reduced-motion: reduce) { .sig-in,.sig-out,.halo,.chip { animation: none; } }
+</style>
+<rect width="1200" height="630" rx="24" fill="url(#bg)"/>
+<rect width="1200" height="630" rx="24" fill="url(#dots)"/>
+<circle cx="150" cy="520" r="260" fill="url(#blobA)"/>
+<circle cx="1080" cy="110" r="280" fill="url(#blobB)"/>
+<circle cx="560" cy="338" r="300" fill="url(#blobC)"/>
 
-  <!-- Self-contained dark surface, quiet grid and static constellation points. -->
-  <rect width="1200" height="630" rx="24" fill="url(#background)"/>
-  <rect x="1" y="1" width="1198" height="628" rx="23" fill="url(#grid)"/>
-  <ellipse cx="460" cy="280" rx="430" ry="300" fill="url(#atmosphere)"/>
-  <ellipse cx="940" cy="320" rx="260" ry="300" fill="url(#violet-atmosphere)"/>
-  <rect x="16" y="16" width="1168" height="598" rx="17" fill="none" stroke="#6595c0" stroke-opacity=".17"/>
-  <g fill="#8ccfe7" opacity=".28">
-    <circle cx="329" cy="92" r="1.5"/><circle cx="609" cy="65" r="1"/><circle cx="784" cy="98" r="1.5"/>
-    <circle cx="405" cy="492" r="1"/><circle cx="745" cy="516" r="1.5"/><circle cx="76" cy="547" r="1"/>
-    <circle cx="1110" cy="579" r="1.5"/><circle cx="668" cy="144" r="1"/><circle cx="318" cy="534" r="1"/>
-  </g>
-  <g fill="none" stroke="#4d829f" stroke-opacity=".22" stroke-width="1">
-    <path d="M40 71h46m-46 427h96l18 18h112M390 131h62l15-15h82M626 468h70l18-18h44"/>
-    <path d="M850 71h310M40 577h168l15 15h49"/>
-  </g>
-
-  <!-- All paths run left-to-right; moving dashes retain a visible static wire. -->
-  <g class="wire">
-    <use href="#input-company"/><use href="#input-product"/><use href="#input-photo"/><use href="#input-market"/>
-    <use href="#output-language"/><use href="#output-design"/><use href="#output-seo"/><use href="#output-inquiry"/>
-    <use href="#output-cookie"/><use href="#output-publish"/><use href="#output-domain"/><use href="#output-update"/>
-  </g>
-  <g>
-    <use class="flow" href="#input-company"/>
-    <use class="flow" href="#input-product" style="animation-delay:-2s"/>
-    <use class="flow" href="#input-photo" style="animation-delay:-4s"/>
-    <use class="flow" href="#input-market" style="animation-delay:-6s"/>
-    <use class="flow right-flow" href="#output-language"/>
-    <use class="flow right-flow" href="#output-design" style="animation-delay:-1.5s"/>
-    <use class="flow right-flow" href="#output-seo" style="animation-delay:-3s"/>
-    <use class="flow right-flow" href="#output-inquiry" style="animation-delay:-4.5s"/>
-    <use class="flow right-flow" href="#output-cookie" style="animation-delay:-6s"/>
-    <use class="flow right-flow" href="#output-publish" style="animation-delay:-7.5s"/>
-    <use class="flow right-flow" href="#output-domain" style="animation-delay:-9s"/>
-    <use class="flow right-flow" href="#output-update" style="animation-delay:-10.5s"/>
-  </g>
-
-  <!-- Inputs: four cards, generous icon and text gutters. -->
-  <text class="heading" x="42" y="60">你只需要提供</text>
-  <g>
-    <rect class="node" x="40" y="122" width="248" height="64" rx="12"/>
-    <use class="icon" href="#company" x="58" y="140" width="28" height="28"/>
-    <text class="label" x="103" y="161">公司介绍</text>
-    <rect class="node" x="40" y="218" width="248" height="64" rx="12"/>
-    <use class="icon" href="#product" x="58" y="236" width="28" height="28"/>
-    <text class="label" x="103" y="257">产品资料</text>
-    <rect class="node" x="40" y="314" width="248" height="64" rx="12"/>
-    <use class="icon" href="#photo" x="58" y="332" width="28" height="28"/>
-    <text class="label" x="103" y="353">Logo 和照片</text>
-    <rect class="node" x="40" y="410" width="248" height="64" rx="12"/>
-    <use class="icon" href="#target" x="58" y="428" width="28" height="28"/>
-    <text class="label" x="103" y="449">目标市场</text>
-  </g>
-
-  <!-- Central chip: beveled shell and pin contacts, text stays inside the flat area. -->
-  <path class="core-halo" d="M394 184H706L750 228V372L706 416H394L350 372V228Z"/>
-  <path fill="url(#core-fill)" d="M394 184H706L750 228V372L706 416H394L350 372V228Z"/>
-  <path class="core-edge" d="M394 184H706L750 228V372L706 416H394L350 372V228Z"/>
-  <path d="M401 196H699L738 235V365L699 404H401L362 365V235Z" fill="none" stroke="#8db5e8" stroke-opacity=".16"/>
-  <g stroke="url(#neon)" stroke-width="2" opacity=".6">
-    <path d="M442 184v-12m24 12v-12m24 12v-12m120 12v-12m24 12v-12m24 12v-12M442 416v12m24-12v12m24-12v12m120-12v12m24-12v12m24-12v12"/>
-  </g>
-  <g fill="#b1e7ff">
-    <circle cx="350" cy="245" r="2.5"/><circle cx="350" cy="280" r="2.5"/><circle cx="350" cy="320" r="2.5"/><circle cx="350" cy="355" r="2.5"/>
-    <circle cx="750" cy="244" r="2"/><circle cx="750" cy="260" r="2"/><circle cx="750" cy="276" r="2"/><circle cx="750" cy="292" r="2"/>
-    <circle cx="750" cy="308" r="2"/><circle cx="750" cy="324" r="2"/><circle cx="750" cy="340" r="2"/><circle cx="750" cy="356" r="2"/>
-  </g>
-  <g fill="none" stroke="url(#neon)" stroke-linecap="round" stroke-width="1.5">
-    <path d="M525 224h50v26h-50zM534 231h32v12h-32zM516 230h9m-9 14h9m50-14h9m-9 14h9M538 218v6m12-6v6m12-6v6M538 250v6m12-6v6m12-6v6"/>
-    <path d="M417 237h74m118 0h74" opacity=".35"/>
-  </g>
-  <text x="550" y="295" text-anchor="middle" fill="#f0fbff" font-size="27" font-weight="700">AI 外贸网站制作技能</text>
-  <text x="550" y="334" text-anchor="middle" fill="#b6cee6" font-size="18">
-    <tspan x="550" dy="0">一句话说需求，AI 帮你做</tspan>
-    <tspan x="550" dy="29">多语言 B2B 网站</tspan>
-  </text>
-  <path d="M500 388h100" stroke="url(#neon)" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-
-  <!-- Outputs: eight evenly spaced cards; the halo wakes each card in sequence. -->
-  <text class="heading" x="860" y="60">你得到</text>
-  <g>
-    <rect class="node-halo" x="858" y="92" width="302" height="48" rx="10"/>
-    <rect class="node" x="858" y="92" width="302" height="48" rx="10"/>
-    <use class="icon" href="#language" x="878" y="103" width="26" height="26"/>
-    <text class="label" x="922" y="123">多语言外贸网站</text>
-    <rect class="node-halo" x="858" y="150" width="302" height="48" rx="10" style="animation-delay:1.5s"/>
-    <rect class="node" x="858" y="150" width="302" height="48" rx="10"/>
-    <use class="icon" href="#design" x="878" y="161" width="26" height="26"/>
-    <text class="label" x="922" y="181">B2B 专业设计</text>
-    <rect class="node-halo" x="858" y="208" width="302" height="48" rx="10" style="animation-delay:3s"/>
-    <rect class="node" x="858" y="208" width="302" height="48" rx="10"/>
-    <use class="icon" href="#search" x="878" y="219" width="26" height="26"/>
-    <text class="label" x="922" y="239">站内技术 SEO</text>
-    <rect class="node-halo" x="858" y="266" width="302" height="48" rx="10" style="animation-delay:4.5s"/>
-    <rect class="node" x="858" y="266" width="302" height="48" rx="10"/>
-    <use class="icon" href="#inquiry" x="878" y="277" width="26" height="26"/>
-    <text class="label" x="922" y="297">询盘与客户联系</text>
-    <rect class="node-halo" x="858" y="324" width="302" height="48" rx="10" style="animation-delay:6s"/>
-    <rect class="node" x="858" y="324" width="302" height="48" rx="10"/>
-    <use class="icon" href="#statistics" x="878" y="335" width="26" height="26"/>
-    <text class="label" x="922" y="355">Cookie 与访问统计</text>
-    <rect class="node-halo" x="858" y="382" width="302" height="48" rx="10" style="animation-delay:7.5s"/>
-    <rect class="node" x="858" y="382" width="302" height="48" rx="10"/>
-    <use class="icon" href="#publish" x="878" y="393" width="26" height="26"/>
-    <text class="label" x="922" y="413">免费发布上线</text>
-    <rect class="node-halo" x="858" y="440" width="302" height="48" rx="10" style="animation-delay:9s"/>
-    <rect class="node" x="858" y="440" width="302" height="48" rx="10"/>
-    <use class="icon" href="#domain" x="878" y="451" width="26" height="26"/>
-    <text class="label" x="922" y="471">自己的域名 + SSL</text>
-    <rect class="node-halo" x="858" y="498" width="302" height="48" rx="10" style="animation-delay:10.5s"/>
-    <rect class="node" x="858" y="498" width="302" height="48" rx="10"/>
-    <use class="icon" href="#update" x="878" y="509" width="26" height="26"/>
-    <text class="label" x="922" y="529">随时更新内容</text>
-  </g>
-
-  <!-- Optional services stay visually secondary and outside the main flow. -->
-  <path d="M550 416V540Q550 552 562 552H588Q600 552 600 564V570" fill="none" stroke="#526485" stroke-opacity=".5" stroke-width="1"/>
-  <circle cx="600" cy="570" r="2" fill="#7e8da6" opacity=".55"/>
-  <text x="600" y="594" text-anchor="middle" fill="#94a6c2" font-size="16">可选增值服务：RXCMS 后台管理 · 外贸 SEO 代运营</text>
+<text x="600" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="url(#title)">把资料交给 AI，得到一个能接询盘的多语言外贸网站</text>
+<text x="44" y="146" font-size="15" font-weight="600" fill="#64748B" letter-spacing="2">你只需要提供</text>
+<path d="M250,196 C340,196 360,293 450,293" class="base" stroke="url(#inLine)"/>
+<path d="M250,196 C340,196 360,293 450,293" class="sig sig-in" stroke="#0EA5A4" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="40" y="170.0" width="210" height="52" rx="14" fill="#FFFFFF"/></g>
+<circle cx="70" cy="196" r="17" fill="#CCFBF1"/>
+<g transform="translate(58,184)" fill="none" stroke="#0F766E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V7l6-3v17M10 21V4M14 21V10l6 2v9M3 21h18M7 10h.01M7 14h.01M17 15h.01M17 18h.01"/></g>
+<text x="98" y="202" font-size="17" font-weight="600" fill="#0F172A">公司介绍</text>
+<path d="M250,270 C340,270 360,323 450,323" class="base" stroke="url(#inLine)"/>
+<path d="M250,270 C340,270 360,323 450,323" class="sig sig-in" stroke="#0EA5A4" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="40" y="244.0" width="210" height="52" rx="14" fill="#FFFFFF"/></g>
+<circle cx="70" cy="270" r="17" fill="#CCFBF1"/>
+<g transform="translate(58,258)" fill="none" stroke="#0F766E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></g>
+<text x="98" y="276" font-size="17" font-weight="600" fill="#0F172A">产品资料</text>
+<path d="M250,344 C340,344 360,353 450,353" class="base" stroke="url(#inLine)"/>
+<path d="M250,344 C340,344 360,353 450,353" class="sig sig-in" stroke="#0EA5A4" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="40" y="318.0" width="210" height="52" rx="14" fill="#FFFFFF"/></g>
+<circle cx="70" cy="344" r="17" fill="#CCFBF1"/>
+<g transform="translate(58,332)" fill="none" stroke="#0F766E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4zM4 16l4.5-4.5 3.5 3.5 2.5-2.5L20 17M15.5 9.5h.01"/></g>
+<text x="98" y="350" font-size="17" font-weight="600" fill="#0F172A">Logo 和照片</text>
+<path d="M250,418 C340,418 360,383 450,383" class="base" stroke="url(#inLine)"/>
+<path d="M250,418 C340,418 360,383 450,383" class="sig sig-in" stroke="#0EA5A4" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="40" y="392.0" width="210" height="52" rx="14" fill="#FFFFFF"/></g>
+<circle cx="70" cy="418" r="17" fill="#CCFBF1"/>
+<g transform="translate(58,406)" fill="none" stroke="#0F766E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM12 12l7-7M16 5h3v3"/></g>
+<text x="98" y="424" font-size="17" font-weight="600" fill="#0F172A">目标市场</text>
+<text x="852" y="104" font-size="15" font-weight="600" fill="#64748B" letter-spacing="2">你得到</text>
+<path d="M670,282 C750,282 758.0,146 848.0,146" class="base" stroke="url(#outLine)"/>
+<path d="M670,282 C750,282 758.0,146 848.0,146" class="sig sig-out" stroke="#2563EB" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="848.0" y="124.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
+<rect x="848.0" y="124.0" width="290" height="44" rx="12" fill="none" stroke="#2563EB" stroke-width="2" stroke-opacity="0" class="chip"/>
+<circle cx="874.0" cy="146" r="15" fill="#2563EB"/>
+<g transform="translate(863.2,135.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9M12 3c-2.5 2.5-3.5 5.5-3.5 9s1 6.5 3.5 9"/></g>
+<text x="900.0" y="152" font-size="16.5" font-weight="600" fill="#0F172A">多语言外贸网站</text>
+<path d="M670,298 C750,298 734.4897959183673,198 824.4897959183673,198" class="base" stroke="url(#outLine)"/>
+<path d="M670,298 C750,298 734.4897959183673,198 824.4897959183673,198" class="sig sig-out" stroke="#4F46E5" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="824.5" y="176.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
+<rect x="824.5" y="176.0" width="290" height="44" rx="12" fill="none" stroke="#4F46E5" stroke-width="2" stroke-opacity="0" class="chip"/>
+<circle cx="850.5" cy="198" r="15" fill="#4F46E5"/>
+<g transform="translate(839.7,187.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4zM14 7l3 3"/></g>
+<text x="876.5" y="204" font-size="16.5" font-weight="600" fill="#0F172A">B2B 专业设计</text>
+<path d="M670,314 C750,314 718.8163265306123,250 808.8163265306123,250" class="base" stroke="url(#outLine)"/>
+<path d="M670,314 C750,314 718.8163265306123,250 808.8163265306123,250" class="sig sig-out" stroke="#7C3AED" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="808.8" y="228.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
+<rect x="808.8" y="228.0" width="290" height="44" rx="12" fill="none" stroke="#7C3AED" stroke-width="2" stroke-opacity="0" class="chip"/>
+<circle cx="834.8" cy="250" r="15" fill="#7C3AED"/>
+<g transform="translate(824.0,239.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 17a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13zM15.5 15.5L20 20M8 12.5v-2M10.5 12.5v-4M13 12.5v-3"/></g>
+<text x="860.8" y="256" font-size="16.5" font-weight="600" fill="#0F172A">站内技术 SEO</text>
+<path d="M670,330 C750,330 710.9795918367347,302 800.9795918367347,302" class="base" stroke="url(#outLine)"/>
+<path d="M670,330 C750,330 710.9795918367347,302 800.9795918367347,302" class="sig sig-out" stroke="#2563EB" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="801.0" y="280.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
+<rect x="801.0" y="280.0" width="290" height="44" rx="12" fill="none" stroke="#2563EB" stroke-width="2" stroke-opacity="0" class="chip"/>
+<circle cx="827.0" cy="302" r="15" fill="#2563EB"/>
+<g transform="translate(816.2,291.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5zM8 9h8M8 12h5"/></g>
+<text x="853.0" y="308" font-size="16.5" font-weight="600" fill="#0F172A">询盘与客户联系</text>
+<path d="M670,346 C750,346 710.9795918367347,354 800.9795918367347,354" class="base" stroke="url(#outLine)"/>
+<path d="M670,346 C750,346 710.9795918367347,354 800.9795918367347,354" class="sig sig-out" stroke="#0891B2" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="801.0" y="332.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
+<rect x="801.0" y="332.0" width="290" height="44" rx="12" fill="none" stroke="#0891B2" stroke-width="2" stroke-opacity="0" class="chip"/>
+<circle cx="827.0" cy="354" r="15" fill="#0891B2"/>
+<g transform="translate(816.2,343.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16M8 16v-4M12 16V8M16 16v-6"/></g>
+<text x="853.0" y="360" font-size="16.5" font-weight="600" fill="#0F172A">Cookie 与访问统计</text>
+<path d="M670,362 C750,362 718.8163265306123,406 808.8163265306123,406" class="base" stroke="url(#outLine)"/>
+<path d="M670,362 C750,362 718.8163265306123,406 808.8163265306123,406" class="sig sig-out" stroke="#0EA5E9" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="808.8" y="384.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
+<rect x="808.8" y="384.0" width="290" height="44" rx="12" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-opacity="0" class="chip"/>
+<circle cx="834.8" cy="406" r="15" fill="#0EA5E9"/>
+<g transform="translate(824.0,395.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-8A5.5 5.5 0 0 1 17 8.5 4.5 4.5 0 0 1 17.5 18M12 20v-8M9 15l3-3 3 3"/></g>
+<text x="860.8" y="412" font-size="16.5" font-weight="600" fill="#0F172A">免费发布上线</text>
+<path d="M670,378 C750,378 734.4897959183673,458 824.4897959183673,458" class="base" stroke="url(#outLine)"/>
+<path d="M670,378 C750,378 734.4897959183673,458 824.4897959183673,458" class="sig sig-out" stroke="#4F46E5" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="824.5" y="436.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
+<rect x="824.5" y="436.0" width="290" height="44" rx="12" fill="none" stroke="#4F46E5" stroke-width="2" stroke-opacity="0" class="chip"/>
+<circle cx="850.5" cy="458" r="15" fill="#4F46E5"/>
+<g transform="translate(839.7,447.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6zM9 11V8a3 3 0 0 1 6 0v3M12 15v2"/></g>
+<text x="876.5" y="464" font-size="16.5" font-weight="600" fill="#0F172A">自己的域名 + SSL</text>
+<path d="M670,394 C750,394 758.0,510 848.0,510" class="base" stroke="url(#outLine)"/>
+<path d="M670,394 C750,394 758.0,510 848.0,510" class="sig sig-out" stroke="#7C3AED" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="848.0" y="488.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
+<rect x="848.0" y="488.0" width="290" height="44" rx="12" fill="none" stroke="#7C3AED" stroke-width="2" stroke-opacity="0" class="chip"/>
+<circle cx="874.0" cy="510" r="15" fill="#7C3AED"/>
+<g transform="translate(863.2,499.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3M18 3v4h-4M6 21v-4h4"/></g>
+<text x="900.0" y="516" font-size="16.5" font-weight="600" fill="#0F172A">随时更新内容</text>
+<circle cx="560" cy="338" r="150" fill="url(#halo)" class="halo"/>
+<circle cx="560" cy="338" r="126" fill="none" stroke="#6366F1" stroke-opacity=".30" stroke-width="1.5" stroke-dasharray="10 8"/>
+<circle cx="560" cy="338" r="104" fill="url(#orb)"/>
+<ellipse cx="530" cy="286" rx="52" ry="24" fill="#FFFFFF" opacity=".16"/>
+<text x="560" y="324" text-anchor="middle" font-size="27" font-weight="800" fill="#FFFFFF">AI 外贸网站</text>
+<text x="560" y="360" text-anchor="middle" font-size="27" font-weight="800" fill="#FFFFFF">制作技能</text>
+<text x="560" y="392" text-anchor="middle" font-size="14" fill="#E0E7FF">一句话说需求，AI 帮你做</text>
+<path d="M560,478 C560,512 600,560 600,574" fill="none" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="3 6" opacity=".8"/>
+<rect x="340.0" y="574" width="520" height="38" rx="19" fill="#FFFFFF" stroke="#C7D2FE" filter="url(#shadow)"/>
+<text x="600" y="599" text-anchor="middle" font-size="15" fill="#475569">可选增值服务：RXCMS 后台管理 · 外贸 SEO 代运营</text>
 </svg>
