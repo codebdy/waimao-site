@@ -69,63 +69,79 @@
 <circle cx="70" cy="418" r="17" fill="#CCFBF1"/>
 <g transform="translate(58,406)" fill="none" stroke="#0F766E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM12 12l7-7M16 5h3v3"/></g>
 <text x="98" y="424" font-size="17" font-weight="600" fill="#0F172A">目标市场</text>
-<text x="852" y="104" font-size="15" font-weight="600" fill="#64748B" letter-spacing="2">你得到</text>
-<path d="M670,282 C750,282 758.0,146 848.0,146" class="base" stroke="url(#outLine)"/>
-<path d="M670,282 C750,282 758.0,146 848.0,146" class="sig sig-out" stroke="#2563EB" pathLength="100"/>
-<g filter="url(#shadow)"><rect x="848.0" y="124.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
-<rect x="848.0" y="124.0" width="290" height="44" rx="12" fill="none" stroke="#2563EB" stroke-width="2" stroke-opacity="0" class="chip"/>
-<circle cx="874.0" cy="146" r="15" fill="#2563EB"/>
-<g transform="translate(863.2,135.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9M12 3c-2.5 2.5-3.5 5.5-3.5 9s1 6.5 3.5 9"/></g>
-<text x="900.0" y="152" font-size="16.5" font-weight="600" fill="#0F172A">多语言外贸网站</text>
-<path d="M670,298 C750,298 734.4897959183673,198 824.4897959183673,198" class="base" stroke="url(#outLine)"/>
-<path d="M670,298 C750,298 734.4897959183673,198 824.4897959183673,198" class="sig sig-out" stroke="#4F46E5" pathLength="100"/>
-<g filter="url(#shadow)"><rect x="824.5" y="176.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
-<rect x="824.5" y="176.0" width="290" height="44" rx="12" fill="none" stroke="#4F46E5" stroke-width="2" stroke-opacity="0" class="chip"/>
-<circle cx="850.5" cy="198" r="15" fill="#4F46E5"/>
-<g transform="translate(839.7,187.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4zM14 7l3 3"/></g>
-<text x="876.5" y="204" font-size="16.5" font-weight="600" fill="#0F172A">B2B 专业设计</text>
-<path d="M670,314 C750,314 718.8163265306123,250 808.8163265306123,250" class="base" stroke="url(#outLine)"/>
-<path d="M670,314 C750,314 718.8163265306123,250 808.8163265306123,250" class="sig sig-out" stroke="#7C3AED" pathLength="100"/>
-<g filter="url(#shadow)"><rect x="808.8" y="228.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
-<rect x="808.8" y="228.0" width="290" height="44" rx="12" fill="none" stroke="#7C3AED" stroke-width="2" stroke-opacity="0" class="chip"/>
-<circle cx="834.8" cy="250" r="15" fill="#7C3AED"/>
-<g transform="translate(824.0,239.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 17a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13zM15.5 15.5L20 20M8 12.5v-2M10.5 12.5v-4M13 12.5v-3"/></g>
-<text x="860.8" y="256" font-size="16.5" font-weight="600" fill="#0F172A">站内技术 SEO</text>
-<path d="M670,330 C750,330 710.9795918367347,302 800.9795918367347,302" class="base" stroke="url(#outLine)"/>
-<path d="M670,330 C750,330 710.9795918367347,302 800.9795918367347,302" class="sig sig-out" stroke="#2563EB" pathLength="100"/>
-<g filter="url(#shadow)"><rect x="801.0" y="280.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
-<rect x="801.0" y="280.0" width="290" height="44" rx="12" fill="none" stroke="#2563EB" stroke-width="2" stroke-opacity="0" class="chip"/>
-<circle cx="827.0" cy="302" r="15" fill="#2563EB"/>
-<g transform="translate(816.2,291.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5zM8 9h8M8 12h5"/></g>
-<text x="853.0" y="308" font-size="16.5" font-weight="600" fill="#0F172A">询盘与客户联系</text>
-<path d="M670,346 C750,346 710.9795918367347,354 800.9795918367347,354" class="base" stroke="url(#outLine)"/>
-<path d="M670,346 C750,346 710.9795918367347,354 800.9795918367347,354" class="sig sig-out" stroke="#0891B2" pathLength="100"/>
-<g filter="url(#shadow)"><rect x="801.0" y="332.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
-<rect x="801.0" y="332.0" width="290" height="44" rx="12" fill="none" stroke="#0891B2" stroke-width="2" stroke-opacity="0" class="chip"/>
-<circle cx="827.0" cy="354" r="15" fill="#0891B2"/>
-<g transform="translate(816.2,343.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16M8 16v-4M12 16V8M16 16v-6"/></g>
-<text x="853.0" y="360" font-size="16.5" font-weight="600" fill="#0F172A">Cookie 与访问统计</text>
-<path d="M670,362 C750,362 718.8163265306123,406 808.8163265306123,406" class="base" stroke="url(#outLine)"/>
-<path d="M670,362 C750,362 718.8163265306123,406 808.8163265306123,406" class="sig sig-out" stroke="#0EA5E9" pathLength="100"/>
-<g filter="url(#shadow)"><rect x="808.8" y="384.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
-<rect x="808.8" y="384.0" width="290" height="44" rx="12" fill="none" stroke="#0EA5E9" stroke-width="2" stroke-opacity="0" class="chip"/>
-<circle cx="834.8" cy="406" r="15" fill="#0EA5E9"/>
-<g transform="translate(824.0,395.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-8A5.5 5.5 0 0 1 17 8.5 4.5 4.5 0 0 1 17.5 18M12 20v-8M9 15l3-3 3 3"/></g>
-<text x="860.8" y="412" font-size="16.5" font-weight="600" fill="#0F172A">免费发布上线</text>
-<path d="M670,378 C750,378 734.4897959183673,458 824.4897959183673,458" class="base" stroke="url(#outLine)"/>
-<path d="M670,378 C750,378 734.4897959183673,458 824.4897959183673,458" class="sig sig-out" stroke="#4F46E5" pathLength="100"/>
-<g filter="url(#shadow)"><rect x="824.5" y="436.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
-<rect x="824.5" y="436.0" width="290" height="44" rx="12" fill="none" stroke="#4F46E5" stroke-width="2" stroke-opacity="0" class="chip"/>
-<circle cx="850.5" cy="458" r="15" fill="#4F46E5"/>
-<g transform="translate(839.7,447.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6zM9 11V8a3 3 0 0 1 6 0v3M12 15v2"/></g>
-<text x="876.5" y="464" font-size="16.5" font-weight="600" fill="#0F172A">自己的域名 + SSL</text>
-<path d="M670,394 C750,394 758.0,510 848.0,510" class="base" stroke="url(#outLine)"/>
-<path d="M670,394 C750,394 758.0,510 848.0,510" class="sig sig-out" stroke="#7C3AED" pathLength="100"/>
-<g filter="url(#shadow)"><rect x="848.0" y="488.0" width="290" height="44" rx="12" fill="#FFFFFF"/></g>
-<rect x="848.0" y="488.0" width="290" height="44" rx="12" fill="none" stroke="#7C3AED" stroke-width="2" stroke-opacity="0" class="chip"/>
-<circle cx="874.0" cy="510" r="15" fill="#7C3AED"/>
-<g transform="translate(863.2,499.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3M18 3v4h-4M6 21v-4h4"/></g>
-<text x="900.0" y="516" font-size="16.5" font-weight="600" fill="#0F172A">随时更新内容</text>
+<text x="786" y="104" font-size="15" font-weight="600" fill="#64748B" letter-spacing="2">你得到</text>
+<path d="M670,284 C740,284 706,190.0 786,190.0" class="base" stroke="url(#outLine)"/>
+<path d="M670,284 C740,284 706,190.0 786,190.0" class="sig sig-out" stroke="#2563EB" pathLength="100"/>
+<path d="M670,302 C740,302 706,242.0 786,242.0" class="base" stroke="url(#outLine)"/>
+<path d="M670,302 C740,302 706,242.0 786,242.0" class="sig sig-out" stroke="#4F46E5" pathLength="100"/>
+<path d="M670,320 C740,320 706,294.0 786,294.0" class="base" stroke="url(#outLine)"/>
+<path d="M670,320 C740,320 706,294.0 786,294.0" class="sig sig-out" stroke="#7C3AED" pathLength="100"/>
+<path d="M670,338 C740,338 706,346.0 786,346.0" class="base" stroke="url(#outLine)"/>
+<path d="M670,338 C740,338 706,346.0 786,346.0" class="sig sig-out" stroke="#2563EB" pathLength="100"/>
+<path d="M670,356 C740,356 706,398.0 786,398.0" class="base" stroke="url(#outLine)"/>
+<path d="M670,356 C740,356 706,398.0 786,398.0" class="sig sig-out" stroke="#0891B2" pathLength="100"/>
+<path d="M670,374 C740,374 706,450.0 786,450.0" class="base" stroke="url(#outLine)"/>
+<path d="M670,374 C740,374 706,450.0 786,450.0" class="sig sig-out" stroke="#0EA5E9" pathLength="100"/>
+<path d="M670,392 C740,392 706,522 786,522" class="base" stroke="url(#outLine)"/>
+<path d="M670,392 C740,392 706,522 786,522" class="sig sig-out" stroke="#4F46E5" pathLength="100"/>
+<g filter="url(#shadow)"><rect x="786" y="118" width="378" height="362" rx="16" fill="#FFFFFF"/></g>
+<path d="M786,134 a16,16 0 0 1 16,-16 h346 a16,16 0 0 1 16,16 v24 h-378 z" fill="#EEF2FF"/>
+<rect x="786" y="118" width="378" height="362" rx="16" fill="none" stroke="#C7D2FE"/>
+<circle cx="806" cy="138" r="4.5" fill="#F87171"/>
+<circle cx="821" cy="138" r="4.5" fill="#FBBF24"/>
+<circle cx="836" cy="138" r="4.5" fill="#34D399"/>
+<rect x="858" y="127" width="290" height="22" rx="11" fill="#FFFFFF" stroke="#E0E7FF"/>
+<g transform="translate(868,131) scale(.58)" fill="none" stroke="#16A34A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6zM9 11V8a3 3 0 0 1 6 0v3M12 15v2"/></g>
+<text x="888" y="143" font-size="12.5" fill="#475569">https://www.yourcompany.com</text>
+<rect x="800" y="168.0" width="350" height="44" rx="10" fill="#F8FAFF"/>
+<rect x="800" y="168.0" width="350" height="44" rx="10" fill="none" stroke="#2563EB" stroke-width="2" class="chip"/>
+<circle cx="824" cy="190.0" r="14" fill="#2563EB"/>
+<g transform="translate(813.2,179.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9M12 3c-2.5 2.5-3.5 5.5-3.5 9s1 6.5 3.5 9"/></g>
+<text x="848" y="196.0" font-size="16" font-weight="600" fill="#0F172A">多语言外贸网站</text>
+<rect x="1004" y="179.0" width="32" height="22" rx="6" fill="#E0E7FF"/>
+<text x="1020" y="194.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3730A3">EN</text>
+<rect x="1040" y="179.0" width="32" height="22" rx="6" fill="#E0E7FF"/>
+<text x="1056" y="194.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3730A3">DE</text>
+<rect x="1076" y="179.0" width="32" height="22" rx="6" fill="#E0E7FF"/>
+<text x="1092" y="194.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3730A3">ES</text>
+<rect x="1112" y="179.0" width="32" height="22" rx="6" fill="#E0E7FF"/>
+<text x="1128" y="194.5" text-anchor="middle" font-size="11.5" font-weight="700" fill="#3730A3">AR</text>
+<rect x="800" y="220.0" width="350" height="44" rx="10" fill="#F8FAFF"/>
+<rect x="800" y="220.0" width="350" height="44" rx="10" fill="none" stroke="#4F46E5" stroke-width="2" class="chip"/>
+<circle cx="824" cy="242.0" r="14" fill="#4F46E5"/>
+<g transform="translate(813.2,231.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4zM14 7l3 3"/></g>
+<text x="848" y="248.0" font-size="16" font-weight="600" fill="#0F172A">B2B 专业设计</text>
+<rect x="800" y="272.0" width="350" height="44" rx="10" fill="#F8FAFF"/>
+<rect x="800" y="272.0" width="350" height="44" rx="10" fill="none" stroke="#7C3AED" stroke-width="2" class="chip"/>
+<circle cx="824" cy="294.0" r="14" fill="#7C3AED"/>
+<g transform="translate(813.2,283.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 17a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13zM15.5 15.5L20 20M8 12.5v-2M10.5 12.5v-4M13 12.5v-3"/></g>
+<text x="848" y="300.0" font-size="16" font-weight="600" fill="#0F172A">站内技术 SEO</text>
+<rect x="800" y="324.0" width="350" height="44" rx="10" fill="#F8FAFF"/>
+<rect x="800" y="324.0" width="350" height="44" rx="10" fill="none" stroke="#2563EB" stroke-width="2" class="chip"/>
+<circle cx="824" cy="346.0" r="14" fill="#2563EB"/>
+<g transform="translate(813.2,335.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4V5zM8 9h8M8 12h5"/></g>
+<text x="848" y="352.0" font-size="16" font-weight="600" fill="#0F172A">询盘与客户联系</text>
+<rect x="800" y="376.0" width="350" height="44" rx="10" fill="#F8FAFF"/>
+<rect x="800" y="376.0" width="350" height="44" rx="10" fill="none" stroke="#0891B2" stroke-width="2" class="chip"/>
+<circle cx="824" cy="398.0" r="14" fill="#0891B2"/>
+<g transform="translate(813.2,387.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16M8 16v-4M12 16V8M16 16v-6"/></g>
+<text x="848" y="404.0" font-size="16" font-weight="600" fill="#0F172A">Cookie 与访问统计</text>
+<rect x="800" y="428.0" width="350" height="44" rx="10" fill="#F8FAFF"/>
+<rect x="800" y="428.0" width="350" height="44" rx="10" fill="none" stroke="#0EA5E9" stroke-width="2" class="chip"/>
+<circle cx="824" cy="450.0" r="14" fill="#0EA5E9"/>
+<g transform="translate(813.2,439.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6zM9 11V8a3 3 0 0 1 6 0v3M12 15v2"/></g>
+<text x="848" y="456.0" font-size="16" font-weight="600" fill="#0F172A">自己的域名 + SSL</text>
+<path d="M826,480 v20 M1124,480 v20" stroke="#C7D2FE" stroke-width="2"/>
+<g filter="url(#shadow)"><rect x="786.0" y="500" width="184.0" height="44" rx="12" fill="#FFFFFF"/></g>
+<rect x="786.0" y="500" width="184.0" height="44" rx="12" fill="none" stroke="#4F46E5" stroke-width="2" class="chip"/>
+<circle cx="810.0" cy="522.0" r="14" fill="#4F46E5"/>
+<g transform="translate(799.2,511.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-8A5.5 5.5 0 0 1 17 8.5 4.5 4.5 0 0 1 17.5 18M12 20v-8M9 15l3-3 3 3"/></g>
+<text x="832.0" y="528.0" font-size="16" font-weight="600" fill="#0F172A">免费发布上线</text>
+<g filter="url(#shadow)"><rect x="980.0" y="500" width="184.0" height="44" rx="12" fill="#FFFFFF"/></g>
+<rect x="980.0" y="500" width="184.0" height="44" rx="12" fill="none" stroke="#7C3AED" stroke-width="2" class="chip"/>
+<circle cx="1004.0" cy="522.0" r="14" fill="#7C3AED"/>
+<g transform="translate(993.2,511.2) scale(.9)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3M18 3v4h-4M6 21v-4h4"/></g>
+<text x="1026.0" y="528.0" font-size="16" font-weight="600" fill="#0F172A">随时更新内容</text>
 <circle cx="560" cy="338" r="150" fill="url(#halo)" class="halo"/>
 <circle cx="560" cy="338" r="126" fill="none" stroke="#6366F1" stroke-opacity=".30" stroke-width="1.5" stroke-dasharray="10 8"/>
 <circle cx="560" cy="338" r="104" fill="url(#orb)"/>
