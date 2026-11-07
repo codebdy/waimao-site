@@ -61,6 +61,7 @@
 | 让 Google 搜到我的网站 | [SEO](docs/seo.md) |
 | 网站要不要弹 Cookie 框、怎么接 Google 统计 | [Cookie 同意框](docs/cookie.md) |
 | 想让网站更漂亮、更贴合行业 | [使用小技巧](docs/tips.md) |
+| 不知道 Banner、首屏、轮播这些叫法 | [网站常用术语速查](docs/glossary.md) |
 | 出问题了，或想看看容易忽略的事 | [常见问题](docs/faq.md) |
 
 ## 免费和收费

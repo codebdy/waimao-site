@@ -3,7 +3,7 @@ name: waimao-site
 description: 创建或改造面向海外采购商的 B2B 外贸网站，使用 Astro + Tailwind，内容来源可选本地文件、RXCMS API 或 WordPress REST API（实验，仅标准文章），覆盖页面规划、B2B 视觉设计、询盘内容和完整的站内技术 SEO（元信息、canonical、sitemap、结构化数据、多语言 hreflang）。新建站默认 static，可按需求选择 server，并支持 Vercel / Cloudflare 部署配置与迁移。用于外贸建站和相关实现，不代替独立的营销运营或通用 CMS 管理。
 license: MIT; adapted third-party portions retain their licenses (see THIRD_PARTY_NOTICES.md)
 metadata:
-  version: "0.1.3"
+  version: "0.1.4"
 ---
 
 # waimao-site · 外贸建站
@@ -12,7 +12,7 @@ metadata:
 
 ## 面向零基础用户
 
-- 账号注册、安装、GitHub 上传与自动部署需要详细引导时，按主题使用 `docs/` 下的新手文档：[开始前准备](docs/00-prepare.md)、[安装](docs/01-install.md)、[开始建站](docs/02-start.md)、[风格](docs/03-style.md)、[预览](docs/04-preview.md)、[GitHub](docs/05-github.md)、[Vercel](docs/07-vercel.md)、[Cloudflare](docs/06-cloudflare.md)、[更新](docs/08-update.md)、[域名](docs/09-domain.md)、[SEO](docs/seo.md)、[Cookie](docs/cookie.md)、[询盘](docs/inquiry.md)、[常见问题](docs/faq.md)、[功能一览](docs/features.md)、[使用小技巧](docs/tips.md)。用户提问时引导到对应那一篇，不整篇复述。README 只做入口；生成网站仍须提供符合本项目实际配置的说明，不能只引用 skill 文档。
+- 账号注册、安装、GitHub 上传与自动部署需要详细引导时，按主题使用 `docs/` 下的新手文档：[开始前准备](docs/00-prepare.md)、[安装](docs/01-install.md)、[开始建站](docs/02-start.md)、[风格](docs/03-style.md)、[预览](docs/04-preview.md)、[GitHub](docs/05-github.md)、[Vercel](docs/07-vercel.md)、[Cloudflare](docs/06-cloudflare.md)、[更新](docs/08-update.md)、[域名](docs/09-domain.md)、[SEO](docs/seo.md)、[Cookie](docs/cookie.md)、[询盘](docs/inquiry.md)、[常见问题](docs/faq.md)、[功能一览](docs/features.md)、[使用小技巧](docs/tips.md)、[术语速查](docs/glossary.md)。用户提问时引导到对应那一篇，不整篇复述。README 只做入口；生成网站仍须提供符合本项目实际配置的说明，不能只引用 skill 文档。
 - 默认用户不懂终端、框架、API、环境变量、构建或部署。先用业务语言说明当前阶段和下一步，技术细节留给实施。需要用户操作时再解释术语，例如构建就是把内容生成网站文件，部署就是把网站放到可访问的平台。
 - 每轮只询问当前必要的少量信息，通常 1–3 个问题；已有资料先读取。不给用户整张技术配置问卷，不让其决定无关的底层实现。
 - 用户操作步骤必须说明：在哪个应用/页面或文件夹操作、输入/选择什么、成功后会看到什么。区分 AI 对话与终端命令；命令依据实际系统给出，路径使用本次真实目录，不让小白原样执行带占位符的命令。
@@ -57,10 +57,11 @@ metadata:
 
 做法：
 1. 每次开始修改网站前先读 `brief/`，按其中的要求执行；建站时根据客户资料填好初稿。
-2. 客户提出要求或反馈时，判断是长期的还是只针对这一处。长期的（如“文案要专业严谨”“产品页先放参数表”“图片不要出现人”）写进对应文件和反馈记录，并告诉客户“已记住，以后都按这个来”；一次性的修改直接改，不记。
+2. 客户提出要求或反馈时，判断是长期的还是只针对这一处。长期的（如“文案要专业严谨”“产品页先放参数表”“图片不要出现人”）写进对应文件和反馈记录，并告诉客户“已记住，以后都按这个来”；一次性的文字修改直接改，不记；图片修正例外，每次都按 [通用生图规范](references/image-prompts.md) 第九节记录。
 3. 新要求与已记录的冲突时，以客户最新说法为准并更新记录；与“不编造”等底线冲突时说明原因，不照做。
-4. 客户要求某些内容只在对话里给出、不存文件时，尊重客户。
+4. `brief/` 是这个网站自己的资料，必须保留并持续更新，本 skill “提示词在对话中提供”的交付规则不适用于它。用户自己的 AI 工具设置里有“提示词不写入文件”之类规则时，不擅自违背：用大白话问用户一次，例如“要不要把这些图片提示词和你的意见记在网站里？记下来以后改图会越来越准”；用户同意就记，不同意就只在对话里给出。
 5. 维护已有网站时若还没有 `brief/`，在第一次修改时补建。
+6. 用户不知道 `brief` 是什么，对用户说“网站里记下的你的要求”“图片提示词记录”，不要求用户说出文件夹或文件名。
 
 **怎么保证每次都被读到**：不能只靠本 skill 被调用。starter 根目录附带 `AGENTS.md`（Codex 等支持该文件的 AI 工具会自动读取）和 `CLAUDE.md`（Claude Code 自动读取，内容为导入 `@AGENTS.md` 和 `@brief/requirements.md`），里面写明修改前先读 `brief/`。网站放在工作文件夹的子目录（如 `my-waimao-site/huali-pumps/`）时，在工作文件夹根目录也写一份很短的 `AGENTS.md` 和 `CLAUDE.md`，只说明网站在哪个子目录、先读其中的 `AGENTS.md` 与 `brief/`（`CLAUDE.md` 可直接导入 `@huali-pumps/AGENTS.md` 和 `@huali-pumps/brief/requirements.md`，按实际文件夹名替换）。这些文件只放指引，不复制整份要求；已存在同名文件时在末尾追加一节，不覆盖原内容。
 
@@ -93,6 +94,6 @@ metadata:
 
 ## 交付
 
-交付目标项目源码、项目自己的使用及部署 README、必要配置和验证结果。提示词直接在对话中提供；不要为了交付创建提示词文件（例外：网站项目 `brief/` 下的客户要求和图片提示词记录是网站自身的资料，按下方“沉淀客户要求”维护）。客户资料与密钥不放进 skill 源码仓库。
+交付目标项目源码、项目自己的使用及部署 README、必要配置和验证结果。提示词直接在对话中提供；不要为了交付创建提示词文件（例外：网站项目 `brief/` 下的客户要求和生图提示词记录是网站自身的资料，不受这条限制，按上方“沉淀客户要求”维护）。客户资料与密钥不放进 skill 源码仓库。
 
 上游方法与许可见 [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md)。核心不要求 Claude 专用工具、额外 SEO skills、付费 API 或自动多代理编排；有可用工具时再增强。
