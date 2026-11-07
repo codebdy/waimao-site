@@ -53,6 +53,11 @@ test('missing UI strings report every missing key, including form and consent te
     return true;
   });
   assert.throws(() => validateDictionaries([{ code: 'fr' }]), /fr.nav.home/);
+  const englishContact = dictionaries.en.nav.contact;
+  try {
+    delete dictionaries.en.nav.contact;
+    assert.throws(() => validateDictionaries([{ code: 'en' }]), /en.nav.contact/);
+  } finally { dictionaries.en.nav.contact = englishContact; }
 });
 
 test('hreflang uses real translation identity, reciprocal URLs, htmlLang and x-default', () => {

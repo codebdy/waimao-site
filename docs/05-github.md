@@ -1,12 +1,12 @@
 # 上传到 GitHub
 
-[← 返回首页](../README.md) · 上一步：[预览和修改](04-preview.md) · 下一步：[发布到 Vercel](06-vercel.md) 或 [发布到 Cloudflare](07-cloudflare.md)
+[← 返回首页](../README.md) · 上一步：[预览和修改](04-preview.md) · 下一步：[发布到 Cloudflare（推荐）](06-cloudflare.md) 或 [发布到 Vercel](07-vercel.md)
 
 **这篇适合：** 网站在电脑上看着满意了，准备发布的人。
 
 ## 为什么要先上传 GitHub
 
-GitHub 相当于网站代码的“云盘”。上传后，Vercel 或 Cloudflare 会从这里取代码、自动生成网站。以后你每次上传修改，网站都会自动更新。
+GitHub 相当于网站代码的“云盘”。上传后，Cloudflare 或 Vercel 会从这里取代码、自动生成网站。以后你每次上传修改，网站都会自动更新。
 
 **上传到 GitHub ≠ 网站上线。** 上线是下一篇的事。
 
@@ -56,4 +56,4 @@ AI 改完、你预览满意后：打开 Desktop → 写 Summary → **Commit to 
 
 记住：**Commit 是存档，Push 才是上传。** 只 Commit 不 Push，网站不会更新。
 
-下一步：选一个平台发布 → [Vercel](06-vercel.md) 或 [Cloudflare](07-cloudflare.md)（选一个就够了）
+下一步：选一个平台发布 → [Cloudflare（推荐，免费版就够用）](06-cloudflare.md) 或 [Vercel](07-vercel.md)（选一个就够了）

@@ -89,6 +89,7 @@ globalThis.fetch = async input => {
     const localProducts = JSON.parse(localProductsText);
     if (variant === 'multilingual') {
       config.i18n = multilingual; config.indexable = true;
+      localProducts[0].translations.de.slug = 'muster-bauteil-für-pumpen';
       // Independent static inquiry functions also need translated labels and receipt messages.
       config.deployTarget = 'vercel'; config.inquiry = { provider: 'rxcms', turnstileSiteKey: 'public-fixture-key' };
       config.google = { analyticsId: 'G-EXAMPLE123', adsId: 'AW-123456' };
@@ -113,7 +114,8 @@ globalThis.fetch = async input => {
       const page = inspectHTML(await readFile(file, 'utf8'));
       const { tags, graph, switchLinks } = page;
       const relativePath = relative(join(work, 'dist'), file).replaceAll('\\', '/');
-      const pagePath = relativePath === 'index.html' ? '/' : `/${relativePath.endsWith('/index.html') ? relativePath.slice(0, -10) : relativePath}`;
+      // Filesystem names may contain Unicode; compare links using URL-encoded paths.
+      const pagePath = new URL(relativePath === 'index.html' ? '/' : `/${relativePath.endsWith('/index.html') ? relativePath.slice(0, -10) : relativePath}`, config.site).pathname;
       htmlPages.set(pagePath, page);
       const german = pagePath.startsWith('/de/');
       const prefix = german ? '/de' : '';
@@ -130,7 +132,7 @@ globalThis.fetch = async input => {
       assert.equal(meta('twitter:card'), config.ogImage ? 'summary_large_image' : undefined);
       const product = graph.find(node => node['@type'] === 'Product');
       const article = graph.find(node => node['@type'] === 'Article');
-      if (['sample-component', 'sample-pump', 'sample-valve', 'untranslated-component', 'muster-bauteil'].some(slug => pagePath === `${prefix}/products/${slug}/`)) assert.ok(product, `${file}: Product missing`);
+      if (['sample-component', 'sample-pump', 'sample-valve', 'untranslated-component', 'muster-bauteil-für-pumpen'].some(slug => pagePath === `${prefix}/products/${encodeURIComponent(slug)}/`)) assert.ok(product, `${file}: Product missing`);
       const isArticlePage = relative(join(work, 'dist/articles'), file) === join('sample-news', 'index.html') || relative(join(work, 'dist/articles'), file) === join('undated-news', 'index.html');
       if (isArticlePage) assert.ok(article, `${variant}: Article missing`);
       if (product || article) {
@@ -177,7 +179,7 @@ globalThis.fetch = async input => {
       assert.ok(!files.some(path => path.includes('protected-news')));
     }
     if (variant === 'multilingual') {
-      const enProduct = '/products/sample-component/', deProduct = '/de/products/muster-bauteil/';
+      const enProduct = '/products/sample-component/', deProduct = '/de/products/muster-bauteil-f%C3%BCr-pumpen/';
       assert.ok(htmlPages.has(deProduct));
       for (const missing of ['/de/products/untranslated-component/', '/de/products/sample-component/', '/de/404.html', '/en/']) assert.ok(!htmlPages.has(missing));
       const alternates = path => htmlPages.get(path).tags.filter(tag => tag.name === 'link' && tag.attrs.rel === 'alternate').map(tag => tag.attrs);
@@ -201,7 +203,9 @@ globalThis.fetch = async input => {
         else assert.equal(page.tags.find(tag => tag.attrs.rel === 'canonical').attrs.href, new URL(path, config.site).href);
         for (const link of page.switchLinks) assert.ok(htmlPages.has(link.href), `Language link must exist: ${link.href}`);
       }
-      assert.deepEqual(htmlPages.get(deProduct).switchLinks.map(link => link.href), [enProduct, deProduct]);
+      for (const path of [enProduct, deProduct]) {
+        assert.deepEqual(htmlPages.get(path).switchLinks.map(link => link.href), [enProduct, deProduct], `${path}: switcher must link to the translated product, not a homepage`);
+      }
       assert.deepEqual(htmlPages.get('/products/untranslated-component/').switchLinks.map(link => link.href), ['/products/untranslated-component/', '/de/']);
       assert.ok(htmlPages.get(deProduct).text.includes('Produktinformationen'));
       assert.ok(htmlPages.get('/de/').text.includes('Katalog ansehen'));
@@ -239,12 +243,12 @@ globalThis.fetch = async input => {
       content: { source: ['rxcms', 'wordpress'].includes(scenario) ? scenario : 'local', locale: 'en' },
       inquiry: { provider: 'none', turnstileSiteKey: '' }, i18n: multilingual };
     await writeFile(join(work, 'site.config.mjs'), `export default ${JSON.stringify(config)};\n`);
-    await writeFile(uiFile, uiText + (scenario === 'missing-ui' ? '\ndelete dictionaries.de.home.explore;\ndelete dictionaries.de.cookie.title;\n' : ''));
+    await writeFile(uiFile, uiText + (scenario === 'missing-ui' ? '\ndelete dictionaries.de.home.explore;\ndelete dictionaries.de.cookie.title;\ndelete dictionaries.en.nav.contact;\n' : ''));
     const env = { ...process.env, ASTRO_TELEMETRY_DISABLED: '1' }; delete env.SITE_OUTPUT; delete env.DEPLOY_TARGET;
     const result = spawnSync(process.execPath, ['--import', pathToFileURL(preload).href, join(source, 'node_modules/astro/bin/astro.mjs'), 'build'], { cwd: work, env, encoding: 'utf8', timeout: 60000 });
     assert.notEqual(result.status, 0, `${scenario} should fail`);
     const output = result.stdout + result.stderr;
-    for (const message of scenario === 'missing-ui' ? ['de.home.explore', 'de.cookie.title'] : [scenario === 'server' ? 'require static' : 'separate integration']) assert.ok(output.includes(message), `${scenario}: ${output}`);
+    for (const message of scenario === 'missing-ui' ? ['de.home.explore', 'de.cookie.title', 'en.nav.contact'] : [scenario === 'server' ? 'require static' : 'separate integration']) assert.ok(output.includes(message), `${scenario}: ${output}`);
     console.log(`${scenario}: unsupported/incomplete multilingual build rejected as expected`);
   }
   assert.equal(await readFile(join(source, 'site.config.mjs'), 'utf8'), configText, 'Source settings must not change');

@@ -15,7 +15,7 @@ TEMPLATE-LICENSE.txt 保留原模板的 MIT 声明，其范围是原模板代码
 | Cookie 同意框 | 开启，Google ID 为空，不发送统计/广告请求 |
 | 更新 | 修改代码并推送 GitHub，连接的平台重新构建 |
 
-content.source、output、deployTarget、inquiry.provider 四项独立。RXCMS 产品/文章已提供内容适配；WordPress 标准文章为实验支持。单语言构建快照，不是完成的客户网站；多语言、复杂产品页、真实平台和邮箱仍需按客户验收。
+content.source、output、deployTarget、inquiry.provider 四项独立。RXCMS 产品/文章已提供内容适配；WordPress 标准文章为实验支持。默认单语言构建快照，本地 static 站可开启多语言；RXCMS / WordPress 内容源的多语言需要单独接入。模板不是完成的客户网站；客户译文、复杂产品页、真实平台和邮箱仍需验收。
 
 ## 第一次在电脑上看网站
 
@@ -24,7 +24,7 @@ content.source、output、deployTarget、inquiry.provider 四项独立。RXCMS �
 3. 首次安装依赖输入 `npm ci`。出现错误先处理，不继续发布。
 4. 由你输入 `npm run dev`，访问终端打印的网址。保持窗口运行，结束时按 Ctrl+C 停止。此时只是本地预览。
 5. 把需要修改的内容告诉 AI，再预览。发布前执行 `npm test` 和 `npm run build`。AI 默认不启动 dev/preview 或任何服务。
-6. 把网站仓库推送到自己的 GitHub，按下方选择平台。若尚不会注册、安装或上传，请先看完整 skill 的 docs/ 目录（05-github.md、06-vercel.md、07-cloudflare.md）；生成客户项目时应保留适合本项目的新手步骤。
+6. 把网站仓库推送到自己的 GitHub，按下方选择平台。若尚不会注册、安装或上传，请先看完整 skill 的 docs/ 目录（05-github.md、07-vercel.md、06-cloudflare.md）；生成客户项目时应保留适合本项目的新手步骤。
 
 独立网站仓库根目录应直接能看到 package.json。GitHub Desktop 中查看 Changes，Commit 后还要 Push origin，托管平台才会自动构建。不要上传 .env、node_modules、dist、.astro、.wrangler、.vercel。真实询盘函数不由普通 Astro 本地预览运行。
 
@@ -41,11 +41,51 @@ content: { source: 'local', locale: 'en' },
 inquiry: { provider: 'none', turnstileSiteKey: '' },
 ```
 
-本地内容在 src/data/catalog.ts。source=rxcms 时，在本地 .env 或平台构建环境设置 RXCMS_API_BASE（服务 origin）、RXCMS_SITE_KEY；通过分页 API 读取产品和文章，生成 Products / Articles。失败中止构建，不回退演示内容。媒体需稳定 HTTPS URL，当前保守拒绝带查询参数的媒体链接；富文本只支持安全 Markdown 子集，不执行 MDX。相关产品按 relatedSlugs 映射，schemaJson 保留供人工核对后合并，未自动覆盖默认 Product schema。
+本地产品在 src/data/local-products.json，由 src/data/catalog.ts 读取。source=rxcms 时，在本地 .env 或平台构建环境设置 RXCMS_API_BASE（服务 origin）、RXCMS_SITE_KEY；通过分页 API 读取产品和文章，生成 Products / Articles。失败中止构建，不回退演示内容。媒体需稳定 HTTPS URL，当前保守拒绝带查询参数的媒体链接；富文本只支持安全 Markdown 子集，不执行 MDX。相关产品按 relatedSlugs 映射，schemaJson 保留供人工核对后合并，未自动覆盖默认 Product schema。
 
 source=wordpress 时，配置 WORDPRESS_API_BASE（以 /wp-json/ 结尾）；需认证时成对配置 WORDPRESS_USERNAME、WORDPRESS_APPLICATION_PASSWORD。实验客户端仅把标准 posts 渲染到 Articles，产品为空；pages 客户端未连前端路由。产品插件、媒体展示、内链改写、多语言和交互插件需额外适配。WordPress 后台继续运行在其原 PHP/数据库宿主。
 
 凭证只在构建/服务端使用，不加 PUBLIC_ 前缀，不发聊天，不进入页面或配置文件。即使选 server，当前产品/文章路由仍是构建快照；需要实时 CMS 时另实现请求时取数与缓存策略。CMS 后台更新后需重建或配置已验证的发布钩子；只改后台不会自动产生 Git 提交。
+
+## 本地静态站开启多语言
+
+默认 `i18n: null`，继续使用原来的 `language: 'en'`，仍生成 7 个演示页面，没有语言切换器和 hreflang 标签。只配置一种语言也保持无前缀路由。若要英语加德语，在 site.config.mjs 中把 i18n 改为：
+
+```js
+i18n: {
+  defaultLocale: 'en',
+  locales: [
+    { code: 'en', htmlLang: 'en', name: 'English' },
+    { code: 'de', htmlLang: 'de', name: 'Deutsch', dir: 'ltr' },
+  ],
+},
+```
+
+同时保持 `content.source: 'local'`、`output: 'static'`。显式 i18n 优先于旧 language 字段；content.locale 是 CMS 取数设置，不是这份语言列表。code 是 URL 代码和字典键，htmlLang 是语言标签（也可为 en-US 等），name 是切换器显示名称，dir 可为 ltr 或 rtl，省略默认 ltr。默认语言在 `/`，其他语言在 `/de/` 等路径；Astro 使用 `prefixDefaultLocale: false`，不生成回退译文。RXCMS / WordPress 或 server 配置多种语言会报错，需单独接入。
+
+产品文件 src/data/local-products.json 的每条记录有一个共享 key 和 translations。示例结构如下，实际填写客户资料：
+
+```json
+{
+  "key": "sample-component",
+  "translations": {
+    "en": { "slug": "sample-component", "title": "Sample industrial component", "description": "Example only.", "specifications": [] },
+    "de": { "slug": "muster-bauteil", "title": "Industrielles Musterbauteil", "description": "Nur ein Beispiel.", "specifications": [] }
+  }
+}
+```
+
+同一产品的 key 不变，各语言 slug 可以不同。没有某种语言的版本就不填写该版本：不会生成该语言详情页，也不会加入 sitemap 或 hreflang；不要复制英文冒充译文。已有演示产品附带德语译文；构建测试另加一个仅英语产品验证缺译文情形，不增加默认演示页数。本地文章仍为空，本次没有新增文章编辑机制。
+
+新增一种语言时，让 AI 一起完成这三处修改：
+
+1. 在 site.config.mjs 的 i18n.locales 中加入该语言。
+2. 在 src/i18n/ui.mjs 的 dictionaries 中增加完整字典，按英语字典的字段逐项翻译。它包含导航、按钮、页脚、联系和隐私正文、404、询盘标签与结果提示、Cookie 文案。缺项构建会报出字段名，不会悄悄显示英文。客户上线前还需按真实处理方式完善各语言隐私说明。
+3. 在 src/data/local-products.json 添加已经准备好的产品译文，包括参数、可选 SEO 字段及附件说明；relatedSlugs 若使用，要填写本语言的产品 slug。然后运行 npm test、npm run check、npm run test:builds 和 npm run build 检查。
+
+多语言页头使用普通链接切换语言：有对应译文就打开该页，没有则打开目标语言首页。每页语言标记、规范网址和结构化数据使用实际语言，企业和网站标识保持稳定。hreflang 只关联真实存在的可索引译文；x-default 指向默认语言对应页，没有该版本时指向默认语言首页。sitemap 汇总各语言实际页面；收录开关、空文章页 noindex 和单一默认语言 404 保持原有规则。
+
+Cookie 同意框使用 vanilla-cookieconsent 内置 translations，初始语言跟随页面；同一域名的各语言共用根路径 Cookie、名称和 revision，不因切换语言重复索取同意。真实浏览器中的记忆、撤回、方向排版和平台上的缺页状态码仍需验收。
 
 ## Vercel：默认 static
 
@@ -112,6 +152,6 @@ Cloudflare：安装相容的 @astrojs/cloudflare（本次核对 14.4.6）及 Wra
 
 `npm test` 检查部署选择、SEO、同意控制、内容客户端和询盘代理；脱敏数据在 tests/fixtures。`npm run build` 检查静态生成。真实 CMS、通知、云端函数、DNS、浏览器交互和视觉效果需要实际验收，单元测试不能代替。
 
-开发/审核可再执行 `npm run check` 做类型检查，`npm run test:builds` 在临时目录运行六种脱敏静态构建，并检查生成文件没有测试密钥；不会连接真实 CMS 或启动预览服务器。依赖升级后同步 public/third-party-licenses.txt 中的完整声明。
+开发/审核可再执行 `npm run check` 做类型检查，`npm run test:builds` 在临时目录运行七种脱敏静态构建（含英语/德语），检查真实译文路由、SEO、切换链接及生成文件中没有测试密钥；另检查不支持的多语言配置和字典缺项会阻止构建。不会连接真实 CMS 或启动预览服务器。依赖升级后同步 public/third-party-licenses.txt 中的完整声明。
 
 依据：[Astro Vercel](https://docs.astro.build/en/guides/deploy/vercel/)、[Astro Cloudflare](https://docs.astro.build/en/guides/deploy/cloudflare/)、[Google Consent Mode](https://developers.google.com/tag-platform/security/guides/consent)。

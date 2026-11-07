@@ -41,7 +41,7 @@
 一般不需要换。真要换的话：
 
 1. 告诉 AI：“我要把网站从 Vercel 换到 Cloudflare”，它会改好配置，你 Commit、Push。
-2. 按新平台的文档（[Vercel](06-vercel.md) / [Cloudflare](07-cloudflare.md)）重新连接**同一个** GitHub 仓库。
+2. 按新平台的文档（[Vercel](07-vercel.md) / [Cloudflare](06-cloudflare.md)）重新连接**同一个** GitHub 仓库。
 3. 用过的环境变量（CMS 密钥、询盘设置）要在新平台重新填一遍。
 4. 先用新平台送的网址确认一切正常，再把域名[改绑](09-domain.md)过去。
 5. 旧平台先别删，等新平台稳定运行几天再删，出问题还能切回去。

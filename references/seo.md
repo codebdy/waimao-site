@@ -18,7 +18,9 @@
 
 ## 多语言
 
-只将已发布、可访问且有真实对应内容的语言页面加入 alternates；检查语言代码、互相引用、canonical 和 sitemap 一致。x-default 在有合适默认入口时使用。正文回退英文时按实际语言处理，不能只改 html lang。自引用和回链检查不应被扩写成未经证实的“单个缺项导致全站信号失效”。
+本地 static 模板已支持多语言；RXCMS / WordPress 内容源的多语言需要单独接入，不能仅增加配置就声称完成。只将页面清单中真实存在、可索引的对应译文加入 hreflang，包含自引用和互相回链；缺译文不生成详情页、不进 sitemap，也不以英文填充。x-default 指向默认语言对应页；该版本不存在时指向默认语言首页。单语言不输出 hreflang。
+
+每页 html lang、dir 和 WebPage / Article 的 inLanguage 使用实际语言；canonical 统一用 site 域名和当前语言路径。Organization / WebSite 的 @id 在各语言间保持稳定，面包屑使用本语言名称和路径。sitemap 汇总实际可索引页面；空文章列表和 404 仍排除，indexable=false 时保持 noindex 和空 sitemap。检查语言代码、自引用、回链和规范网址一致，不将单个缺项夸大成未经证实的全站信号失效。
 
 ## 结构化数据
 

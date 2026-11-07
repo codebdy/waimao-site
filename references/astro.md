@@ -16,9 +16,17 @@
 
 将 `assets/astro-starter/` 中源码复制到新项目目录；排除 node_modules、dist、.astro、.wrangler、.vercel 和本地环境文件。已有站点按需借鉴文件，不覆盖。
 
-模板包含首页、产品列表与详情、文章列表/详情、联系页、隐私页、404、robots、sitemap，以及共用页面壳和 SEO 输出。默认本地演示产品；content.source=rxcms 时使用已提供的构建期产品/文章适配，wordpress 为标准文章实验接入。可按 [inquiry](inquiry.md) 添加 static 独立询盘函数，按 [consent](consent.md) 配置同意框。尚未连接客户 CMS、未实现通用多语言路由或经过真实表单/邮件验收，不能混称为已上线客户站。
+模板包含首页、产品列表与详情、文章列表/详情、联系页、隐私页、404、robots、sitemap，以及共用页面壳和 SEO 输出。默认本地演示产品；content.source=rxcms 时使用已提供的构建期产品/文章适配，wordpress 为标准文章实验接入。本地 static 站已支持多语言；RXCMS、WordPress 内容源及 server 的多语言需要单独接入，配置多种语言时会明确报错。可按 [inquiry](inquiry.md) 添加 static 独立询盘函数，按 [consent](consent.md) 配置同意框。模板不等于已连接客户 CMS 或经过真实表单/邮件验收的上线客户站。
 
-在 `src/data/catalog.ts` 替换产品；在 `site.config.mjs` 设置生产域名、企业名、描述、语言和已确认邮箱。站点默认不可索引，正式开放时显式设 `indexable: true`，并删除演示内容。已有站点不套用这个模板开关。
+在 `src/data/local-products.json` 替换本地产品，由 `src/data/catalog.ts` 按语言读取；在 `site.config.mjs` 设置生产域名、企业名、描述、语言和已确认邮箱。站点默认不可索引，正式开放时显式设 `indexable: true`，并删除演示内容。已有站点不套用这个模板开关。
+
+## 本地静态站多语言
+
+`site.config.mjs` 的 `i18n: null` 兼容原 `language` 字段；显式配置 `i18n.defaultLocale` 和 `i18n.locales` 后优先使用它们。每个 locale 包含 URL `code`、`htmlLang`、显示 `name` 和可选 `dir`（默认 ltr）。Astro i18n 使用 `prefixDefaultLocale: false`：默认语言无前缀，其他语言为 `/<code>/`，不启用内容回退。
+
+`src/i18n/ui.mjs` 提供完整英语和德语界面字典，包括固定页正文、询盘提示和 Cookie 同意框；新增语言必须补全字典，缺项会在构建时报出完整字段名。CookieConsent 使用自身的多语言 translations，同一域名下各语言共用根路径的同意 Cookie。
+
+本地产品通过共享 `key` 关联 `translations[code]`，每个版本独立填写 slug、标题、描述及参数；没有译文就不生成该详情页。`catalog.ts` 的页面清单统一驱动非默认语言路由、sitemap、hreflang 和语言切换链接；有对应译文切到该页面，没有则切到目标语言首页。404 只生成默认语言版本。只启用一种语言时保留原来的无前缀路由，不输出 hreflang 或切换器，默认演示数据仍生成 7 个 HTML 页面。
 
 ## 路由与内容
 

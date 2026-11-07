@@ -68,17 +68,20 @@ const de = {
 export const dictionaries = { en, de };
 
 export function validateDictionaries(locales, available = dictionaries) {
-  const missing = [];
+  const missing = new Set();
   function check(reference, value, path) {
     for (const [key, expected] of Object.entries(reference)) {
       const name = `${path}.${key}`;
       if (typeof expected === 'string') {
-        if (typeof value?.[key] !== 'string' || !value[key].trim()) missing.push(name);
+        if (typeof value?.[key] !== 'string' || !value[key].trim()) missing.add(name);
       } else check(expected, value?.[key], name);
     }
   }
-  for (const locale of locales) check(en, available[locale.code], locale.code);
-  if (missing.length) throw new Error(`Missing UI translations in src/i18n/ui.mjs:\n${missing.join('\n')}`);
+  // Cross-check built-in dictionaries so a missing English key is also reported.
+  for (const locale of locales) {
+    for (const reference of Object.values(dictionaries)) check(reference, available[locale.code], locale.code);
+  }
+  if (missing.size) throw new Error(`Missing UI translations in src/i18n/ui.mjs:\n${[...missing].join('\n')}`);
 }
 
 export function useUi(locale = 'en') {

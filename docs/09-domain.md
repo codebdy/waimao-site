@@ -1,6 +1,6 @@
 # 注册域名并绑定到网站
 
-[← 返回首页](../README.md) · 相关：[发布到 Vercel](06-vercel.md) · [发布到 Cloudflare](07-cloudflare.md)
+[← 返回首页](../README.md) · 相关：[发布到 Vercel](07-vercel.md) · [发布到 Cloudflare](06-cloudflare.md)
 
 **这篇适合：** 网站已经用平台送的网址（`xxx.vercel.app` 或 `xxx.pages.dev`）发布成功，想换成自己域名（比如 `www.yourcompany.com`）的人。
 
@@ -95,7 +95,7 @@ AI 会更新网站里的正式地址（关系到 Google 收录），然后你 Co
 ## 完成标志
 
 - 浏览器输入 `yourcompany.com` 和 `www.yourcompany.com` 都能打开网站
-- 地址栏显示小锁头（HTTPS）。证书由平台**自动配置**，不用自己买，一般绑定后几分钟到几小时生效
+- 地址栏显示小锁头（SSL 证书生效，网址以 https 开头）。SSL 证书由平台**自动配置**，不用自己买，一般绑定后几分钟到几小时生效
 - 公司邮箱收发正常
 
 ## 常见问题

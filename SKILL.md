@@ -12,7 +12,7 @@ metadata:
 
 ## 面向零基础用户
 
-- 账号注册、安装、GitHub 上传与自动部署需要详细引导时，按主题使用 `docs/` 下的新手文档：[安装](docs/01-install.md)、[开始建站](docs/02-start.md)、[风格](docs/03-style.md)、[预览](docs/04-preview.md)、[GitHub](docs/05-github.md)、[Vercel](docs/06-vercel.md)、[Cloudflare](docs/07-cloudflare.md)、[更新](docs/08-update.md)、[域名](docs/09-domain.md)、[SEO](docs/seo.md)、[Cookie](docs/cookie.md)、[询盘](docs/inquiry.md)、[常见问题](docs/faq.md)、[功能一览](docs/features.md)。用户提问时引导到对应那一篇，不整篇复述。README 只做入口；生成网站仍须提供符合本项目实际配置的说明，不能只引用 skill 文档。
+- 账号注册、安装、GitHub 上传与自动部署需要详细引导时，按主题使用 `docs/` 下的新手文档：[安装](docs/01-install.md)、[开始建站](docs/02-start.md)、[风格](docs/03-style.md)、[预览](docs/04-preview.md)、[GitHub](docs/05-github.md)、[Vercel](docs/07-vercel.md)、[Cloudflare](docs/06-cloudflare.md)、[更新](docs/08-update.md)、[域名](docs/09-domain.md)、[SEO](docs/seo.md)、[Cookie](docs/cookie.md)、[询盘](docs/inquiry.md)、[常见问题](docs/faq.md)、[功能一览](docs/features.md)。用户提问时引导到对应那一篇，不整篇复述。README 只做入口；生成网站仍须提供符合本项目实际配置的说明，不能只引用 skill 文档。
 - 默认用户不懂终端、框架、API、环境变量、构建或部署。先用业务语言说明当前阶段和下一步，技术细节留给实施。需要用户操作时再解释术语，例如构建就是把内容生成网站文件，部署就是把网站放到可访问的平台。
 - 每轮只询问当前必要的少量信息，通常 1–3 个问题；已有资料先读取。不给用户整张技术配置问卷，不让其决定无关的底层实现。
 - 用户操作步骤必须说明：在哪个应用/页面或文件夹操作、输入/选择什么、成功后会看到什么。区分 AI 对话与终端命令；命令依据实际系统给出，路径使用本次真实目录，不让小白原样执行带占位符的命令。
@@ -42,7 +42,7 @@ metadata:
 
 - 新建 Astro 站默认 `output: 'static'`。内容来源（本地 / RXCMS API / WordPress REST API）、渲染模式（static / server）、部署平台（Vercel / Cloudflare）分别决定。CMS 不自动意味着 server。
 - 用户明确选择 server，或确认需要请求时渲染后，才切换模式及适配器。维护已有项目时保留现有模式，除非任务要求迁移。
-- 建站开始时询问目标部署平台；上下文已有答案就沿用。尚未决定时继续生成平台中立的 static 站，在部署前确定平台。切换平台通常只改集中配置；检查平台绑定、运行时 API、环境变量和重定向是否也需要迁移。
+- 不在建站开始时追问部署平台；上下文已有选择或用户已有 Vercel 账号就沿用。尚未决定时继续生成平台中立的 static 站；到发布阶段默认推荐 Cloudflare（免费版允许商业网站使用），并说明 Vercel 免费版（Hobby）仅限个人非商业用途、公司网站需付费版。切换平台通常只改集中配置；检查平台绑定、运行时 API、环境变量和重定向是否也需要迁移。
 - WordPress 作为 API 内容后端，网站前端仍用 Astro；凭证与 RXCMS 一样只放构建/服务端环境变量。默认不生成 WordPress 主题。WordPress 后台仍由已有 PHP / 数据库宿主运行，前端可以部署到 Vercel / Cloudflare。
 - 先读取目标项目指令、依赖、页面壳及真实接口。已有页面改动优先复用组件，保留范围外业务行为。SEO 优化不自动授权修改询盘字段和提交流程。
 - 不主动启动应用、dev/preview 服务器或后台进程。静态检查与针对性测试可以执行；需要运行页面时由用户启动或明确授权。没有实际验证就不宣称表单、线上响应或视觉效果已通过。

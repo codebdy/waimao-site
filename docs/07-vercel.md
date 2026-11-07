@@ -1,8 +1,10 @@
 # 发布到 Vercel
 
-[← 返回首页](../README.md) · 上一步：[上传到 GitHub](05-github.md) · 另一个选择：[发布到 Cloudflare](07-cloudflare.md)
+[← 返回首页](../README.md) · 上一步：[上传到 GitHub](05-github.md) · 另一个选择：[发布到 Cloudflare](06-cloudflare.md)
 
 **这篇适合：** 代码已经上传到 GitHub，选择用 Vercel 发布的人。Vercel 和 Cloudflare 选一个就行。
+
+> **推荐优先用 [Cloudflare](06-cloudflare.md)**：它的免费版公司网站也可以用。已经有 Vercel 付费账号，或团队本来就在用 Vercel，再选这篇；公司网站请用 Vercel 付费版。
 
 ## 发布前先让 AI 做一件事
 

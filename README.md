@@ -2,11 +2,17 @@
 
 把公司和产品资料交给 AI，它帮你做一个面向全球客户的**多语言外贸网站**，再一步步带你发布到网上。**不需要会写代码。**
 
+> ✅ **不用买服务器，起步零成本**：skill 免费开源，网站发布在 Cloudflare 免费版上就够用，全球访问快、自带 SSL 证书（网址以 https 开头，地址栏显示小锁）。
+>
+> ✅ **建站和站内技术 SEO 一套搞定**：不用再另外请人做 SEO 技术优化。
+>
+> ✅ **支持多语言**：英语、德语、西班牙语、阿拉伯语……各国客户都能搜到你。
+
 ## 你会得到什么
 
 - 一个多语言外贸网站：首页、产品列表、产品详情、联系页、隐私页。可以只做英文，也可以加上德语、西班牙语、阿拉伯语等，每种语言有独立网址，方便各国客户在 Google 搜到
 - 以后想改文字、换产品，直接告诉 AI 就行
-- 发布到 Vercel 或 Cloudflare，有自己的网址，可以绑定自己的域名
+- **不用买服务器，起步零成本**：发布到 Cloudflare 免费版就够用，访问快、自带 SSL 证书（网址以 https 开头，地址栏显示小锁），全球客户都能顺畅打开；也支持 Vercel。可以绑定自己的域名
 - **建站和站内技术 SEO 一套搞定**：标题描述、网站地图、规范网址、结构化数据、多语言标注等站内技术 SEO，AI 建站时一并做好，**不用再另外请人做** → [SEO](docs/seo.md)
 - 可选：Cookie 同意框、Google 统计、站内询盘表单
 - B2B 网站设计指导：AI 根据产品、采购人群和品牌资料安排配色、排版与询盘入口，无需另外安装设计 skill → [确定网站风格](docs/03-style.md)
@@ -15,7 +21,7 @@
 
 1. **安装**：下载安装包，放进你用的 AI 工具（Claude Code、Codex、WorkBuddy 等）→ [安装](docs/01-install.md)
 2. **建站**：把公司资料告诉 AI，让它生成网站，先在电脑上看效果 → [开始建站](docs/02-start.md)
-3. **发布**：上传到 GitHub，连接 Vercel 或 Cloudflare，网站就上线了 → [上传到 GitHub](docs/05-github.md)
+3. **发布**：上传到 GitHub，连接 Cloudflare（推荐，免费）或 Vercel，网站就上线了 → [上传到 GitHub](docs/05-github.md)
 
 👉 **下载安装包：** [GitHub Releases](https://github.com/codebdy/export-site/releases)（下载 `export-site-版本号.zip`，不要点绿色 Code 按钮）
 
@@ -29,8 +35,8 @@
 | 定网站的颜色、风格、Logo | [确定网站风格](docs/03-style.md) |
 | 在电脑上看网站、提修改意见 | [预览和修改](docs/04-preview.md) |
 | 把网站代码上传到 GitHub | [上传到 GitHub](docs/05-github.md) |
-| 发布到 Vercel | [发布到 Vercel](docs/06-vercel.md) |
-| 发布到 Cloudflare | [发布到 Cloudflare](docs/07-cloudflare.md) |
+| 发布到 Cloudflare（推荐，免费） | [发布到 Cloudflare](docs/06-cloudflare.md) |
+| 发布到 Vercel | [发布到 Vercel](docs/07-vercel.md) |
 | 改了内容让网站更新、换电脑、换平台 | [日常更新](docs/08-update.md) |
 | 买域名、把自己的域名绑到网站 | [注册域名并绑定](docs/09-domain.md) |
 | 选哪种方式管理内容 | [纯静态站](docs/content-static.md) · [RXCMS 站](docs/content-rxcms.md) · [WordPress 站](docs/content-wordpress.md) |
@@ -42,7 +48,8 @@
 ## 免费和收费
 
 - **这个 skill 免费开源**，可以直接用。
-- 你自己用的 AI 工具、域名、网站托管，按各家规则收费。
+- **网站托管可以不花钱**：Cloudflare 免费版就够起步使用。Vercel 免费版只限个人非商业用途，公司网站选 Vercel 要用付费版。
+- 你自己用的 AI 工具、域名，按各家规则收费。
 - 作者另外提供两项服务，需要时联系作者，不买也能正常使用这个 skill：
   - **RXCMS 平台**：后台管理内容、图片视频托管、询盘、邮件通知、智能体
   - **外贸 SEO 代运营**：专业 SEO 内容和高质量外链，交给我们做，你专心接询盘 → [了解服务](docs/seo.md#想把排名做上去外贸-seo-代运营)

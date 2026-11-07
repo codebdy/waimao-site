@@ -1,8 +1,10 @@
 # 发布到 Cloudflare
 
-[← 返回首页](../README.md) · 上一步：[上传到 GitHub](05-github.md) · 另一个选择：[发布到 Vercel](06-vercel.md)
+[← 返回首页](../README.md) · 上一步：[上传到 GitHub](05-github.md) · 另一个选择：[发布到 Vercel](07-vercel.md)
 
-**这篇适合：** 代码已经上传到 GitHub，选择用 Cloudflare 发布的人。Vercel 和 Cloudflare 选一个就行。
+**这篇适合：** 代码已经上传到 GitHub，选择用 Cloudflare 发布的人。**推荐新手选 Cloudflare**，Vercel 和 Cloudflare 选一个就行。
+
+> 💰 **不用买服务器，免费版就够用。** Cloudflare 的免费版就够一个外贸网站起步使用，公司网站也可以用，访问快、自带 SSL 证书（网址以 https 开头，地址栏显示小锁）。拿不定主意选哪个平台，就选 Cloudflare。
 
 ## 发布前先让 AI 做一件事
 
