@@ -23,6 +23,7 @@
 
 | 我想…… | 看这篇 |
 | --- | --- |
+| **先看看它都能做什么** | [功能一览](docs/features.md) |
 | 安装这个 skill | [安装](docs/01-install.md) |
 | 开始做网站，第一次跟 AI 怎么说 | [开始建站](docs/02-start.md) |
 | 定网站的颜色、风格、Logo | [确定网站风格](docs/03-style.md) |

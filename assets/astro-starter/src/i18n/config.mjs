@@ -1,5 +1,7 @@
 import settings from '../../site.config.mjs';
 
+/** @typedef {{ code: string, htmlLang: string, name: string, dir: 'ltr' | 'rtl' }} Locale */
+/** @returns {{ defaultLocale: string, locales: Locale[] }} */
 export function resolveI18n(settings, env = process.env) {
   const legacy = settings.language || 'en';
   const config = settings.i18n ?? {
