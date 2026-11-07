@@ -49,7 +49,7 @@ Skill 本身开源；AI 工具、域名、托管套餐和可选 CMS 可能收费
 4. 登录后确认右上角能看到自己的头像或账号菜单。记住用户名，以后仓库会归在这个账号下。
 5. 按 GitHub 提示设置双重验证并保存恢复码。无需为了开始建站购买 GitHub 企业版。
 
-**完成标志：**你能登录 GitHub，邮箱已验证。此时不用先手动创建空仓库，第五步会通过 Desktop 上传网站。[官方注册说明](https://docs.github.com/en/account-and-profile/how-tos/account-management/creating-an-account-on-github)
+**完成标志**：你能登录 GitHub，邮箱已验证。此时不用先手动创建空仓库，第五步会通过 Desktop 上传网站。[官方注册说明](https://docs.github.com/en/account-and-profile/how-tos/account-management/creating-an-account-on-github)
 
 ### 1.3 安装你选用的工具
 
@@ -93,7 +93,7 @@ my-export-site/
 4. 用所选 AI 工具打开 `my-export-site` 项目。使用命令行工具时，在该文件夹打开终端。Windows 可在文件资源管理器地址栏输入 `powershell` 后回车，其他系统用终端进入该文件夹，再按工具说明启动。例如 Claude Code 在终端输入 `claude`。
 5. 在 AI 工具的对话框中，按表里的方式调用 skill。Claude Code 输入 `/export-site`，Codex 输入 `$export-site` 或通过 `/skills` 选择，WorkBuddy 用自然语言请它使用 export-site。这些调用内容应填在 AI 对话框中。
 
-**完成标志** AI 能读取该 skill，并开始询问建站资料。找不到时按表检查所选工具的放置位置，确认 `export-site/SKILL.md` 的层级正确，必要时重新进入会话或重新加载技能。也可以使用表中兜底办法，直接请 AI 读取实际路径下的 `SKILL.md`。
+**完成标志**：AI 能读取该 skill，并开始询问建站资料。找不到时按表检查所选工具的放置位置，确认 `export-site/SKILL.md` 的层级正确，必要时重新进入会话或重新加载技能。也可以使用表中兜底办法，直接请 AI 读取实际路径下的 `SKILL.md`。
 
 DeepSeek 是模型，不是安装 skill 的工具。DeepSeek 网页/App 只能聊天，不能读写电脑文件，装不了 skill，也生成不了网站文件。要用 DeepSeek，需要在支持 skill、能读写本地文件的工具中选择 DeepSeek 模型。例如社区工具 DeepSeek Harness 读取 `.agents/skills/`，未实测。
 
@@ -123,7 +123,7 @@ DeepSeek 是模型，不是安装 skill 的工具。DeepSeek 网页/App 只能�
 4. 告诉 AI 哪个页面、文字或图片要改，改完再查看。发布前让 AI 执行 `npm test`、`npm run build` 等必要检查。
 5. 检查真实公司资料、产品参数、联系方式、图片使用权及隐私说明。联系页的邮件链接是打开访客邮件软件；站内询盘表单则需要另外配置函数服务。
 
-**完成标志：**你看过本地页面，资料符合实际，构建检查通过。静态预览不运行平台询盘函数，表单到 RXCMS 的真实提交要在客户的部署环境另行验收。
+**完成标志**：你看过本地页面，资料符合实际，构建检查通过。静态预览不运行平台询盘函数，表单到 RXCMS 的真实提交要在客户的部署环境另行验收。
 
 <a id="github-upload"></a>
 ## 第五步：把网站代码上传 GitHub
@@ -152,7 +152,7 @@ Commit 只是保存本地版本，下一步才上传。
 2. 普通客户网站建议勾选 **Keep this code private**，代码不对所有人公开。网站上线后仍可供访客访问；代码私有与网页公开不冲突。
 3. 确认归属自己的账号，点击发布。用 **Repository → View on GitHub** 打开仓库页面。[官方发布说明](https://docs.github.com/en/desktop/adding-and-cloning-repositories/adding-an-existing-project-to-github-using-github-desktop)
 
-**完成标志：**GitHub 仓库网页能看到 package.json、src 等。采用本指南独立 website 仓库时，它们直接在仓库最外层；平台的 Root Directory 留默认即可。只有实际上传了外层项目、package.json 在 website 里面时，才填 `website`。
+**完成标志**：GitHub 仓库网页能看到 package.json、src 等。采用本指南独立 website 仓库时，它们直接在仓库最外层；平台的 Root Directory 留默认即可。只有实际上传了外层项目、package.json 在 website 里面时，才填 `website`。
 
 不要另建同名空仓库再强行推送。已有远程仓库时沿用 **Push origin**，请 AI 根据现有状态解释；不要用强制推送覆盖历史。
 
@@ -181,7 +181,7 @@ AI 应先在网站 site.config.mjs 中设置 output 为 static、deployTarget �
 6. 点击 **Deploy**。构建完成后进入成功的部署详情，打开平台提供的网站链接。若失败，查看 Build Logs 中第一条实际错误，交给 AI 排查，不重复乱改配置。
 7. 确认项目的 Production Branch 对应已上传的分支。本指南使用 main 时即为 main。以后 Push origin 到这个分支，会触发新的生产部署；其他分支按平台规则用于预览。
 
-**完成标志：**控制台显示部署成功，实际网址可以访问，页面和联系方式正确。初次使用平台网址也要让 AI 将 site.config.mjs 的 `site` 改成实际正式地址再提交；演示内容尚未替换时保持不收录。[Vercel Git 部署说明](https://vercel.com/docs/getting-started-with-vercel)
+**完成标志**：控制台显示部署成功，实际网址可以访问，页面和联系方式正确。初次使用平台网址也要让 AI 将 site.config.mjs 的 `site` 改成实际正式地址再提交；演示内容尚未替换时保持不收录。[Vercel Git 部署说明](https://vercel.com/docs/getting-started-with-vercel)
 
 <a id="cloudflare"></a>
 ## 第六步 B：注册 Cloudflare 并自动部署
@@ -213,7 +213,7 @@ AI 应先在网站 site.config.mjs 中设置 output 为 static、deployTarget �
 4. 添加必要的 CMS 构建环境变量，默认本地内容可跳过。提交 package-lock.json，保留平台的依赖安装步骤；不要关闭安装后直接运行构建。
 5. 点击 **Save and Deploy**，查看构建记录。成功后打开平台分配的 `pages.dev` 网站地址；让 AI 更新网站 `site` 配置为实际正式网址，再提交构建。
 
-**完成标志：**Pages 显示成功部署，网页能打开。Git 连接会在推送代码时自动构建；为了使用这条自动化路线，从一开始就选择 Connect to Git。[Cloudflare Git 集成](https://developers.cloudflare.com/pages/get-started/git-integration/)
+**完成标志**：Pages 显示成功部署，网页能打开。Git 连接会在推送代码时自动构建；为了使用这条自动化路线，从一开始就选择 Connect to Git。[Cloudflare Git 集成](https://developers.cloudflare.com/pages/get-started/git-integration/)
 
 这里上传 GitHub 的是源码，Cloudflare 会自行生成 dist。控制台拖拽 dist 是另一种手动发布路线，不能代替本文的 Git 自动化；**含 Pages Functions 的项目也不能只在控制台拖入 dist**，应使用 Git 集成或受支持的 Wrangler 部署。[Functions 部署说明](https://developers.cloudflare.com/pages/functions/get-started/)
 
@@ -301,11 +301,11 @@ google: {
 },
 ```
 
-- **开启：**将 enabled 设为 true。只有你确实使用这些服务，才填写自己的 GA4 `G-…` 和 Google Ads `AW-…` 标识。它们是公开标签 ID，不是 CMS 密钥。没有 Ads 就保持 adsId 为空。
-- **关闭：**将 enabled 设为 false。模板同时停用同意框和这套 Google 标签集成，避免关了弹窗却继续跟踪。
-- **让访客改选择：**开启时，网页页脚有 Cookie settings，点击可重新设置。统计和广告分开选择；撤回已同意的项目会刷新页面，让新选择生效。
-- **修改后上线：**自己预览，再 Commit、Push，等待平台部署成功。已经保存选择的浏览器可能不再自动弹窗，可用页脚重新打开；测试首次访问可用无痕窗口。
-- **用途有实质变化：**让 AI 更新说明，并将 revision 增加，使旧选择重新征求。不要为让弹窗反复出现而每次随意改版本。
+- **开启**：将 enabled 设为 true。只有你确实使用这些服务，才填写自己的 GA4 `G-…` 和 Google Ads `AW-…` 标识。它们是公开标签 ID，不是 CMS 密钥。没有 Ads 就保持 adsId 为空。
+- **关闭**：将 enabled 设为 false。模板同时停用同意框和这套 Google 标签集成，避免关了弹窗却继续跟踪。
+- **让访客改选择**：开启时，网页页脚有 Cookie settings，点击可重新设置。统计和广告分开选择；撤回已同意的项目会刷新页面，让新选择生效。
+- **修改后上线**：自己预览，再 Commit、Push，等待平台部署成功。已经保存选择的浏览器可能不再自动弹窗，可用页脚重新打开；测试首次访问可用无痕窗口。
+- **用途有实质变化**：让 AI 更新说明，并将 revision 增加，使旧选择重新征求。不要为让弹窗反复出现而每次随意改版本。
 
 你不懂配置时可以直接让 AI 开启、关闭或填写已取得的公开 ID。真实公司隐私页需要按实际数据处理补充；模板的 `/privacy-policy/` 仍是待完善内容。
 
@@ -330,4 +330,4 @@ google: {
 
 交付完成时，你应该拿到实际可访问的网址、对应源码仓库、项目自己的 README，并知道如何预览、更新和重新发布。有询盘时还要有真实验收记录；未验证项应明确列出。遇到问题把错误文字交给 AI，先遮住密码、密钥和客户个人信息。
 
-需要专业 SEO skills，或开通提供图片/视频托管、询盘、邮件通知及智能体接入的 RXCMS，可在 [项目介绍中的作者二维码](../README.md#联系作者) 联系作者。基础开源 skill 不强制购买这些服务。
+作者拥有 18 年外贸经验、25 年软件开发经验。欢迎通过 [作者微信二维码](../README.md#联系作者) 交流独立站、SEO、AI 工具与海外营销；想加入外贸营销群，也可以联系作者，和同行一起分享经验、讨论问题。

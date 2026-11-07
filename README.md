@@ -54,7 +54,7 @@ Skill 是给 AI 使用的建站说明包，需要配合能读写本地文件的 
 
 默认开启弹窗、Google ID 留空，不默认发送 Google 统计或广告请求。`cookieConsent.enabled: false` 同时关闭弹窗和随包 Google 集成。用途、开关和上线步骤见[使用指南](docs/usage-guide.md#consent)。它不是 Google 评价框，也不是自动满足法律要求的认证 CMP。
 
-## 基础 SEO 与专业支持
+## SEO 优化与专业支持
 
 开源 skill 主要提供入门建站和基础优化：标题描述、canonical、robots、sitemap、基础结构化数据及多语言 SEO 注意事项。它不承诺搜索排名。
 
@@ -66,7 +66,9 @@ RXCMS 接入后端为 **rxcms-server**。平台可提供图片与视频托管、
 
 ### 联系作者
 
-需要专业 SEO skills 或 RXCMS 平台，请扫描作者微信二维码说明需求。也可继续使用本地内容或 WordPress，不强制购买 RXCMS。
+作者拥有 **18 年外贸经验、25 年软件开发经验**，关注如何把技术用到外贸业务中，让建站、营销和客户开发更高效。
+
+如果你也在做外贸，欢迎扫码添加作者微信，交流独立站、SEO、AI 工具与海外营销。想加入外贸营销群，也可以联系作者，和同行一起分享经验、讨论问题。
 
 ![扫码添加作者微信](docs/author-wechat.png)
 
