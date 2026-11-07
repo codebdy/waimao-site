@@ -12,7 +12,7 @@
 
 ## 先看一个用它做出来的网站
 
-- 演示网站：<https://foodm-gamma.vercel.app/>（虚构的食品机械公司，用 AI 从一句话需求开始制作）
+- 演示网站：<https://foodm.yizhanfei.online/>（虚构的食品机械公司，用 AI 从一句话需求开始制作）
 - 对应的网站代码：<https://github.com/codebdy/foodm>
 
 演示站里的公司、产品和图片都是测试用的，图片为 AI 生成的概念图，不代表真实产品。
