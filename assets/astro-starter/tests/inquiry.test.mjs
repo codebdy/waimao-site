@@ -76,7 +76,7 @@ test('static inquiry functions select only one platform and never load an SSR ad
 });
 
 test('configuration switch cleans only generated endpoints and fails builds on stale files', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'export-site-inquiry-'));
+  const root = await mkdtemp(join(tmpdir(), 'waimao-site-inquiry-'));
   const settings = { output: 'static', deployTarget: 'vercel', inquiry: { provider: 'rxcms', turnstileSiteKey: 'public-test-key' } };
   await assert.rejects(configureInquiry(root, settings, {}, true));
   await configureInquiry(root, settings);
@@ -95,7 +95,7 @@ test('configuration switch cleans only generated endpoints and fails builds on s
 });
 
 test('disabled inquiry leaves user-owned routing/endpoint files alone instead of failing the build', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'export-site-inquiry-'));
+  const root = await mkdtemp(join(tmpdir(), 'waimao-site-inquiry-'));
   await mkdir(join(root, 'public'), { recursive: true });
   const own = JSON.stringify({ version: 1, include: ['/api/other'], exclude: [] });
   await writeFile(join(root, 'public/_routes.json'), own);

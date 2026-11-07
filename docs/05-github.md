@@ -12,8 +12,8 @@ GitHub 相当于网站代码的“云盘”。上传后，Cloudflare 或 Vercel 
 
 ## 第一步：注册 GitHub
 
-1. 打开 [GitHub 注册页](https://github.com/signup)，用邮箱注册（已有账号直接登录）。
-2. 去邮箱点 GitHub 发来的验证链接。收不到就看看垃圾邮件。
+1. 打开 [GitHub 注册页](https://github.com/signup)，**推荐点 Continue with Google，用谷歌账号注册**，以后也用它登录（已有账号直接登录）。没有谷歌账号也可以用邮箱注册。
+2. 按页面提示完成验证；用邮箱注册的，去邮箱点 GitHub 发来的验证链接，收不到就看看垃圾邮件。
 3. 按 GitHub 提示开启双重验证，**把恢复码保存好**。
 
 **完成标志：** 能登录 GitHub，右上角能看到你的头像。
@@ -28,12 +28,12 @@ GitHub Desktop 是一个用按钮操作的软件，不用敲命令。
 
 ## 第三步：把网站加进 Desktop
 
-> **只上传 `website` 文件夹**，不要上传整个 `my-export-site`（里面有 skill 和你的原始资料）。
+> **只上传 `website` 文件夹**，不要上传整个 `my-waimao-site`（里面有你的原始资料）。
 
-1. 在 Desktop 点菜单 **File → Add local repository**，选择 `my-export-site/website` 文件夹。
+1. 在 Desktop 点菜单 **File → Add local repository**，选择 `my-waimao-site/website` 文件夹。
 2. 如果提示“这个文件夹还不是仓库”，点提示里的 **create a repository**。
-   - 弹出的窗口里，Name 填 `website`，Local path 选 `my-export-site`（也就是 website 的上一层）。
-   - 确认最后的路径还是 `my-export-site/website`，没有多套一层。
+   - 弹出的窗口里，Name 填 `website`，Local path 选 `my-waimao-site`（也就是 website 的上一层）。
+   - 确认最后的路径还是 `my-waimao-site/website`，没有多套一层。
    - 拿不准就让 AI 帮你：“请只在 website 文件夹里初始化 Git 仓库”。
 3. 看左边 **Changes** 列表，应该有 `src`、`package.json`、`site.config.mjs` 这些。**如果看到 `.env`、`node_modules`、`dist`，先停下来问 AI**，这些不能上传。
 

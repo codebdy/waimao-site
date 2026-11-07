@@ -8,16 +8,22 @@ import { localePath } from '../../i18n/urls.mjs';
 import { useUi } from '../../i18n/ui.mjs';
 import { canonicalUrl } from '../../lib/seo.mjs';
 import settings from '../../../site.config.mjs';
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
 export const prerender = true;
 export function getStaticPaths() { return posts.map(post => ({ params: { slug: post.slug }, props: { post } })); }
 interface Props { post: Post; locale?: string; }
 const { post, locale = i18n.defaultLocale } = Astro.props;
 const t = useUi(locale);
 const url = canonicalUrl(postPath(post.slug, locale), settings.site);
+const localImages = post.images ?? [];
+const optimized = await Promise.all(localImages.map(image => getImage({ src: image.src, width: Math.min(960, image.src.width), format: image.src.format === 'svg' ? 'svg' : 'webp', quality: 80 })));
+const Content = post.localEntry ? (await render(post.localEntry)).Content : null;
 const schema = [
   { '@type': 'Article', '@id': `${url}#article`, headline: post.title, url, inLanguage: i18n.locales.find(item => item.code === locale)!.htmlLang,
     mainEntityOfPage: { '@id': `${url}#webpage` },
     ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
+    ...(optimized.length ? { image: optimized.map(image => canonicalUrl(image.src, settings.site)) } : {}),
   },
   { '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: [
     { '@type': 'ListItem', position: 1, name: t.nav.home, item: canonicalUrl(localePath('/', locale), settings.site) },
@@ -28,5 +34,11 @@ const schema = [
 ---
 <SiteLayout locale={locale} title={post.seoTitle || post.title} description={post.seoDescription || post.description} schema={schema}>
   <PageHeader title={post.title} description={post.description} />
-  <Container class="section content-body"><div set:html={post.contentHtml} /></Container>
+  <Container class="section content-body">
+    {localImages.map((image, index) => <Image src={image.src} alt={image.alt} format={image.src.format === 'svg' ? 'svg' : 'webp'} quality={80}
+      width={Math.min(960, image.src.width)} widths={[320, 640, 960].filter(width => width <= image.src.width)}
+      sizes="(max-width: 1024px) 92vw, 960px" class="mb-6 h-auto max-w-full rounded-lg"
+      loading={index === 0 ? 'eager' : 'lazy'} fetchpriority={index === 0 ? 'high' : undefined} />)}
+    {Content ? <Content /> : <div set:html={post.contentHtml} />}
+  </Container>
 </SiteLayout>

@@ -1,18 +1,18 @@
 ---
-name: export-site
+name: waimao-site
 description: 创建或改造面向海外采购商的 B2B 外贸网站，使用 Astro + Tailwind，内容来源可选本地文件、RXCMS API 或 WordPress REST API（实验，仅标准文章），覆盖页面规划、B2B 视觉设计、询盘内容和完整的站内技术 SEO（元信息、canonical、sitemap、结构化数据、多语言 hreflang）。新建站默认 static，可按需求选择 server，并支持 Vercel / Cloudflare 部署配置与迁移。用于外贸建站和相关实现，不代替独立的营销运营或通用 CMS 管理。
 license: MIT; adapted third-party portions retain their licenses (see THIRD_PARTY_NOTICES.md)
 metadata:
   version: "0.1.0"
 ---
 
-# Export Site · 外贸建站
+# waimao-site · 外贸建站
 
 交付能被采购商理解、能维护内容、具备真实询盘路径的网站。根据现有项目和用户资料实施，不将示例企业当成真实客户。
 
 ## 面向零基础用户
 
-- 账号注册、安装、GitHub 上传与自动部署需要详细引导时，按主题使用 `docs/` 下的新手文档：[安装](docs/01-install.md)、[开始建站](docs/02-start.md)、[风格](docs/03-style.md)、[预览](docs/04-preview.md)、[GitHub](docs/05-github.md)、[Vercel](docs/07-vercel.md)、[Cloudflare](docs/06-cloudflare.md)、[更新](docs/08-update.md)、[域名](docs/09-domain.md)、[SEO](docs/seo.md)、[Cookie](docs/cookie.md)、[询盘](docs/inquiry.md)、[常见问题](docs/faq.md)、[功能一览](docs/features.md)。用户提问时引导到对应那一篇，不整篇复述。README 只做入口；生成网站仍须提供符合本项目实际配置的说明，不能只引用 skill 文档。
+- 账号注册、安装、GitHub 上传与自动部署需要详细引导时，按主题使用 `docs/` 下的新手文档：[开始前准备](docs/00-prepare.md)、[安装](docs/01-install.md)、[开始建站](docs/02-start.md)、[风格](docs/03-style.md)、[预览](docs/04-preview.md)、[GitHub](docs/05-github.md)、[Vercel](docs/07-vercel.md)、[Cloudflare](docs/06-cloudflare.md)、[更新](docs/08-update.md)、[域名](docs/09-domain.md)、[SEO](docs/seo.md)、[Cookie](docs/cookie.md)、[询盘](docs/inquiry.md)、[常见问题](docs/faq.md)、[功能一览](docs/features.md)、[使用小技巧](docs/tips.md)。用户提问时引导到对应那一篇，不整篇复述。README 只做入口；生成网站仍须提供符合本项目实际配置的说明，不能只引用 skill 文档。
 - 默认用户不懂终端、框架、API、环境变量、构建或部署。先用业务语言说明当前阶段和下一步，技术细节留给实施。需要用户操作时再解释术语，例如构建就是把内容生成网站文件，部署就是把网站放到可访问的平台。
 - 每轮只询问当前必要的少量信息，通常 1–3 个问题；已有资料先读取。不给用户整张技术配置问卷，不让其决定无关的底层实现。
 - 用户操作步骤必须说明：在哪个应用/页面或文件夹操作、输入/选择什么、成功后会看到什么。区分 AI 对话与终端命令；命令依据实际系统给出，路径使用本次真实目录，不让小白原样执行带占位符的命令。
@@ -51,9 +51,11 @@ metadata:
 ## 工作流程
 
 1. 识别新建还是维护，按上面的选择规则说明建站方式和默认值。读取已有资料，确定企业类型、目标采购商、产品、市场语言、内容来源和主要转化目标。只询问影响当前决策的缺项；未知认证、交期和产能不能编造。
-2. 规划页面和内容，读取 [planning](references/planning.md)。新建或视觉改造时读取 [design](references/design.md)，围绕产品展示、采购信息和询盘提出适合客户的视觉方向，再落实到页面。使用者无需另外安装设计 skill；简单修复不强制重新做全站策划或设计。
+2. 规划页面和内容，读取 [planning](references/planning.md) 和 [页面蓝图](references/page-blueprints.md)（各类页面的模块、文案规则、title 写法与结构化数据）。新建或视觉改造时读取 [design](references/design.md)，围绕产品展示、采购信息和询盘提出适合客户的视觉方向，再落实到页面。使用者无需另外安装设计 skill；简单修复不强制重新做全站策划或设计。
 3. 读取 [astro](references/astro.md) 实现共用前端；内容来源选 RXCMS 时再读 [rxcms](references/rxcms.md)，选 WordPress API 时再读 [wordpress](references/wordpress.md)。只加载相关内容源分支。
 4. 生成或修改页面、内容和真实询盘路径。新建 Astro 可使用 [starter](assets/astro-starter/README.md)，默认单语言，本地 static 站已支持多语言；RXCMS / WordPress 内容源的多语言需要单独接入。模板不是完成的客户网站；不要覆盖已有项目。
+   - local 产品和文章使用 Astro 内容集合：`src/content/products/<语言>/*.md`、`src/content/articles/<语言>/*.md`，frontmatter 校验必填字段，共享 key 关联译文；不再使用产品 JSON。缺译文不生成页面，本地文章存在时接通栏目及详情。RXCMS / WordPress 保留原适配流程。
+   - 本地页面图片放 `src/assets/`，集合图片用 `image()` 引用并填写 alt，页面用 `astro:assets` 的 Image / Picture 输出宽高和多尺寸，栅格图优先 WebP。首屏主图 eager + high，其余 lazy。大型 SVG、固定地址的 favicon 和分享图保留 public；远程 CMS 图片保持原处理。不要生成虚构品牌素材。
    - 启用 RXCMS 询盘时读取 [inquiry](references/inquiry.md)。static 可以独立配置询盘函数，不因此切换 server；配置后先生成对应平台入口并提交，再部署。保存、垃圾判定和通知结果分别表达，旧后端通知结果未提供就标未知。客户建站到联调阶段再取得测试站点与收件人，不能要求 skill 使用者在尚未建站时提供这些信息。
    - 涉及 Cookie 弹窗、Google 统计或广告时读取 [consent](references/consent.md)。新模板有默认开启但无 Google ID 的同意框；解释用途和开关，沿用用户已有选择。关闭同时停用随包标签，不注入真实站点的跟踪 ID；交付文档写清配置、数据用途和未验证项。
 5. 涉及路由、索引、内容或 SEO 输出时读取 [seo](references/seo.md)。将发现转为代码修复或有依据的待办，不只输出评分。
@@ -61,8 +63,20 @@ metadata:
    - 新手优先使用 GitHub 仓库连接平台的自动构建路线，说明保存、Commit、Push、部署的区别；不为了这条现成功能额外搭建 GitHub Actions。Cloudflare 注册与连接 GitHub 分开解释。客户网站仓库与开源 skill 仓库分开。
 7. 按 [verification](references/verification.md) 检查本次改动，报告已验证、未验证和需要用户提供的事项。
 
+## 新建站分阶段推进
+
+新建网站时按阶段带用户往前走。每个阶段结束时用业务语言告诉用户：做了什么、需要他确认或补充什么、下一步是什么；用户确认或说“继续”后再进入下一阶段；设计阶段用户没有偏好、也没有影响选择的缺项时，按推荐方案直接继续，不额外要求确认。用户已给齐资料并要求一次做完时，可连续推进，但仍在最后逐项汇报。
+
+1. **了解业务**：读取已有资料，补问影响建站的缺项（通常 1–3 个问题）：卖什么、卖给谁、哪些国家和语言、怎么接询盘。说明默认方案（纯静态站 + static + 英文），用户另有要求再调整。
+2. **规划页面**：按 [planning](references/planning.md) 和 [页面蓝图](references/page-blueprints.md) 列出页面清单、导航和网址，标出每页还缺哪些资料。请用户确认页面清单。
+3. **定设计方向**：按 [design](references/design.md) 用文字给出推荐方向（颜色、字体、首页内容顺序、图片表现）及理由；用户没有偏好就按推荐继续。用户给出喜欢的参照网站或主题时，按 design 的“风格复刻”只复刻风格、不复制素材。需要 AI 生成图片时，先在网站项目的 `design/image-prompts.md` 定好统一图片风格，并在其中记录每张图的提示词。
+4. **生成网站**：从 starter 生成项目，按页面蓝图写各页内容和 SEO 元信息；资料缺失处保留结构并汇总待补清单，不编造。
+5. **用户预览与修改**：告诉用户如何在网站目录启动预览、看哪些页面，按反馈修改。
+6. **上线前检查**：按 [verification](references/verification.md) 的“上线前检查清单”逐项检查，用业务语言报告通过项、待补项和需要用户确认的事。
+7. **发布与收录**：按 [deployment](references/deployment.md) 引导发布（默认推荐 Cloudflare）；资料真实、正式域名可访问后再开启收录，并引导提交 Google Search Console。
+
 ## 交付
 
-交付目标项目源码、项目自己的使用及部署 README、必要配置和验证结果。提示词直接在对话中提供；不要为了交付创建提示词文件。客户资料与密钥不放进 skill 源码仓库。
+交付目标项目源码、项目自己的使用及部署 README、必要配置和验证结果。提示词直接在对话中提供；不要为了交付创建提示词文件（例外：网站项目内用于统一图片风格的 `design/image-prompts.md` 是网站自身的资料，按 design 规则维护）。客户资料与密钥不放进 skill 源码仓库。
 
 上游方法与许可见 [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md)。核心不要求 Claude 专用工具、额外 SEO skills、付费 API 或自动多代理编排；有可用工具时再增强。

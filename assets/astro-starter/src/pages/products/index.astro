@@ -10,8 +10,9 @@ interface Props { locale?: string; }
 const { locale = i18n.defaultLocale } = Astro.props;
 const t = useUi(locale);
 const { products } = getCatalog(locale);
+const firstImage = products.findIndex(product => product.images?.length);
 ---
 <SiteLayout locale={locale} title={t.products.title} description={t.products.description}>
   <PageHeader title={t.products.title} description={t.products.intro} />
-  <section class="section" aria-label={t.products.catalog}><Container class="grid gap-6 md:grid-cols-2">{products.map(product => <ProductCard product={product} locale={locale} />)}</Container></section>
+  <section class="section" aria-label={t.products.catalog}><Container class="grid gap-6 md:grid-cols-2">{products.map((product, index) => <ProductCard product={product} locale={locale} priority={index === firstImage} />)}</Container></section>
 </SiteLayout>

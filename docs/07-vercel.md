@@ -14,7 +14,7 @@ AI 会把 `site.config.mjs` 里的发布平台设成 Vercel。改完后按[上�
 
 ## 关于费用
 
-Vercel 的免费版（Hobby）**只限个人非商业用途**。公司外贸网站属于商业用途，应该选付费的 Pro 套餐。[官方说明](https://vercel.com/docs/plans/hobby)
+Vercel 也有免费版（Hobby），但许可更严格：**只限个人非商业用途**。个人项目可以用免费版；公司外贸网站属于商业用途，按条款应该选付费的 Pro 套餐，或者改用免费版就允许商业网站的 Cloudflare。按自己的情况选择。[官方说明](https://vercel.com/docs/plans/hobby)
 
 ## 第一步：注册并连接 GitHub
 

@@ -38,4 +38,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           VERSION="${TAG#v}"
-          gh release upload "$TAG" "releases/export-site-${VERSION}.zip" "releases/export-site-${VERSION}.zip.sha256" --clobber
+          gh release upload "$TAG" "releases/waimao-site-${VERSION}.zip" "releases/waimao-site-${VERSION}.zip.sha256" --clobber

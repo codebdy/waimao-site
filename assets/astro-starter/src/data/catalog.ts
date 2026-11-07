@@ -1,11 +1,15 @@
 import settings from '../../site.config.mjs';
 import { loadRXCatalog } from '../lib/content/rxcms.mjs';
 import { createWordPressClient, mapWordPressPost } from '../lib/content/wordpress.mjs';
-import localProducts from './local-products.json';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import type { ImageMetadata } from 'astro';
+import { validateLocalEntries } from '../lib/content/local.mjs';
 import { i18n } from '../i18n/config.mjs';
 import { localePath } from '../i18n/urls.mjs';
 export interface Product {
   key?: string;
+  images?: { src: ImageMetadata; alt: string }[];
+  localEntry?: CollectionEntry<'products'>;
   slug: string;
   title: string;
   description: string;
@@ -13,33 +17,26 @@ export interface Product {
   contentHtml?: string;
   extraContentHtml?: string[];
   media?: { url: string; alt: string; name?: string; type: string }[];
-  attachments?: { url: string; alt: string; name?: string; type: string }[];
+  attachments?: { url: string; alt?: string; name?: string; type?: string }[];
   relatedSlugs?: string[];
   seoTitle?: string;
   seoDescription?: string;
 }
 
-export interface Post { slug: string; title: string; description: string; contentHtml: string; seoTitle?: string; seoDescription?: string; publishedAt?: string; }
+export interface Post { key?: string; slug: string; title: string; description: string; contentHtml?: string; seoTitle?: string; seoDescription?: string; publishedAt?: string; images?: { src: ImageMetadata; alt: string }[]; localEntry?: CollectionEntry<'articles'>; }
 interface Catalog { products: Product[]; posts: Post[]; }
 
-// Fictional translations only. Missing versions are omitted, never filled from another locale.
-function localCatalog(locale: string): Catalog {
-  const keys = new Set(), slugs = new Set();
-  const products: Product[] = [];
-  for (const record of localProducts as { key: string; translations: Record<string, Product> }[]) {
-    if (!record.key || keys.has(record.key)) throw new Error(`Missing or duplicate local product key: ${record.key}`);
-    keys.add(record.key);
-    const version = record.translations[locale];
-    if (!version) continue;
-    if (!version.slug || ['.', '..'].includes(version.slug) || version.slug.includes('/') || version.slug.includes('\\') || slugs.has(version.slug)) throw new Error(`Invalid or duplicate product slug for ${locale}: ${version.slug}`);
-    if (!version.title?.trim() || !version.description?.trim() || !Array.isArray(version.specifications)) throw new Error(`Incomplete local product ${record.key}/${locale}: title, description and specifications are required.`);
-    slugs.add(version.slug);
-    products.push({ ...version, key: record.key });
-  }
-  return { products, posts: [] };
-}
-
 const source = settings.content.source;
+const localProducts = source === 'local' ? await getCollection('products') : [];
+const localArticles = source === 'local' ? await getCollection('articles') : [];
+validateLocalEntries(localProducts);
+validateLocalEntries(localArticles);
+function localCatalog(locale: string): Catalog {
+  return {
+    products: localProducts.filter(entry => entry.id.split('/')[0] === locale).map(entry => ({ ...entry.data, localEntry: entry })),
+    posts: localArticles.filter(entry => entry.id.split('/')[0] === locale).map(entry => ({ ...entry.data, localEntry: entry })),
+  };
+}
 // Explicit server-side reads; never serialize this environment object into page props.
 const env = {
   RXCMS_API_BASE: import.meta.env.RXCMS_API_BASE ?? process.env.RXCMS_API_BASE,
@@ -80,7 +77,7 @@ export const pageRoutes: PageRoute[] = i18n.locales.flatMap(({ code }): PageRout
     { key: 'contact', kind: 'contact', locale: code, path: localePath('/contact/', code) },
     { key: 'privacy', kind: 'privacy', locale: code, path: localePath('/privacy-policy/', code) },
     ...products.map((product): PageRoute => ({ key: `product:${product.key ?? product.slug}`, kind: 'product', locale: code, path: productPath(product.slug, code), product })),
-    ...posts.map((post): PageRoute => ({ key: `article:${post.slug}`, kind: 'article', locale: code, path: postPath(post.slug, code), post })),
+    ...posts.map((post): PageRoute => ({ key: `article:${post.key ?? post.slug}`, kind: 'article', locale: code, path: postPath(post.slug, code), post })),
   ];
 });
 // Empty article indexes and 404s are never listed.

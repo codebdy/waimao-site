@@ -14,6 +14,7 @@ function fixture(settings = {}) {
 const both = { google: { analyticsId: 'G-TEST123', adsId: 'AW-12345' } };
 test('default dialog has only necessary storage and no Google requests', () => {
   const f = fixture(); f.update({ analytics: true, advertisement: true });
+  assert.equal(f.options.cookieName, 'cc_waimao_site');
   assert.deepEqual(Object.keys(bannerConfig(f.options, () => {}).categories), ['necessary']);
   assert.deepEqual(f.scripts, []);
   assert.equal(f.commands[0][0], 'consent'); assert.equal(f.commands[0][1], 'default');

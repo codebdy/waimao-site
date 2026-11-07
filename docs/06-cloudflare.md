@@ -4,7 +4,7 @@
 
 **这篇适合：** 代码已经上传到 GitHub，选择用 Cloudflare 发布的人。**推荐新手选 Cloudflare**，Vercel 和 Cloudflare 选一个就行。
 
-> 💰 **不用买服务器，免费版就够用。** Cloudflare 的免费版就够一个外贸网站起步使用，公司网站也可以用，访问快、自带 SSL 证书（网址以 https 开头，地址栏显示小锁）。拿不定主意选哪个平台，就选 Cloudflare。
+> 💰 **不用买服务器，免费版就够用。** Cloudflare 的免费版就够一个外贸网站起步使用，公司网站也可以用，访问快、自带 SSL 证书（网址以 https 开头，访问更安全）。拿不定主意选哪个平台，就选 Cloudflare。
 
 ## 发布前先让 AI 做一件事
 
@@ -14,8 +14,8 @@ AI 会把 `site.config.mjs` 里的发布平台设成 Cloudflare。改完后按[�
 
 ## 第一步：注册 Cloudflare
 
-1. 打开 [Cloudflare 注册页](https://dash.cloudflare.com/sign-up)，用邮箱和密码注册。
-2. 去邮箱点验证链接，然后登录控制台。
+1. 打开 [Cloudflare 注册页](https://dash.cloudflare.com/sign-up)，**推荐点页面上的 Google 按钮，用谷歌账号注册**，以后也用它登录。也可以用 GitHub 账号或邮箱注册。
+2. 用邮箱注册的，去邮箱点验证链接；然后登录控制台。
 
 这一步**不需要**把域名转到 Cloudflare，也不需要改公司的 DNS。先用 Cloudflare 送的网址就行。
 

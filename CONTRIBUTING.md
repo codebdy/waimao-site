@@ -36,7 +36,7 @@ npm run build          # 默认静态构建
 
 1. 把 `SKILL.md` 里的 `metadata.version` 改成新版本号（如 `0.1.1`），提交并推送。
 2. 在 GitHub 网页打开 **Releases → Draft a new release**，tag 填 `v0.1.1`（必须和上一步的版本号一致），写更新说明，点 **Publish release**。
-3. GitHub Actions 会自动运行打包脚本，把 `export-site-0.1.1.zip` 和 SHA-256 校验文件挂到这个 Release 下。
+3. GitHub Actions 会自动运行打包脚本，把 `waimao-site-0.1.1.zip` 和 SHA-256 校验文件挂到这个 Release 下。
 4. 一两分钟后检查 Release 的 Assets 里有没有 ZIP。没有就去 **Actions** 页面看报错，最常见的是版本号不一致。
 
 本地试打包：在仓库根目录执行 `python -I scripts/package_skill.py`，结果在被 Git 忽略的 `releases/` 目录。遇到不认识的文件类型，脚本会报错并列出文件，确认需要打包后再把扩展名加进脚本。

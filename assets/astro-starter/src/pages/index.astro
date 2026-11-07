@@ -11,12 +11,13 @@ interface Props { locale?: string; }
 const { locale = i18n.defaultLocale } = Astro.props;
 const t = useUi(locale);
 const { products } = getCatalog(locale);
+const firstImage = products.findIndex(product => product.images?.length);
 ---
 <SiteLayout locale={locale} title={t.home.title} description={t.home.description}>
   <PageHeader title={t.home.heading} description={t.home.intro}>
     <a class="button mt-7" href={localePath('/products/', locale)}>{t.home.explore}</a>
   </PageHeader>
   <section class="section" aria-label={t.home.featured}>
-    <Container class="grid gap-6 md:grid-cols-2">{products.map(product => <ProductCard product={product} locale={locale} />)}</Container>
+    <Container class="grid gap-6 md:grid-cols-2">{products.map((product, index) => <ProductCard product={product} locale={locale} priority={index === firstImage} />)}</Container>
   </section>
 </SiteLayout>

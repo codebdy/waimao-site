@@ -18,7 +18,7 @@ export default {
   indexable: false, // Deliberately a demo; opt in only after replacing sample data.
   cookieConsent: {
     enabled: true, // false disables BOTH the dialog and this Google integration.
-    cookieName: 'cc_export_site', // Use a unique name for each new client website.
+    cookieName: 'cc_waimao_site', // Use a unique name for each new client website.
     revision: 1, // Increase after material changes to purposes/services.
   },
   google: {

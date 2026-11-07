@@ -1,5 +1,5 @@
 {
   // Copy to the project root as wrangler.jsonc ONLY for Cloudflare Workers server output.
   // The current Astro adapter supplies its generated entrypoint/configuration.
-  "name": "export-site"
+  "name": "waimao-site"
 }

@@ -41,7 +41,7 @@ content: { source: 'local', locale: 'en' },
 inquiry: { provider: 'none', turnstileSiteKey: '' },
 ```
 
-本地产品在 src/data/local-products.json，由 src/data/catalog.ts 读取。source=rxcms 时，在本地 .env 或平台构建环境设置 RXCMS_API_BASE（服务 origin）、RXCMS_SITE_KEY；通过分页 API 读取产品和文章，生成 Products / Articles。失败中止构建，不回退演示内容。媒体需稳定 HTTPS URL，当前保守拒绝带查询参数的媒体链接；富文本只支持安全 Markdown 子集，不执行 MDX。相关产品按 relatedSlugs 映射，schemaJson 保留供人工核对后合并，未自动覆盖默认 Product schema。
+本地产品与文章用 Markdown 管理，分别放在 src/content/products/ 和 src/content/articles/，由 Astro 内容集合和 src/data/catalog.ts 读取。source=rxcms 时，在本地 .env 或平台构建环境设置 RXCMS_API_BASE（服务 origin）、RXCMS_SITE_KEY；通过分页 API 读取产品和文章，生成 Products / Articles。失败中止构建，不回退演示内容。媒体需稳定 HTTPS URL，当前保守拒绝带查询参数的媒体链接；富文本只支持安全 Markdown 子集，不执行 MDX。相关产品按 relatedSlugs 映射，schemaJson 保留供人工核对后合并，未自动覆盖默认 Product schema。
 
 source=wordpress 时，配置 WORDPRESS_API_BASE（以 /wp-json/ 结尾）；需认证时成对配置 WORDPRESS_USERNAME、WORDPRESS_APPLICATION_PASSWORD。实验客户端仅把标准 posts 渲染到 Articles，产品为空；pages 客户端未连前端路由。产品插件、媒体展示、内链改写、多语言和交互插件需额外适配。WordPress 后台继续运行在其原 PHP/数据库宿主。
 
@@ -63,25 +63,58 @@ i18n: {
 
 同时保持 `content.source: 'local'`、`output: 'static'`。显式 i18n 优先于旧 language 字段；content.locale 是 CMS 取数设置，不是这份语言列表。code 是 URL 代码和字典键，htmlLang 是语言标签（也可为 en-US 等），name 是切换器显示名称，dir 可为 ltr 或 rtl，省略默认 ltr。默认语言在 `/`，其他语言在 `/de/` 等路径；Astro 使用 `prefixDefaultLocale: false`，不生成回退译文。RXCMS / WordPress 或 server 配置多种语言会报错，需单独接入。
 
-产品文件 src/data/local-products.json 的每条记录有一个共享 key 和 translations。示例结构如下，实际填写客户资料：
+内容按语言分文件夹，每条产品或文章一个 `.md` 文件。默认目录如下（文章集合起初为空，添加文章后自动显示文章导航和详情页）：
 
-```json
-{
-  "key": "sample-component",
-  "translations": {
-    "en": { "slug": "sample-component", "title": "Sample industrial component", "description": "Example only.", "specifications": [] },
-    "de": { "slug": "muster-bauteil", "title": "Industrielles Musterbauteil", "description": "Nur ein Beispiel.", "specifications": [] }
-  }
-}
+```text
+src/
+  content.config.ts
+  content/
+    products/
+      en/sample-component.md
+      de/muster-bauteil.md
+    articles/
+      en/your-guide.md       ← 需要文章时自行新增
+  assets/
+    products/sample-component.png
 ```
 
-同一产品的 key 不变，各语言 slug 可以不同。没有某种语言的版本就不填写该版本：不会生成该语言详情页，也不会加入 sitemap 或 hreflang；不要复制英文冒充译文。已有演示产品附带德语译文；构建测试另加一个仅英语产品验证缺译文情形，不增加默认演示页数。本地文章仍为空，本次没有新增文章编辑机制。
+下面是 `src/content/products/en/sample-component.md` 的完整示例。`---` 之间是资料字段，后面是 Markdown 正文；实际建站时替换演示内容：
 
-新增一种语言时，让 AI 一起完成这三处修改：
+```markdown
+---
+key: sample-component
+slug: sample-component
+title: Sample industrial component
+description: Demonstration product. Replace with verified information.
+specifications:
+  - label: Catalog status
+    value: Demonstration only
+images:
+  - src: ../../../assets/products/sample-component.png
+    alt: Neutral geometric illustration of a sample component
+seoTitle: Sample industrial component
+seoDescription: Demonstration product for an example catalog.
+---
 
-1. 在 site.config.mjs 的 i18n.locales 中加入该语言。
-2. 在 src/i18n/ui.mjs 的 dictionaries 中增加完整字典，按英语字典的字段逐项翻译。它包含导航、按钮、页脚、联系和隐私正文、404、询盘标签与结果提示、Cookie 文案。缺项构建会报出字段名，不会悄悄显示英文。客户上线前还需按真实处理方式完善各语言隐私说明。
-3. 在 src/data/local-products.json 添加已经准备好的产品译文，包括参数、可选 SEO 字段及附件说明；relatedSlugs 若使用，要填写本语言的产品 slug。然后运行 npm test、npm run check、npm run test:builds 和 npm run build 检查。
+## Product overview
+
+This is a **fictional demonstration**, not a real product.
+Replace it with verified applications, materials and ordering information.
+```
+
+产品必填 `key`、`slug`、`title`、`description`、`specifications`（没有参数时先写 `[]`）。图片可省略；填 images 时，每张的 src 和非空 alt 都必填。seoTitle、seoDescription 可选。缺必填字段、图片文件不存在，或同一语言有重复 key/slug，构建会报出文件名，修好再发布。
+
+文章写到 `src/content/articles/en/文件名.md`，同样填写 key、slug、title、description、可选 images/SEO 字段，正文写 Markdown；不要求参数表。确有发布日期才加 `publishedAt: "2026-01-02"`，也可用带时区的完整时间；不知道就省略，不填空字符串或猜日期。每种语言有文章时，其文章导航和详情页会自动生成。默认没有文章时仍是 7 页，空文章列表不收录；Astro 可能提示 articles 集合为空，这不是构建失败。
+
+新增内容或语言时：
+
+1. **新增产品**：在对应语言的 products 目录复制一个 `.md`，换成新的 key、slug 和真实资料。新增文章同理放 articles。修改正文不会改变网址；改 slug 会改变网址，已有上线页面须另安排重定向。
+2. **新增图片**：放到 src/assets/products/、articles/ 等目录，按 Markdown 文件位置填写 images.src，并写本语言 alt。当前例子的 `../../../` 是从 en 目录退回 src，再进入 assets。详情首图和列表第一张产品图优先加载，其余懒加载；Astro 自动生成 WebP、宽高和多尺寸。
+3. **新增译文**：在同一集合的目标语言目录新增 `.md`，沿用原 key，翻译标题、描述、参数、正文和 alt；slug 可以不同。不建该文件就不发布该语言版本，也不进 sitemap 或 hreflang。不同语言可以共用同一张图片文件。
+4. **新增网站语言**：除了译文文件，还要在 site.config.mjs 的 i18n.locales 加入该语言，并在 src/i18n/ui.mjs 补齐界面字典（包括联系、隐私、表单和 Cookie 文案）；缺项构建报错，不回退英文。
+5. 修改后运行 npm test、npm run check、npm run test:builds、npm run build，再按原流程发布。自动路由和多语言只针对 local 内容，不能用这些文件覆盖 CMS 取数。
+
+所有本地页面图片，包括真实 Logo、页面插图和小图标，都放 src/assets，页面使用 Astro Image / Picture。当前页头仍是文字公司名，不提供虚构 Logo；新增品牌图片时让 AI 按相同规则接入。小型 SVG 保留矢量；大型 SVG 插图/背景放 public，按路径引用，不经过图片优化。favicon.svg 和 ogImage 分享图也保留 public；RXCMS / WordPress 远程图片不迁移。正文以文字为主，图片通过 frontmatter 管理，不用 HTML img 绕过优化。
 
 多语言页头使用普通链接切换语言：有对应译文就打开该页，没有则打开目标语言首页。每页语言标记、规范网址和结构化数据使用实际语言，企业和网站标识保持稳定。hreflang 只关联真实存在的可索引译文；x-default 指向默认语言对应页，没有该版本时指向默认语言首页。sitemap 汇总各语言实际页面；收录开关、空文章页 noindex 和单一默认语言 404 保持原有规则。
 
@@ -136,7 +169,7 @@ Vercel 在相应环境的变量中配置；Pages 在项目运行时变量/Secret
 
 关闭：把 site.config.mjs 的 cookieConsent.enabled 改 false，同时停用此弹窗和随包 Google 集成。开启则改 true。改后预览、Commit、Push，再等部署成功；已有选择可从页脚重开。实质用途变化时增加 revision，重新征求同意。默认偏好保存 180 天。
 
-真实上线前补齐 src/pages/privacy-policy.astro，说明实际运营者、用途、联系和数据处理。当前英语文案需随网站语言调整。这不是认证 CMP，不自动保证法律合规；也不管理手动添加的其它脚本或 Turnstile。Google Ads 转化事件需要单独配置，标签加载不等于转化追踪完成。
+真实上线前补齐 src/i18n/ui.mjs 中各语言的 privacy 文案，由 src/pages/privacy-policy.astro 渲染，说明实际运营者、用途、联系和数据处理。这不是认证 CMP，不自动保证法律合规；也不管理手动添加的其它脚本或 Turnstile。Google Ads 转化事件需要单独配置，标签加载不等于转化追踪完成。
 
 ## 按需 server 与平台切换
 
@@ -152,6 +185,6 @@ Cloudflare：安装相容的 @astrojs/cloudflare（本次核对 14.4.6）及 Wra
 
 `npm test` 检查部署选择、SEO、同意控制、内容客户端和询盘代理；脱敏数据在 tests/fixtures。`npm run build` 检查静态生成。真实 CMS、通知、云端函数、DNS、浏览器交互和视觉效果需要实际验收，单元测试不能代替。
 
-开发/审核可再执行 `npm run check` 做类型检查，`npm run test:builds` 在临时目录运行七种脱敏静态构建（含英语/德语），检查真实译文路由、SEO、切换链接及生成文件中没有测试密钥；另检查不支持的多语言配置和字典缺项会阻止构建。不会连接真实 CMS 或启动预览服务器。依赖升级后同步 public/third-party-licenses.txt 中的完整声明。
+开发/审核可再执行 `npm run check` 做类型检查，`npm run test:builds` 在临时目录运行八种脱敏静态构建（含英语/德语和 Markdown 文章），检查真实译文路由、SEO、切换链接及生成文件中没有测试密钥；另检查不支持的多语言配置、字典缺项、frontmatter 缺字段、图片缺失和重复 key/slug 会阻止构建。不会连接真实 CMS 或启动预览服务器。依赖升级后同步 public/third-party-licenses.txt 中的完整声明。
 
 依据：[Astro Vercel](https://docs.astro.build/en/guides/deploy/vercel/)、[Astro Cloudflare](https://docs.astro.build/en/guides/deploy/cloudflare/)、[Google Consent Mode](https://developers.google.com/tag-platform/security/guides/consent)。

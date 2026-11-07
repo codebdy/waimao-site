@@ -14,7 +14,7 @@ function tagId(value, prefix, alphabet) {
 export function consentOptions(settings) {
   const config = settings.cookieConsent ?? {};
   const enabled = config.enabled ?? true;
-  const cookieName = config.cookieName ?? 'cc_export_site';
+  const cookieName = config.cookieName ?? 'cc_waimao_site';
   const revision = config.revision ?? 1;
   if (typeof enabled !== 'boolean') throw new Error('cookieConsent.enabled must be a boolean.');
   if (typeof cookieName !== 'string' || !cookieName ||

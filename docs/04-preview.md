@@ -6,7 +6,7 @@
 
 ## 在电脑上打开网站
 
-1. 打开 `my-export-site/website` 文件夹，确认里面有 `package.json`。
+1. 打开 `my-waimao-site/website` 文件夹，确认里面有 `package.json`。
 2. 在这个文件夹的地址栏输入 `powershell` 回车，打开一个终端窗口。Mac 用户：在访达里右键 `website` 文件夹，选“服务 → 新建位于文件夹位置的终端窗口”。
 3. **第一次**预览时输入下面的命令，等它跑完（几分钟）：
    ```text
@@ -34,7 +34,7 @@
 
 ```text
 首页第一屏的标题改成 "Reliable Industrial Pumps from China"。
-产品页的离心泵图片换成 my-export-site/资料/pump-1.jpg。
+产品页的离心泵图片换成 my-waimao-site/资料/pump-1.jpg。
 联系页加上 WhatsApp：+86 138xxxx。
 ```
 

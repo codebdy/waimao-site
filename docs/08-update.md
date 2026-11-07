@@ -12,7 +12,7 @@
 告诉 AI 改什么 → 自己预览确认 → GitHub Desktop 里 Commit → Push → 平台自动发布
 ```
 
-1. 打开 AI 工具，进入原来的 `my-export-site` 项目，叫出 export-site，说清楚要改什么。
+1. 打开 AI 工具，进入原来的 `my-waimao-site` 项目，叫出 waimao-site，说清楚要改什么。
 2. 按[预览和修改](04-preview.md)在电脑上看一下效果。
 3. 打开 GitHub Desktop，确认当前仓库是你的网站，写一句 Summary，点 **Commit to main**，再点 **Push origin**。
 4. 去 Vercel 或 Cloudflare 控制台，能看到一次新的部署。等它显示成功，刷新网站就是新内容了。
@@ -52,6 +52,6 @@
 
 代码都在 GitHub 上。新电脑上：
 1. 安装 Node.js、AI 工具、GitHub Desktop。
-2. 新建 `my-export-site` 文件夹，在 GitHub Desktop 里用 **File → Clone repository** 把网站仓库下载到 `my-export-site/website`。
-3. 按[安装](01-install.md)重新放好 skill，按[预览和修改](04-preview.md)第一次运行 `npm ci`，就能继续让 AI 修改。
+2. 新建 `my-waimao-site` 文件夹，在 GitHub Desktop 里用 **File → Clone repository** 把网站仓库下载到 `my-waimao-site/website`。
+3. 按[安装](01-install.md)让 AI 重新装一次 skill，按[预览和修改](04-preview.md)第一次运行 `npm ci`，就能继续让 AI 修改。
 4. 用了 RXCMS 或 WordPress 的：密钥不会保存在 GitHub 上，要按之前的方法重新填写 `.env` 文件。

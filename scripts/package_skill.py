@@ -60,13 +60,13 @@ def main():
     output = ROOT / "releases"
     output.mkdir(exist_ok=True)
     check_path(output)
-    archive = output / f"export-site-{versions[0]}.zip"
+    archive = output / f"waimao-site-{versions[0]}.zip"
     temporary = archive.with_suffix(".zip.tmp")
     # Fixed archive timestamps make equal source bytes produce equal packages.
     from zipfile import ZipInfo
     with ZipFile(temporary, "w", compression=ZIP_DEFLATED) as bundle:
         for path in files:
-            entry = ZipInfo("export-site/" + path.relative_to(ROOT).as_posix(), date_time=(2026, 1, 1, 0, 0, 0))
+            entry = ZipInfo("waimao-site/" + path.relative_to(ROOT).as_posix(), date_time=(2026, 1, 1, 0, 0, 0))
             entry.compress_type = ZIP_DEFLATED
             # Explicit Unix mode: a hand-made ZipInfo otherwise has mode 0, which unzips as
             # unreadable files on macOS/Linux. Fixed system also keeps bytes OS-independent.

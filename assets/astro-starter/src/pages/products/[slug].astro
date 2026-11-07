@@ -8,6 +8,8 @@ import { localePath } from '../../i18n/urls.mjs';
 import { useUi } from '../../i18n/ui.mjs';
 import { canonicalUrl } from '../../lib/seo.mjs';
 import settings from '../../../site.config.mjs';
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
 // Catalog is a build-time snapshot in either output mode.
 // For live CMS SSR, replace this route's fetching and 404/5xx handling together.
 export const prerender = true;
@@ -19,7 +21,10 @@ const { product, locale = i18n.defaultLocale } = Astro.props;
 const t = useUi(locale);
 const url = canonicalUrl(productPath(product.slug, locale), settings.site);
 const localProducts = getCatalog(locale).products;
-const images = product.media?.filter(media => media.type === 'image').map(media => media.url) ?? [];
+const localImages = product.images ?? [];
+const optimized = await Promise.all(localImages.map(image => getImage({ src: image.src, width: Math.min(960, image.src.width), format: image.src.format === 'svg' ? 'svg' : 'webp', quality: 80 })));
+const images = [...optimized.map(image => canonicalUrl(image.src, settings.site)), ...(product.media?.filter(media => media.type === 'image').map(media => media.url) ?? [])];
+const Content = product.localEntry ? (await render(product.localEntry)).Content : null;
 const schema = [
   { '@type': 'Product', '@id': `${url}#product`, url, name: product.title, description: product.description,
     mainEntityOfPage: { '@id': `${url}#webpage` }, ...(images.length ? { image: images } : {}),
@@ -35,10 +40,15 @@ const schema = [
   <PageHeader title={product.title} description={product.description} />
   <section class="section">
     <Container>
+      {localImages.map((image, index) => <Image src={image.src} alt={image.alt} format={image.src.format === 'svg' ? 'svg' : 'webp'} quality={80}
+        width={Math.min(960, image.src.width)} widths={[320, 640, 960].filter(width => width <= image.src.width)}
+        sizes="(max-width: 1024px) 92vw, 960px" class="mb-6 h-auto max-w-full rounded-lg"
+        loading={index === 0 ? 'eager' : 'lazy'} fetchpriority={index === 0 ? 'high' : undefined} />)}
       <h2 class="text-2xl font-semibold">{t.products.information}</h2>
       <dl class="mt-6 grid gap-4">{product.specifications.map(spec => <div><dt class="font-semibold">{spec.label}</dt><dd>{spec.value}</dd></div>)}</dl>
       {product.media?.filter(media => media.type === 'image').map(media => <img class="mt-6 max-w-full" src={media.url} alt={media.alt} loading="lazy" />)}
       {product.contentHtml && <div class="content-body mt-6" set:html={product.contentHtml} />}
+      {Content && <div class="content-body mt-6"><Content /></div>}
       {product.extraContentHtml?.map(html => <div class="content-body mt-6" set:html={html} />)}
       {product.attachments?.map(media => <p class="mt-4"><a class="underline" href={media.url}>{media.alt || media.name || t.products.download}</a></p>)}
       {product.relatedSlugs?.map(slug => localProducts.find(p => p.slug === slug)).filter(Boolean).map(related => <p class="mt-4"><a class="underline" href={productPath(related!.slug, locale)}>{related!.title}</a></p>)}

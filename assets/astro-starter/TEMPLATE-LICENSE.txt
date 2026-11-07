@@ -1,14 +1,14 @@
-Export Site starter template notice
+waimao-site starter template notice
 
-The MIT license below covers the original Export Site starter code supplied by
-export-site contributors. Retain this notice for that code when reusing it.
+The MIT license below covers the original waimao-site starter code supplied by
+waimao-site contributors. Retain this notice for that code when reusing it.
 This file does not declare a license for customer-added content, branding,
 assets or independently authored code. Record their terms separately.
 Third-party dependency notices are in public/third-party-licenses.txt.
 
 MIT License
 
-Copyright (c) 2026 export-site contributors
+Copyright (c) 2026 waimao-site contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
