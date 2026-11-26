@@ -37,11 +37,11 @@
 - 上线并开启收录后，引导用户验证 Google Search Console 并提交 sitemap；没有 Search Console 数据就不报告收录结论。
 - robots.txt 控制抓取，不保证 URL 不被索引。需要爬虫读取 noindex 的公开页面不要同时 Disallow。私有预览优先用平台访问控制；robots 与 noindex 不是保密措施。
 - 不继承 Kingnod 的临时 Disallow 或“所有标签页 noindex”作为通用政策。分类/标签是否索引取决于独立价值和用户选择。
-- 旧 URL 迁移要映射到实际对应页面，永久迁移用合适状态码；不存在页面返回真实 404/410，不能把错误页用 200 输出。静态平台的状态码与重定向另行验证。
+- 旧 URL 迁移要映射到实际对应页面，永久迁移用合适状态码；不存在页面返回真实 404/410，不能把错误页用 200 输出。模板用 `config/redirects.mjs` 一份清单生成 Cloudflare `public/_redirects` 与 Vercel `vercel.json` 的 301（构建前 `--check` 防止漏提交）；上线后仍要实际请求旧地址，确认状态码和目标。
 
 ## 多语言
 
-本地 static 模板已支持多语言；RXCMS / WordPress 内容源的多语言需要单独接入，不能仅增加配置就声称完成。只将页面清单中真实存在、可索引的对应译文加入 hreflang，包含自引用和互相回链；缺译文不生成详情页、不进 sitemap，也不以英文填充。x-default 指向默认语言对应页；该版本不存在时指向默认语言首页。单语言不输出 hreflang。
+本地与 RXCMS 内容源的 static 模板已支持多语言（RXCMS 各语言用相同 slug 配对）；WordPress 内容源的多语言需要单独接入，不能仅增加配置就声称完成。只将页面清单中真实存在、可索引的对应译文加入 hreflang，包含自引用和互相回链；缺译文不生成详情页、不进 sitemap，也不以英文填充。x-default 指向默认语言对应页；该版本不存在时指向默认语言首页。单语言不输出 hreflang。
 
 每页 html lang、dir 和 WebPage / Article 的 inLanguage 使用实际语言；canonical 统一用 site 域名和当前语言路径。Organization / WebSite 的 @id 在各语言间保持稳定，面包屑使用本语言名称和路径。sitemap 汇总实际可索引页面；空文章列表和 404 仍排除，indexable=false 时保持 noindex 和空 sitemap。检查语言代码、自引用、回链和规范网址一致，不将单个缺项夸大成未经证实的全站信号失效。
 

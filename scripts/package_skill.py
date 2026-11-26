@@ -25,6 +25,7 @@ def check_path(path):
 def source_files():
     files = [ROOT / name for name in ROOT_FILES]
     files.append(ROOT / "scripts/package_skill.py")
+    files.append(ROOT / "scripts/rxcms-publish.mjs")
     unknown = []
     for folder in SOURCE_DIRS:
         check_path(ROOT / folder)
@@ -36,7 +37,7 @@ def source_files():
                 if excluded(name):
                     continue
                 path = Path(current) / name
-                allowed = name in {".gitignore", ".env.example"} or path.suffix in EXTENSIONS or name.endswith(".jsonc.example")
+                allowed = name in {".gitignore", ".env.example", "_redirects"} or path.suffix in EXTENSIONS or name.endswith(".jsonc.example")
                 if not allowed:
                     unknown.append(path.relative_to(ROOT).as_posix())
                     continue

@@ -11,7 +11,8 @@ import { i18n } from '../../i18n/config.mjs';
 
 export const prerender = true;
 export function getStaticPaths() {
-  return pageRoutes.filter(page => page.locale !== i18n.defaultLocale).map(page => ({
+  // Author pages exist only in the default language.
+  return pageRoutes.filter(page => page.locale !== i18n.defaultLocale && page.kind !== 'author').map(page => ({
     params: { locale: page.locale, path: decodeURIComponent(page.path.slice(page.locale.length + 2, -1)) || undefined },
     props: { page },
   }));
@@ -19,6 +20,6 @@ export function getStaticPaths() {
 interface Props { page: PageRoute; }
 const { page } = Astro.props;
 const views = { home: Home, products: Products, product: Product, articles: Articles, article: Article, contact: Contact, privacy: Privacy };
-const Page = views[page.kind];
+const Page = views[page.kind as keyof typeof views];
 ---
 <Page locale={page.locale} product={page.product!} post={page.post!} />

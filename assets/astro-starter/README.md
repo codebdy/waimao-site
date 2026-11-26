@@ -15,7 +15,7 @@ TEMPLATE-LICENSE.txt 保留原模板的 MIT 声明，其范围是原模板代码
 | Cookie 同意框 | 开启，Google ID 为空，不发送统计/广告请求 |
 | 更新 | 修改代码并推送 GitHub，连接的平台重新构建 |
 
-content.source、output、deployTarget、inquiry.provider 四项独立。RXCMS 产品/文章已提供内容适配；WordPress 标准文章为实验支持。默认单语言构建快照，本地 static 站可开启多语言；RXCMS / WordPress 内容源的多语言需要单独接入。模板不是完成的客户网站；客户译文、复杂产品页、真实平台和邮箱仍需验收。
+content.source、output、deployTarget、inquiry.provider 四项独立。RXCMS 产品/文章已提供内容适配；WordPress 标准文章为实验支持。默认单语言构建快照，本地和 RXCMS 内容源的 static 站可开启多语言；WordPress 内容源的多语言需要单独接入。模板不是完成的客户网站；客户译文、复杂产品页、真实平台和邮箱仍需验收。
 
 ## 第一次在电脑上看网站
 
@@ -61,7 +61,7 @@ i18n: {
 },
 ```
 
-同时保持 `content.source: 'local'`、`output: 'static'`。显式 i18n 优先于旧 language 字段；content.locale 是 CMS 取数设置，不是这份语言列表。code 是 URL 代码和字典键，htmlLang 是语言标签（也可为 en-US 等），name 是切换器显示名称，dir 可为 ltr 或 rtl，省略默认 ltr。默认语言在 `/`，其他语言在 `/de/` 等路径；Astro 使用 `prefixDefaultLocale: false`，不生成回退译文。RXCMS / WordPress 或 server 配置多种语言会报错，需单独接入。
+同时保持 `output: 'static'`，内容源为 `local` 或 `rxcms`。用 RXCMS 时 code 必须等于后台语言的 urlFragment（或 abbr），各语言文章/产品用相同 slug 才会配成译文、输出 hreflang；某语言没有这篇就不生成该语言页面。显式 i18n 优先于旧 language 字段；content.locale 是 CMS 取数设置，不是这份语言列表。code 是 URL 代码和字典键，htmlLang 是语言标签（也可为 en-US 等），name 是切换器显示名称，dir 可为 ltr 或 rtl，省略默认 ltr。默认语言在 `/`，其他语言在 `/de/` 等路径；Astro 使用 `prefixDefaultLocale: false`，不生成回退译文。WordPress 或 server 配置多种语言会报错，需单独接入。
 
 内容按语言分文件夹，每条产品或文章一个 `.md` 文件。默认目录如下（文章集合起初为空，添加文章后自动显示文章导航和详情页）：
 
@@ -136,6 +136,10 @@ Cookie 同意框使用 vanilla-cookieconsent 内置 translations，初始语言�
 4. 部署成功后检查 pages.dev 地址、页面、404 和联系入口，再绑定域名。Git 集成在 Push 后自动构建；不要用全站 SPA 回退掩盖不存在页面。
 
 只有纯文件静态站可考虑控制台直接上传 dist；包含 Pages Functions 时应使用 Git 集成或受支持的 Wrangler 流程，不能只拖入 dist。
+
+## 旧地址 301（改版、换域名时）
+
+在 `config/redirects.mjs` 登记「旧地址: 新地址」。旧地址小写、不带结尾斜杠；新地址填最终页面，带结尾斜杠，不能再指向另一条旧地址。改完运行 `npm run configure:redirects`，它从这一份清单同时生成 Cloudflare 的 `public/_redirects` 和 Vercel 的 `vercel.json`（只改其中 `redirects` 一项）。把这两个文件一起提交。构建前的检查发现它们没更新会让构建失败。上线后要实际打开几个旧地址，确认是 301，并且跳到了对的页面。
 
 ## static + RXCMS 询盘函数（可选）
 

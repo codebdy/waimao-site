@@ -14,6 +14,9 @@ const { posts } = getCatalog(locale);
 <SiteLayout locale={locale} title={t.articles.title} description={t.articles.description} noindex={posts.length === 0}>
   <PageHeader title={t.articles.title} />
   <Container class="section space-y-6">
-    {posts.length ? posts.map(post => <article><h2 class="text-xl font-semibold"><a class="underline" href={postPath(post.slug, locale)}>{post.title}</a></h2><p>{post.description}</p></article>) : <p>{t.articles.empty}</p>}
+    {posts.length ? posts.map(post => <article class="flex flex-col gap-4 sm:flex-row">
+      {post.cover && <img src={post.cover.url} alt={post.cover.alt} class="h-auto w-full rounded-lg sm:w-56" loading="lazy" decoding="async" />}
+      <div><h2 class="text-xl font-semibold"><a class="underline" href={postPath(post.slug, locale)}>{post.title}</a></h2><p>{post.description}</p></div>
+    </article>) : <p>{t.articles.empty}</p>}
   </Container>
 </SiteLayout>

@@ -70,9 +70,11 @@ metadata:
 1. 识别新建还是维护，按上面的选择规则说明建站方式和默认值。读取已有资料，确定企业类型、目标采购商、产品、市场语言、内容来源和主要转化目标。只询问影响当前决策的缺项；未知认证、交期和产能不能编造。
 2. 规划页面和内容，读取 [planning](references/planning.md) 和 [页面蓝图](references/page-blueprints.md)（各类页面的模块、文案规则、title 写法与结构化数据）。新建或视觉改造时读取 [design](references/design.md)，围绕产品展示、采购信息和询盘提出适合客户的视觉方向，再落实到页面。使用者无需另外安装设计 skill；简单修复不强制重新做全站策划或设计。
 3. 读取 [astro](references/astro.md) 实现共用前端；内容来源选 RXCMS 时再读 [rxcms](references/rxcms.md)，选 WordPress API 时再读 [wordpress](references/wordpress.md)。只加载相关内容源分支。
-4. 生成或修改页面、内容和真实询盘路径。新建 Astro 可使用 [starter](assets/astro-starter/README.md)，默认单语言，本地 static 站已支持多语言；RXCMS / WordPress 内容源的多语言需要单独接入。模板不是完成的客户网站；不要覆盖已有项目。
+4. 生成或修改页面、内容和真实询盘路径。新建 Astro 可使用 [starter](assets/astro-starter/README.md)，默认单语言，本地与 RXCMS 内容源的 static 站已支持多语言（RXCMS 按相同 slug 配对译文）；WordPress 内容源的多语言需要单独接入。模板不是完成的客户网站；不要覆盖已有项目。
    - local 产品和文章使用 Astro 内容集合：`src/content/products/<语言>/*.md`、`src/content/articles/<语言>/*.md`，frontmatter 校验必填字段，共享 key 关联译文；不再使用产品 JSON。缺译文不生成页面，本地文章存在时接通栏目及详情。RXCMS / WordPress 保留原适配流程。
    - 本地页面图片放 `src/assets/`，集合图片用 `image()` 引用并填写 alt，页面用 `astro:assets` 的 Image / Picture 输出宽高和多尺寸，栅格图优先 WebP。首屏主图 eager + high，其余 lazy。大型 SVG、固定地址的 favicon 和分享图保留 public；远程 CMS 图片保持原处理。不要生成虚构品牌素材。
+   - 用户要求把文章或产品发布到 RXCMS 后台时，读取 [rxcms-publish](references/rxcms-publish.md)，用随包的 `scripts/rxcms-publish.mjs` 先 check 再 publish，凭证只从网站文件夹的 `.env` 读。发布写入后台不等于网站已更新，static 站还要重新构建部署。
+   - 改版或换域名有旧网址时，在网站的 `config/redirects.mjs` 登记旧地址到新地址（只跳一次，永久 301），运行 `npm run configure:redirects` 生成平台规则并提交。
    - 启用 RXCMS 询盘时读取 [inquiry](references/inquiry.md)。static 可以独立配置询盘函数，不因此切换 server；配置后先生成对应平台入口并提交，再部署。保存、垃圾判定和通知结果分别表达，旧后端通知结果未提供就标未知。客户建站到联调阶段再取得测试站点与收件人，不能要求 skill 使用者在尚未建站时提供这些信息。
    - 涉及 Cookie 弹窗、Google 统计或广告时读取 [consent](references/consent.md)。新模板有默认开启但无 Google ID 的同意框；解释用途和开关，沿用用户已有选择。关闭同时停用随包标签，不注入真实站点的跟踪 ID；交付文档写清配置、数据用途和未验证项。
 5. 涉及路由、索引、内容或 SEO 输出时读取 [seo](references/seo.md)。将发现转为代码修复或有依据的待办，不只输出评分。

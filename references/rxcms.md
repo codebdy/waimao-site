@@ -21,7 +21,7 @@
 
 kingnod-v2 的 `src/lib/client.ts` 从 `import.meta.env.RXCMS_API_BASE` / `import.meta.env.RXCMS_SITE_KEY` 读取配置，并以 `process.env` 同名变量兜底；这个模块仅供构建期或服务端使用。它的 `.env-example` 只说明配置，不承载实际凭据。
 
-新建 RXCMS 网站时生成不含真实 key 的 `.env.example`，本地复制为被 Git 忽略的 `.env` 后填写。Vercel / Cloudflare 中把同名值放在平台对应的环境变量设置中，不把真实值写进 site.config.mjs 或提交到 Git。
+新建 RXCMS 网站时生成不含真实 key 的 `.env.example`，本地复制为被 Git 忽略的 `.env` 后填写。同一份 `.env` 也是发布脚本 [rxcms-publish](rxcms-publish.md) 读取凭证的唯一位置；发布要 content:write，平台构建环境可放同名只读 key。Vercel / Cloudflare 中把同名值放在平台对应的环境变量设置中，不把真实值写进 site.config.mjs 或提交到 Git。
 
 - **纯 static 内容读取**：构建进程从环境变量拿 key → 请求 RXCMS → 生成 HTML/公开内容数据 → 部署 dist。访客读取静态文件，不再需要 key。内容更新后重新构建。
 - **server 内容读取**：服务端取得配置并请求 RXCMS；实际使用构建期注入还是运行时变量，要按平台和读取方式确认。Cloudflare runtime secrets/bindings 不能假定等同于 process.env，不能照搬 Node 读取方式而不验证。
@@ -68,6 +68,12 @@ kingnod-v2 当前 `astro.config.mjs` 实际是 `output: 'server'`；询盘路由
 **搜索不同**：不传 locale 时跨语言搜索；单语言搜索要显式传参。**成员不同**：summary/profile 独立回落基准语言，并用 summaryLocale/profileLocale 表示各字段实际语言；未知/缺译文成员仍可能返回基准资料。
 
 站点声明支持某语言不代表每篇内容都有译文。只为实际对应内容生成 hreflang；回落文本按真实语言处理。
+
+**starter 的做法（同 kingnod-v2）**：static 输出下 `site.config.mjs` 的 `i18n.locales[].code` 填后台语言的 urlFragment（或 abbr），每种语言单独取一次产品和文章，列表强制校验返回语言与请求一致；各语言内容按**相同 slug** 配成译文，输出 hreflang 与语言切换。某语言没有这篇就不生成该语言页面，不回落英文。成员（作者）列表不校验信封语言（资料按字段回落），作者页只在默认语言生成，且只为本语言有署名文章的成员生成。
+
+**文章展示字段**：starter 把文章的 `cover`（原生封面）、`tags[].name`（本语言标签名）、`author`（署名成员）映射出来，文章页显示署名（链接作者页）、日期、封面和标签，Article 结构化数据带 `author: Person`、`publisher` 指向站点 Organization。发布时用 [rxcms-publish](rxcms-publish.md) 写入的封面、标签和作者因此在网站上可见。
+
+**正文与产品的其他展示**（同 kingnod-v2）：正文里的 `<video>` 只放行 https 地址，`.m3u8`（Cloudflare Stream）标 `data-hls`，页面按需加载 hls.js（Safari 原生播放，不下载）；询盘卡片 `<figure class="cta" data-cta="inquiry">` 渲染成卡片，按钮链接到本语言联系页（kingnod-v2 是弹窗询盘，模板没有弹窗，用联系页代替）；产品 FAQ（`data.faqs`，按 seqValue 排序）显示在产品页，并输出与页面问答一致的 FAQPage；后台 SEO robots 含 `noindex` 的页面输出 noindex，不进 hreflang 和 sitemap。
 
 ## 图片、视频与附件
 

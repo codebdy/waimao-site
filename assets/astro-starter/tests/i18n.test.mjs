@@ -35,7 +35,9 @@ test('language compatibility, explicit locale metadata and default URL prefixes'
 });
 
 test('multiple languages reject unsupported CMS/server modes and invalid metadata', () => {
-  for (const source of ['rxcms', 'wordpress']) assert.throws(() => resolveI18n({ ...settings, content: { source } }, {}), /separate integration/);
+  assert.throws(() => resolveI18n({ ...settings, content: { source: 'wordpress' } }, {}), /separate integration/);
+  assert.equal(resolveI18n({ ...settings, content: { source: 'rxcms' } }, {}).locales.length, 2, 'RXCMS static sites can be multilingual');
+  assert.throws(() => resolveI18n({ ...settings, output: 'server', content: { source: 'rxcms' } }, {}), /static output/);
   assert.throws(() => resolveI18n(settings, { SITE_OUTPUT: 'server' }), /require static/);
   assert.throws(() => resolveI18n({ ...settings, i18n: { ...settings.i18n, defaultLocale: 'fr' } }, {}), /defaultLocale/);
   assert.throws(() => resolveI18n({ ...settings, i18n: { defaultLocale: 'en', locales: [settings.i18n.locales[0], settings.i18n.locales[0]] } }, {}), /Duplicate/);

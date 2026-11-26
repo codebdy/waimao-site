@@ -70,8 +70,19 @@ globalThis.fetch = async input => {
   const url = new URL(input);
   if (url.origin === 'https://api.example.com') {
     if (url.pathname === '/api/v1/config') return Response.json(rx.config);
-    const all = url.pathname.endsWith('/product') ? rx.products : url.pathname.endsWith('/post') ? rx.posts : null;
-    if (!all) throw new Error('Unexpected RXCMS fixture route');
+    // Like content_api.go: FAQ only in the product detail, never in the list.
+    const prefix = '/api/v1/content/product/';
+    if (url.pathname.startsWith(prefix)) {
+      const slug = decodeURIComponent(url.pathname.slice(prefix.length));
+      const item = rx.products.find(p => p.slug === slug && p.locale === url.searchParams.get('locale'));
+      return item ? Response.json(item) : new Response(null, { status: 404 });
+    }
+    const user = url.pathname.endsWith('/user');
+    const rows = url.pathname.endsWith('/product') ? rx.products : url.pathname.endsWith('/post') ? rx.posts : user ? rx.users : null;
+    if (!rows) throw new Error('Unexpected RXCMS fixture route');
+    // Like the API: content is per language; members come back for every language (base-language fallback).
+    const all = (user ? rows : rows.filter(item => item.locale === url.searchParams.get('locale')))
+      .map(({ data: { faqs, ...data }, ...item }) => ({ ...item, data }));
     const page = Number(url.searchParams.get('page')), pageSize = Number(url.searchParams.get('pageSize'));
     return Response.json({ items: all.slice((page-1)*pageSize, page*pageSize), total: all.length, page, pageSize });
   }
@@ -92,6 +103,9 @@ globalThis.fetch = async input => {
     if (variant === 'consent-off') config.ogImage = '/favicon.svg'; // Test a local asset URL, not a default share image.
     if (variant === 'inquiry-vercel') config.ogImage = 'https://cdn.example.com/share.png';
     if (['rxcms', 'wordpress'].includes(variant)) { config.content.source = variant; config.indexable = true; }
+    if (variant === 'rxcms') config.i18n = multilingual; // RXCMS static multilingual: one catalog per language, paired by slug
+    // Old address of a CMS product that still exists: platform 301, so no page and no sitemap entry.
+    await writeFile(join(work, 'config/redirects.mjs'), variant === 'rxcms' ? "export default { '/products/sample-valve': '/products/sample-pump/' };\n" : 'export default {};\n');
     if (variant === 'consent-off') { config.cookieConsent.enabled = false; config.google.analyticsId = 'G-EXAMPLE123'; config.google.adsId = 'AW-123456'; }
     if (variant.startsWith('inquiry-')) { config.deployTarget = variant.slice('inquiry-'.length); config.inquiry = { provider: 'rxcms', turnstileSiteKey: 'public-fixture-key' }; }
     if (isMultilingual) {
@@ -144,8 +158,8 @@ globalThis.fetch = async input => {
       assert.equal(tags.find(tag => tag.name === 'html').attrs.dir, 'ltr');
       assert.equal(graph.find(node => node['@type'] === 'WebPage').inLanguage, german ? 'de' : 'en');
       for (const [type, id] of [['Organization', 'organization'], ['WebSite', 'website']]) assert.equal(graph.find(node => node['@type'] === type)['@id'], `${new URL('/', config.site).href}#${id}`);
-      assert.equal(switchLinks.length, isMultilingual ? 2 : 0);
-      if (!isMultilingual) assert.ok(!tags.some(tag => tag.attrs.hreflang), 'Single-language output has no hreflang');
+      assert.equal(switchLinks.length, isMultilingual || variant === 'rxcms' ? 2 : 0);
+      if (!isMultilingual && variant !== 'rxcms') assert.ok(!tags.some(tag => tag.attrs.hreflang), 'Single-language output has no hreflang');
       const meta = key => tags.find(tag => tag.name === 'meta' && (tag.attrs.property === key || tag.attrs.name === key))?.attrs.content;
       assert.ok(tags.some(tag => tag.name === 'link' && tag.attrs.rel === 'icon' && tag.attrs.href === '/favicon.svg'), `${file}: favicon missing`);
       assert.equal(meta('og:site_name'), config.name);
@@ -168,9 +182,9 @@ globalThis.fetch = async input => {
         assert.deepEqual(breadcrumb.itemListElement.map(item => item.item), [new URL(`${prefix}/`, config.site).href, new URL(`${prefix}${product ? '/products/' : '/articles/'}`, config.site).href, page.url]);
         assert.equal(breadcrumb.itemListElement[0].name, german ? 'Startseite' : 'Home');
         if (article) {
-          assert.equal(article.headline, variant === 'markdown' ? (german ? 'Lokaler Ratgeber' : pagePath.includes('undated-guide') ? 'Undated guide' : 'Local guide') : variant === 'wordpress' ? 'Pumps & valves' : 'Sample news');
-          assert.equal(article.datePublished, page.url.includes('/undated-') ? undefined : variant === 'markdown' ? '2026-01-02T00:00:00.000Z' : '2026-01-01T00:00:00Z');
-          assert.equal(article.author, undefined);
+          assert.equal(article.headline, variant === 'markdown' ? (german ? 'Lokaler Ratgeber' : pagePath.includes('undated-guide') ? 'Undated guide' : 'Local guide') : variant === 'wordpress' ? 'Pumps & valves' : german ? 'Beispielnachricht' : 'Sample news');
+          assert.equal(article.datePublished, page.url.includes('/undated-') ? undefined : variant === 'markdown' || german ? (variant === 'markdown' ? '2026-01-02T00:00:00.000Z' : '2026-01-02T00:00:00Z') : '2026-01-01T00:00:00Z');
+          assert.deepEqual(article.author, variant === 'rxcms' ? { '@type': 'Person', name: 'Sample Author', url: new URL('/authors/12/', config.site).href } : undefined);
         }
         if (product) {
           if (config.content.source === 'local' && !pagePath.includes('untranslated-component')) {
@@ -204,7 +218,7 @@ globalThis.fetch = async input => {
         }
       }
     }
-    assert.equal(htmlPages.size, variant === 'rxcms' ? 10 : variant === 'markdown' ? 17 : isMultilingual ? 14 : 7);
+    assert.equal(htmlPages.size, variant === 'rxcms' ? 16 : variant === 'markdown' ? 17 : isMultilingual ? 14 : 7);
     const index = await readFile(join(work, 'dist/index.html'), 'utf8');
     const contact = await readFile(join(work, 'dist/contact/index.html'), 'utf8');
     const ids = new Set(), remoteScripts = [];
@@ -214,6 +228,24 @@ globalThis.fetch = async input => {
     assert.equal(contact.includes('id="inquiry-form"'), variant.startsWith('inquiry-') || isMultilingual);
     assert.equal(index.includes('href="/articles/"'), ['rxcms', 'wordpress', 'markdown'].includes(variant), 'Articles is linked only when posts exist');
     if (variant === 'rxcms') {
+      const en = '/articles/sample-news/', de = '/de/articles/sample-news/';
+      const hreflang = path => htmlPages.get(path).tags.filter(tag => tag.name === 'link' && tag.attrs.rel === 'alternate').map(tag => tag.attrs.hreflang);
+      assert.deepEqual(hreflang(en), ['en', 'de', 'x-default']); assert.deepEqual(hreflang(de), ['en', 'de', 'x-default']);
+      assert.ok(!hreflang('/products/sample-pump/').includes('de'), 'no German product, no de alternate');
+      assert.ok(!htmlPages.has('/de/products/sample-pump/') && !htmlPages.has('/de/articles/undated-news/'));
+      const enArticle = await readFile(join(work, 'dist/articles/sample-news/index.html'), 'utf8');
+      assert.ok(enArticle.includes('href="/authors/12/"') && enArticle.includes('>Packaging<') && enArticle.includes('src="https://media.example.com/cover.webp"'));
+      assert.ok((await readFile(join(work, 'dist/de/articles/sample-news/index.html'), 'utf8')).includes('>Verpackung<'));
+      assert.ok(htmlPages.has('/authors/12/') && !htmlPages.has('/authors/13/') && !htmlPages.has('/de/authors/12/'));
+      assert.ok(enArticle.includes('<figure class="cta" data-cta="inquiry">') && enArticle.includes('href="/contact/">Request a quote'));
+      assert.ok((await readFile(join(work, 'dist/de/articles/sample-news/index.html'), 'utf8')).includes('href="/de/contact/">Angebot anfordern'), 'card links to this language');
+      assert.ok(enArticle.includes('data-hls'), 'HLS video kept and marked for the loader');
+      const pump = htmlPages.get('/products/sample-pump/');
+      assert.deepEqual(pump.graph.find(node => node['@type'] === 'FAQPage').mainEntity.map(q => q.name), ['Minimum order?', 'Second question?']);
+      assert.ok(pump.text.includes('Minimum order?'), 'FAQ is visible, not schema-only');
+      assert.ok(!htmlPages.has('/products/sample-valve/') && !(await readFile(join(work, 'dist/sitemap.xml'), 'utf8')).includes('sample-valve'));
+      assert.equal(htmlPages.get('/authors/12/').graph.find(node => node['@type'] === 'ProfilePage').mainEntity.jobTitle, 'Export manager');
+      assert.ok((await readFile(join(work, 'dist/sitemap.xml'), 'utf8')).includes('/authors/12/'));
       assert.ok(files.includes(join(work, 'dist/products/sample-pump/index.html')));
       assert.ok(files.includes(join(work, 'dist/articles/sample-news/index.html')));
       assert.ok(!files.includes(join(work, 'dist/products/sample-component/index.html')));
@@ -310,7 +342,7 @@ globalThis.fetch = async input => {
   // Config failures must stop the real build, before any remote CMS fetch or adapter load.
   const uiFile = join(work, 'src/i18n/ui.mjs');
   const uiText = await readFile(uiFile, 'utf8');
-  for (const scenario of ['rxcms', 'wordpress', 'server', 'missing-ui']) {
+  for (const scenario of ['wordpress', 'server', 'missing-ui']) { // multilingual RXCMS is supported: see the rxcms variant
     const config = { ...structuredClone(settings), output: scenario === 'server' ? 'server' : 'static', deployTarget: 'vercel',
       content: { source: ['rxcms', 'wordpress'].includes(scenario) ? scenario : 'local', locale: 'en' },
       inquiry: { provider: 'none', turnstileSiteKey: '' }, i18n: multilingual };

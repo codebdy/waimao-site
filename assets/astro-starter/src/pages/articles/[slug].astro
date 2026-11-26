@@ -2,7 +2,8 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import Container from '../../components/Container.astro';
-import { posts, postPath, type Post } from '../../data/catalog';
+import HlsVideo from '../../components/HlsVideo.astro';
+import { posts, postPath, authors, authorPath, type Post } from '../../data/catalog';
 import { i18n } from '../../i18n/config.mjs';
 import { localePath } from '../../i18n/urls.mjs';
 import { useUi } from '../../i18n/ui.mjs';
@@ -19,11 +20,24 @@ const url = canonicalUrl(postPath(post.slug, locale), settings.site);
 const localImages = post.images ?? [];
 const optimized = await Promise.all(localImages.map(image => getImage({ src: image.src, width: Math.min(960, image.src.width), format: image.src.format === 'svg' ? 'svg' : 'webp', quality: 80 })));
 const Content = post.localEntry ? (await render(post.localEntry)).Content : null;
+const htmlLang = i18n.locales.find(item => item.code === locale)!.htmlLang;
+// Byline links only to an author page that is actually generated (default language, member signed a post there).
+const authorUrl = post.author && authors.some(author => author.id === post.author!.id) ? authorPath(post.author.id) : null;
+const imageUrls = [...(post.cover ? [post.cover.url] : []), ...optimized.map(image => canonicalUrl(image.src, settings.site))];
+// Inquiry cards and body links store the default /contact/ path; point them at this language's contact page.
+const bodyHtml = post.contentHtml?.replaceAll('href="/contact/"', `href="${localePath('/contact/', locale)}"`);
+const dateLabel = (value: string) => new Intl.DateTimeFormat(htmlLang, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(value));
 const schema = [
-  { '@type': 'Article', '@id': `${url}#article`, headline: post.title, url, inLanguage: i18n.locales.find(item => item.code === locale)!.htmlLang,
+  { '@type': 'Article', '@id': `${url}#article`, headline: post.title, url, inLanguage: htmlLang,
     mainEntityOfPage: { '@id': `${url}#webpage` },
+    ...(post.description ? { description: post.description } : {}),
     ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
-    ...(optimized.length ? { image: optimized.map(image => canonicalUrl(image.src, settings.site)) } : {}),
+    ...(post.updatedAt ? { dateModified: post.updatedAt } : {}),
+    ...(imageUrls.length ? { image: imageUrls } : {}),
+    // Personal byline from the CMS member; the company stays the publisher in the layout's Organization node.
+    ...(post.author ? { author: { '@type': 'Person', name: post.author.name, ...(authorUrl ? { url: canonicalUrl(authorUrl, settings.site) } : {}) } } : {}),
+    ...(post.tags?.length ? { keywords: post.tags.join(', ') } : {}),
+    publisher: { '@id': `${canonicalUrl('/', settings.site)}#organization` },
   },
   { '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`, itemListElement: [
     { '@type': 'ListItem', position: 1, name: t.nav.home, item: canonicalUrl(localePath('/', locale), settings.site) },
@@ -32,13 +46,21 @@ const schema = [
   ] },
 ];
 ---
-<SiteLayout locale={locale} title={post.seoTitle || post.title} description={post.seoDescription || post.description} schema={schema}>
+<SiteLayout locale={locale} title={post.seoTitle || post.title} description={post.seoDescription || post.description} schema={schema} noindex={post.noindex}>
   <PageHeader title={post.title} description={post.description} />
   <Container class="section content-body">
+    {(post.author || post.publishedAt) && <p class="mb-4 text-sm text-slate-600">
+      {post.author && (authorUrl ? <a class="underline" href={authorUrl} rel="author">{post.author.name}</a> : <span>{post.author.name}</span>)}
+      {post.author && post.publishedAt && ' · '}
+      {post.publishedAt && <time datetime={post.publishedAt}>{dateLabel(post.publishedAt)}</time>}
+    </p>}
+    {post.cover && <img src={post.cover.url} alt={post.cover.alt} class="mb-6 h-auto max-w-full rounded-lg" loading="eager" fetchpriority="high" decoding="async" />}
     {localImages.map((image, index) => <Image src={image.src} alt={image.alt} format={image.src.format === 'svg' ? 'svg' : 'webp'} quality={80}
       width={Math.min(960, image.src.width)} widths={[320, 640, 960].filter(width => width <= image.src.width)}
       sizes="(max-width: 1024px) 92vw, 960px" class="mb-6 h-auto max-w-full rounded-lg"
       loading={index === 0 ? 'eager' : 'lazy'} fetchpriority={index === 0 ? 'high' : undefined} />)}
-    {Content ? <Content /> : <div set:html={post.contentHtml} />}
+    {Content ? <Content /> : <div set:html={bodyHtml} />}
+    {bodyHtml?.includes('data-hls') && <HlsVideo />}
+    {post.tags?.length ? <ul class="mt-8 flex flex-wrap gap-2" aria-label={t.articles.tags}>{post.tags.map(tag => <li class="rounded-full border px-3 py-1 text-sm">{tag}</li>)}</ul> : null}
   </Container>
 </SiteLayout>

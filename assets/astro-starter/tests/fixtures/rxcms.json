@@ -8,10 +8,20 @@
       "meta": { "seoTitle": "Sample pump specifications", "seoDescription": "Synthetic SEO description" },
       "medias": [{ "altText": "Example pump", "media": { "mediaType": "image", "file": { "url": "https://media.example.com/pump.webp" } } }],
       "attachments": [{ "media": { "name": "Example datasheet", "mediaType": "file", "file": { "url": "https://media.example.com/datasheet.pdf" } } }],
-      "relatedSlugs": ["sample-valve"], "schemaJson": { "@type": "Product", "name": "Sample pump" }, "category": { "slug": "pumps", "name": "Pumps" }
+      "relatedSlugs": ["sample-valve"], "faqs": [{ "question": "Second question?", "answer": "Second answer.", "seqValue": 2 }, { "question": "Minimum order?", "answer": "One pallet.", "seqValue": 1 }], "schemaJson": { "@type": "Product", "name": "Sample pump" }, "category": { "slug": "pumps", "name": "Pumps" }
     } },
     { "id": 102, "type": "product", "slug": "sample-valve", "locale": "en", "data": { "title": "Sample valve", "description": "A second fictional product.", "content": "Sample body", "relatedSlugs": [] } }
   ],
-  "posts": [{ "id": 201, "type": "post", "slug": "sample-news", "locale": "en", "data": { "title": "Sample news", "description": "Fictional article", "content": "## Example\n\nPublic information.", "publishedAt": "2026-01-01T00:00:00Z" } }],
+  "posts": [
+    { "id": 201, "type": "post", "slug": "sample-news", "locale": "en", "data": { "title": "Sample news", "description": "Fictional article", "content": "## Example\n\nPublic information.\n\n<figure class=\"cta\" data-cta=\"inquiry\">\n<figcaption>Need samples?</figcaption>\n<a href=\"/contact/\">Request a quote</a>\n</figure>\n\n<figure><video src=\"https://stream.example.com/uid/manifest/video.m3u8\" controls></video></figure>", "publishedAt": "2026-01-01T00:00:00Z",
+      "cover": { "altText": "Sample cover", "media": { "mediaType": "image", "file": { "url": "https://media.example.com/cover.webp" } } },
+      "tags": [{ "id": 59, "name": "Packaging", "sourceTagId": 0 }], "author": { "id": 12, "name": "Sample Author" }, "authorId": 12 } },
+    { "id": 203, "type": "post", "slug": "sample-news", "locale": "de", "data": { "title": "Beispielnachricht", "description": "Fiktiver Artikel", "content": "Öffentliche Information.\n\n<figure class=\"cta\" data-cta=\"inquiry\">\n<a href=\"/contact/\">Angebot anfordern</a>\n</figure>", "publishedAt": "2026-01-02T00:00:00Z",
+      "tags": [{ "id": 61, "name": "Verpackung", "sourceTagId": 59 }], "author": { "id": 12, "name": "Sample Author" }, "authorId": 12 } }
+  ],
+  "users": [
+    { "id": 12, "type": "user", "locale": "en", "data": { "name": "Sample Author", "position": "Export manager", "summary": "Fictional member for testing.", "profile": "Writes **sample** guides." } },
+    { "id": 13, "type": "user", "locale": "en", "data": { "name": "Unsigned Member" } }
+  ],
   "receipts": { "saved": { "id": 301, "ok": true, "spam": false }, "spam": { "id": 302, "ok": true, "spam": true } }
 }

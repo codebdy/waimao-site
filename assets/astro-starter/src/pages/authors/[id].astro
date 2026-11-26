@@ -1,0 +1,34 @@
+---
+// RXCMS author pages (default language only, like kingnod-v2 /profiles/[id]): one page per member who signs a post.
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Container from '../../components/Container.astro';
+import { authors, authorPath, posts, postPath, type Author } from '../../data/catalog';
+import { i18n } from '../../i18n/config.mjs';
+import { useUi } from '../../i18n/ui.mjs';
+import { canonicalUrl } from '../../lib/seo.mjs';
+import settings from '../../../site.config.mjs';
+export const prerender = true;
+export function getStaticPaths() { return authors.map(author => ({ params: { id: String(author.id) }, props: { author } })); }
+interface Props { author: Author; }
+const { author } = Astro.props;
+const locale = i18n.defaultLocale;
+const t = useUi(locale);
+const url = canonicalUrl(authorPath(author.id), settings.site);
+const signed = posts.filter(post => post.author?.id === author.id);
+const schema = [{ '@type': 'ProfilePage', '@id': `${url}#profile`, url, mainEntity: { '@type': 'Person', '@id': `${url}#person`, name: author.name, url,
+  ...(author.position ? { jobTitle: author.position } : {}), ...(author.summary ? { description: author.summary } : {}),
+  ...(author.avatar ? { image: author.avatar.url } : {}),
+  worksFor: { '@id': `${canonicalUrl('/', settings.site)}#organization` } } }];
+---
+<SiteLayout locale={locale} title={`${author.name} | ${settings.name}`} description={author.summary || `${t.articles.author}: ${author.name}`} schema={schema}>
+  <PageHeader title={author.name} description={author.position} />
+  <Container class="section content-body">
+    {author.avatar && <img src={author.avatar.url} alt={author.avatar.alt} class="mb-6 h-40 w-40 rounded-full object-cover" loading="eager" decoding="async" />}
+    {author.profileHtml ? <div set:html={author.profileHtml} /> : author.summary && <p>{author.summary}</p>}
+    {signed.length > 0 && <section class="mt-10">
+      <h2 class="text-xl font-semibold">{t.articles.authorArticles}</h2>
+      <ul class="mt-4 space-y-2">{signed.map(post => <li><a class="underline" href={postPath(post.slug, locale)}>{post.title}</a></li>)}</ul>
+    </section>}
+  </Container>
+</SiteLayout>

@@ -27,7 +27,8 @@ export function createRXCMSClient(env, fetcher = fetch) {
         total = result.total;
         for (const item of result.items) {
           if (!item || item.type !== type || !Number.isInteger(item.id) || !item.data ||
-              (locale && item.locale !== locale) || seen.has(item.id)) throw new Error('RXCMS returned invalid, repeated or wrong-language content.');
+              // Members fall back to base-language profile fields per field (summaryLocale/profileLocale), so their envelope locale is not checked.
+              (locale && type !== 'user' && item.locale !== locale) || seen.has(item.id)) throw new Error('RXCMS returned invalid, repeated or wrong-language content.');
           seen.add(item.id); items.push(item);
         }
         if (items.length === total) return items;
@@ -79,7 +80,35 @@ export function mapRXEntry(entry) {
     schemaJson: data.schemaJson ?? null,
     category: data.category ? { slug: data.category.slug, name: plainText(data.category.name) } : null,
     publishedAt: data.publishedAt || null,
+    updatedAt: data.updatedAt || null,
+    // CMS robots "noindex" keeps the page out of index, hreflang and sitemap (same decision everywhere).
+    noindex: /noindex/i.test(String(data.meta?.seoRobots || '')),
+    // Product FAQ (Content API detail, ordered by seqValue): rendered on the page and mirrored as FAQPage.
+    faqs: entry.type === 'product' && Array.isArray(data.faqs)
+      ? [...data.faqs].sort((a, b) => (a?.seqValue ?? 0) - (b?.seqValue ?? 0))
+        .map(q => ({ question: plainText(q?.question || ''), answer: plainText(q?.answer || '') })).filter(q => q.question && q.answer)
+      : [],
+    // Posts: native cover, localized tag names and the byline member (author pages use the member ID).
+    cover: entry.type === 'post' && data.cover ? withAlt(stableMedia(data.cover), title) : null,
+    tags: entry.type === 'post' && Array.isArray(data.tags) ? data.tags.map(tag => plainText(tag?.name)).filter(Boolean) : [],
+    author: entry.type === 'post' ? mapAuthor(data.author, data.authorId) : null,
   };
+}
+
+const withAlt = (media, fallback) => media && { ...media, alt: media.alt || fallback };
+function mapAuthor(author, authorId) {
+  const id = Number(author?.id ?? authorId);
+  const name = plainText(author?.name || '');
+  return Number.isInteger(id) && id > 0 && name ? { id, name } : null;
+}
+
+export function mapRXUser(entry) {
+  if (entry?.type !== 'user' || !Number.isInteger(entry.id) || !entry.data) throw new Error('Expected RXCMS user entry.');
+  const data = entry.data;
+  const name = plainText(data.name || '');
+  if (!name) throw new Error('RXCMS member needs a name.');
+  return { id: entry.id, name, position: plainText(data.position || ''), summary: plainText(data.summary || ''),
+    profileHtml: data.profile ? markdownHTML(data.profile) : '', avatar: withAlt(stableMedia(data.avatar), name) };
 }
 
 export async function loadRXCatalog(env, locale, fetcher = fetch) {
@@ -88,7 +117,17 @@ export async function loadRXCatalog(env, locale, fetcher = fetch) {
   const requested = locale || config.website?.baseLang?.abbr;
   const language = config.locales?.find(item => item.abbr === requested || item.urlFragment === requested);
   if (!language?.abbr) throw new Error('RXCMS locale must match a configured site language.');
-  const products = await client.listAll('product', { locale: language.abbr });
-  const posts = await client.listAll('post', { locale: language.abbr });
-  return { products: uniqueSlugs(products.map(mapRXEntry)), posts: uniqueSlugs(posts.map(mapRXEntry)), locale: language.abbr };
+  const listed = await client.listAll('product', { locale: language.abbr });
+  // Product FAQ is only in the detail response (content_api.go loads faqs for GetOne, not for lists): read it per product.
+  const products = [];
+  for (const item of listed) {
+    const detail = await client.detail('product', segment(item.slug), language.abbr);
+    if (!detail || detail.id !== item.id || detail.locale !== language.abbr) throw new Error('RXCMS product detail does not match its list entry; build stopped.');
+    products.push({ ...item, data: { ...item.data, faqs: detail.data?.faqs ?? [] } });
+  }
+  const posts = (await client.listAll('post', { locale: language.abbr })).map(mapRXEntry);
+  // Author pages only for members who sign at least one post in this language.
+  const authorIds = new Set(posts.map(post => post.author?.id).filter(Boolean));
+  const users = authorIds.size ? (await client.listAll('user', { locale: language.abbr })).filter(user => authorIds.has(user.id)).map(mapRXUser) : [];
+  return { products: uniqueSlugs(products.map(mapRXEntry)), posts: uniqueSlugs(posts), users, locale: language.abbr };
 }

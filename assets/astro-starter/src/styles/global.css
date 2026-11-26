@@ -29,3 +29,11 @@ a:focus-visible { outline: 3px solid var(--color-brand); outline-offset: 4px; }
 .content-body ul { list-style: disc; padding-inline-start: 1.5rem; }
 .content-body ol { list-style: decimal; padding-inline-start: 1.5rem; }
 .content-body a { text-decoration: underline; }
+
+/* Inquiry card in CMS article bodies: <figure class="cta" data-cta="inquiry">, written by the RXCMS publisher. */
+.content-body figure.cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+  margin: 2rem 0; padding: 1.25rem 1.5rem; border: 1px solid currentColor; border-radius: 0.75rem; }
+.content-body figure.cta[data-layout="stack"] { flex-direction: column; align-items: flex-start; }
+.content-body figure.cta figcaption { flex: 1 1 16rem; }
+.content-body figure.cta a { display: inline-flex; padding: .7rem 1.2rem; border-radius: .35rem; background: var(--color-brand); color: white; font-weight: 600; text-decoration: none; }
+.content-body video { width: 100%; height: auto; border-radius: 0.5rem; }

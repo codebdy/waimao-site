@@ -11,7 +11,8 @@ export default {
   description: 'A demonstration catalog for a B2B export website.',
   language: 'en',
   // null preserves the single-language setting above. Explicit i18n takes precedence.
-  // Local + static only for multiple locales; code is the URL prefix and dictionary key.
+  // Multiple locales: static only, content.source local or rxcms; code is the URL prefix and dictionary key
+  // (for rxcms it must equal the RXCMS urlFragment/abbr; translations pair up by identical slug).
   // Example: { defaultLocale: 'en', locales: [{ code: 'en', htmlLang: 'en', name: 'English' }, { code: 'de', htmlLang: 'de', name: 'Deutsch', dir: 'ltr' }] }
   i18n: null,
   email: '', // Confirm the real address before enabling the contact link.
