@@ -71,6 +71,7 @@ metadata:
 2. 规划页面和内容，读取 [planning](references/planning.md) 和 [页面蓝图](references/page-blueprints.md)（各类页面的模块、文案规则、title 写法与结构化数据）。新建或视觉改造时读取 [design](references/design.md)，围绕产品展示、采购信息和询盘提出适合客户的视觉方向，再落实到页面。使用者无需另外安装设计 skill；简单修复不强制重新做全站策划或设计。
 3. 读取 [astro](references/astro.md) 实现共用前端；内容来源选 RXCMS 时再读 [rxcms](references/rxcms.md)，选 WordPress API 时再读 [wordpress](references/wordpress.md)。只加载相关内容源分支。
 4. 生成或修改页面、内容和真实询盘路径。新建 Astro 可使用 [starter](assets/astro-starter/README.md)，默认单语言，本地与 RXCMS 内容源的 static 站已支持多语言（RXCMS 按相同 slug 配对译文）；WordPress 内容源的多语言需要单独接入。模板不是完成的客户网站；不要覆盖已有项目。
+   - 纯静态站的首页、联系页等固定页面使用 `.astro` 页面和共用组件，独立于文章数量。按站点需要启用文章或产品栏目。
    - local 产品和文章使用 Astro 内容集合：`src/content/products/<语言>/*.md`、`src/content/articles/<语言>/*.md`，frontmatter 校验必填字段，共享 key 关联译文；不再使用产品 JSON。缺译文不生成页面，本地文章存在时接通栏目及详情。RXCMS / WordPress 保留原适配流程。
    - 本地页面图片放 `src/assets/`，集合图片用 `image()` 引用并填写 alt，页面用 `astro:assets` 的 Image / Picture 输出宽高和多尺寸，栅格图优先 WebP。首屏主图 eager + high，其余 lazy。大型 SVG、固定地址的 favicon 和分享图保留 public；远程 CMS 图片保持原处理。不要生成虚构品牌素材。
    - 用户要求把文章或产品发布到 RXCMS 后台时，读取 [rxcms-publish](references/rxcms-publish.md)，用随包的 `scripts/rxcms-publish.mjs` 先 check 再 publish，凭证只从网站文件夹的 `.env` 读。发布写入后台不等于网站已更新，static 站还要重新构建部署。
